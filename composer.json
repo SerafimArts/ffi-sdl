@@ -1,0 +1,49 @@
+{
+    "name": "serafim/ffi-sdl",
+    "description": "PHP FFI to SDL2 bindings",
+    "type": "library",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/SerafimArts/SDL/issues",
+        "source": "https://github.com/SerafimArts/SDL"
+    },
+    "keywords": [
+    ],
+    "homepage": "https://github.com/SerafimArts/SDL",
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-ffi": "*",
+        "serafim/ffi-loader": "^1.0",
+        "serafim/ffi-utils": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Serafim\\SDL\\": "src"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "symfony/var-dumper": "~5.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Serafim\\SDL\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

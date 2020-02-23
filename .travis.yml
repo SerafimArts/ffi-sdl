@@ -1,0 +1,44 @@
+language: php
+
+php:
+  - 7.4
+
+matrix:
+  fast_finish: true
+
+sudo: true
+
+addons:
+  apt:
+    update: true
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_script:
+  - sudo apt-get update
+  - sudo apt -y install software-properties-common
+  - apt-get install -y language-pack-en-base && export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8 &&
+  - sudo add-apt-repository ppa:ondrej/php
+  - sudo apt-get -y install php7.4-ffi
+  - echo "extension = ffi.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+  # Initialise Composer
+  - composer self-update -q
+  - composer global require hirak/prestissimo
+
+  # Installing Composer dependencies
+  - composer install --no-interaction --no-suggest --optimize-autoloader
+
+  # Installing code coverage tools
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT
+
+script:
+  - composer run security
+  - vendor/bin/phpunit --testdox --coverage-clover clover.xml
