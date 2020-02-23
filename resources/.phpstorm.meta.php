@@ -16,6 +16,7 @@ namespace Serafim\SDL {
     use FFI\CData;
     use Serafim\SDL\Enum\AssertState;
     use Serafim\SDL\Enum\GLAttr;
+    use Serafim\SDL\Enum\GLProfile;
     use Serafim\SDL\Enum\Init;
     use Serafim\SDL\Enum\ThreadPriority;
 
@@ -290,7 +291,7 @@ namespace Serafim\SDL {
      * @method void SDL_GL_UnloadLibrary()
      * @method int SDL_GL_ExtensionSupported(string $extension)
      * @method void SDL_GL_ResetAttributes()
-     * @method int SDL_GL_SetAttribute(GLAttr|int $attr, int $value)
+     * @method int SDL_GL_SetAttribute(GLAttr|int $attr, int|GLProfile $value)
      * @method int SDL_GL_GetAttribute(GLAttr|int $attr, int $value)
      * @method SDL_GLContext SDL_GL_CreateContext(SDL_Window $window)
      * @method int SDL_GL_MakeCurrent(SDL_Window $window, SDL_GLContext $context)

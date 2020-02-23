@@ -213,7 +213,7 @@ final class GLAttr extends Enum
      *
      * Default value depends on platform
      *
-     * TODO Implement SDL_GLprofile enum
+     * @see GLProfile
      * @see https://wiki.libsdl.org/SDL_GLprofile
      * @var int
      */
