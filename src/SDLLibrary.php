@@ -84,11 +84,6 @@ final class SDLLibrary extends BaseLibrary
                         break;
                 }
 
-
-                if ($os->isWindows()) {
-                    $headers .= \file_get_contents(self::HEADERS_WIN32_PATHNAME);
-                }
-
                 return new static(self::SCOPE, $library, $headers);
             })
         ;
