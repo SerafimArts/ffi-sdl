@@ -1600,8 +1600,6 @@ typedef struct SDL_WindowShapeMode {
   WindowShapeMode mode;
   SDL_WindowShapeParams parameters;
 } SDL_WindowShapeMode;
-typedef void ( *SDL_WindowsMessageHook)(void *userdata, void *hWnd, unsigned int message, Uint64 wParam, Sint64 lParam);
-typedef struct IDirect3DDevice9 IDirect3DDevice9;
 typedef Uint32 ( *SDL_TimerCallback)(Uint32 interval, void *param);
 typedef int SDL_TimerID;
 typedef struct SDL_version {
@@ -1618,8 +1616,6 @@ typedef struct SDL_version {
 
 extern const char *SDL_GetPlatform(void);
 extern void SDL_SetMainReady(void);
-extern int SDL_RegisterApp(char *name, Uint32 style, void *hInst);
-extern void SDL_UnregisterApp(void);
 extern SDL_AssertState SDL_ReportAssertion(SDL_AssertData *, const char *, const char *, int);
 extern void SDL_SetAssertionHandler(SDL_AssertionHandler handler, void *userdata);
 extern SDL_AssertionHandler SDL_GetDefaultAssertionHandler(void);
@@ -2170,10 +2166,6 @@ extern SDL_Window * SDL_CreateShapedWindow(const char *title, unsigned int x, un
 extern int SDL_IsShapedWindow(const SDL_Window *window);
 extern int SDL_SetWindowShape(SDL_Window * window, SDL_Surface * shape, SDL_WindowShapeMode * shape_mode);
 extern int SDL_GetShapedWindowMode(SDL_Window * window, SDL_WindowShapeMode * shape_mode);
-extern void SDL_SetWindowsMessageHook(SDL_WindowsMessageHook callback, void *userdata);
-extern int SDL_Direct3D9GetAdapterIndex(int displayIndex);
-extern IDirect3DDevice9 * SDL_RenderGetD3D9Device(SDL_Renderer * renderer);
-extern int SDL_DXGIGetOutputInfo(int displayIndex, int *adapterIndex, int *outputIndex);
 extern int SDL_IsTablet(void);
 extern Uint32 SDL_GetTicks(void);
 extern Uint64 SDL_GetPerformanceCounter(void);

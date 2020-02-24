@@ -36,6 +36,16 @@ final class SDLLibrary extends BaseLibrary
     /**
      * @var string
      */
+    private const HEADERS_WIN32_PATHNAME = __DIR__ . '/../resources/sdl.win32.h';
+
+    /**
+     * @var string
+     */
+    private const HEADERS_MACOS_PATHNAME = __DIR__ . '/../resources/sdl.macos.h';
+
+    /**
+     * @var string
+     */
     private const ERROR_LOADING_LINUX_INFO =
         '%s. Please install SDL first using ' .
         'the following command: "sudo apt install libsdl2-2.0-0"';
@@ -52,7 +62,7 @@ final class SDLLibrary extends BaseLibrary
      */
     public static function resolve(): self
     {
-        $loader = new Loader(self::SCOPE, self::HEADERS_PATHNAME);
+        $loader = new Loader(self::SCOPE, \file_get_contents(self::HEADERS_PATHNAME));
 
         return $loader
             ->onWindows64(__DIR__ . '/../bin/SDL2x64.dll')
@@ -63,7 +73,22 @@ final class SDLLibrary extends BaseLibrary
             ->otherwise(static function (OperatingSystem $os, BitDepth $bits) {
                 throw new LibraryLoaderException(\sprintf(self::ERROR_LOADING_INFO, $os, $bits));
             })
-            ->resolve(static function (string $library, string $headers) {
+            ->resolve(static function (string $library, string $headers, OperatingSystem $os) {
+                switch (true) {
+                    case $os->isWindows():
+                        $headers .= \file_get_contents(self::HEADERS_WIN32_PATHNAME);
+                        break;
+
+                    case $os->isMac():
+                        $headers .= \file_get_contents(self::HEADERS_MACOS_PATHNAME);
+                        break;
+                }
+
+
+                if ($os->isWindows()) {
+                    $headers .= \file_get_contents(self::HEADERS_WIN32_PATHNAME);
+                }
+
                 return new static(self::SCOPE, $library, $headers);
             })
         ;
