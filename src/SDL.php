@@ -12,20 +12,15 @@ declare(strict_types=1);
 namespace Serafim\SDL;
 
 use FFI\CData;
-use Serafim\SDL\Exception\InitializationException;
-use Serafim\SDL\Exception\SDLException;
+use Serafim\SDL\Library\Library;
+use Serafim\SDL\Library\PreProcessor;
 
 /**
  * @mixin SDLFunctions
  * @mixin \FFI
  */
-final class SDL
+final class SDL implements DefinesInterface, EnumsInterface
 {
-    /**
-     * @var string
-     */
-    private const ERROR_MESSAGE_INIT = 'Unable to initialize SDL: %s';
-
     /**
      * @var \FFI
      */
@@ -33,73 +28,47 @@ final class SDL
 
     /**
      * SDL constructor.
-     *
-     * @param SDLLibrary $lib
-     * @param int $init
      */
-    public function __construct(SDLLibrary $lib, int $init = 0)
+    public function __construct()
     {
-        $this->ffi = $lib->get();
+        $this->ffi = \FFI::cdef($this->getHeaders(), Library::getPathname());
+    }
 
-        if ($this->SDL_Init($init) !== 0) {
-            throw new InitializationException(\sprintf(self::ERROR_MESSAGE_INIT, $this->getErrorMessage()));
+    /**
+     * @return string
+     */
+    private function getHeaders(): string
+    {
+        if (\is_file(Library::getHeadersCompiledPathname())) {
+            return \file_get_contents(Library::getHeadersCompiledPathname());
         }
+
+        @\trigger_error('Unable to find compiled headers. SDL compatibility mode enabled', \E_USER_WARNING);
+
+        $processor = new PreProcessor(Library::getVersion());
+
+        return $processor->file(Library::getHeadersOriginalPathname());
     }
 
     /**
-     * @return string
+     * @param string $type
+     * @param bool $owned
+     * @param bool $persistent
+     * @return CData
      */
-    public function getErrorMessage(): string
+    public function new(string $type, bool $owned = true, bool $persistent = false): CData
     {
-        return $this->SDL_GetError();
+        /** @noinspection StaticInvocationViaThisInspection */
+        return $this->ffi->new($type);
     }
 
     /**
-     * @return \FFI
+     * @param CData $ptr
+     * @return CData
      */
-    public function ffi(): \FFI
+    public function ptr(CData $ptr): CData
     {
-        return $this->ffi;
-    }
-
-    /**
-     * @return string
-     */
-    public function getVersionString(): string
-    {
-        $version = $this->getVersion();
-
-        return \vsprintf('%d.%d.%d', [
-            $version->major,
-            $version->minor,
-            $version->patch,
-        ]);
-    }
-
-    /**
-     * @return CData|SDL_version
-     */
-    public function getVersion(): CData
-    {
-        /**
-         * @noinspection StaticInvocationViaThisInspection
-         * @var CData|SDL_version $version
-         */
-        $version = $this->ffi->new('SDL_version');
-
-        $this->SDL_GetVersion(\FFI::addr($version));
-
-        return $version;
-    }
-
-    /**
-     * @param string $message
-     * @param int $code
-     * @return SDLException
-     */
-    public function error(string $message, int $code = 0): SDLException
-    {
-        return new SDLException(\sprintf($message, $this->getErrorMessage()), $code);
+        return \FFI::addr($ptr);
     }
 
     /**
@@ -120,13 +89,5 @@ final class SDL
     public static function __callStatic(string $name, array $arguments)
     {
         return \FFI::$name(...$arguments);
-    }
-
-    /**
-     * @return void
-     */
-    public function __destruct()
-    {
-        $this->SDL_Quit();
     }
 }

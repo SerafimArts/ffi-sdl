@@ -12,11 +12,10 @@ declare(strict_types=1);
 namespace Serafim\SDL\Enum;
 
 /**
- * Class Enum
+ * Interface GLContextReleaseFlagInterface
  */
-abstract class Enum
+interface GLContextReleaseFlagInterface
 {
-    private function __construct()
-    {
-    }
+    public const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE  = 0x0000;
+    public const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 0x0001;
 }

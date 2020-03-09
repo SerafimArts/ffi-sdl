@@ -19,8 +19,9 @@
     "require": {
         "php": ">=7.4",
         "ext-ffi": "*",
-        "serafim/ffi-loader": "^1.0",
-        "serafim/ffi-utils": "^1.0"
+        "composer-plugin-api": "^1.1",
+        "composer/composer": "~1.9",
+        "serafim/ffi-utils": "dev-master@dev"
     },
     "autoload": {
         "psr-4": {
@@ -42,6 +43,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
+        "class": "Serafim\\SDL\\Library\\Compiler",
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }
