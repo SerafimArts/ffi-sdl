@@ -75,11 +75,11 @@ It is equivalent to the following example:
 ```php
 <?php
 
-use Serafim\SDL\Enum\Init;
 use Serafim\SDL\SDL;
-use Serafim\SDL\SDLLibrary;
 
-$sdl = new SDL(SDLLibrary::resolve(), Init::SDL_INIT_VIDEO);
+$sdl = new SDL();
+
+$sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
 
 $window = $sdl->SDL_CreateWindow(
     'An SDL2 window',                  // window title
@@ -111,66 +111,3 @@ $sdl->SDL_Quit();
 PHP is a managed-memory language, then cleanup after shutdown is optional. It 
 means that `$sdl->SDL_DestroyWindow()` and `$sdl->SDL_Quit()` not needed... 
 maybe...
-
-## Example
-
-### Hello World
-
-```php
-<?php
-
-use FFI\CData;
-use Serafim\FFIUtils\Util;
-use Serafim\SDL\Enum\Init;
-use Serafim\SDL\SDL;
-use Serafim\SDL\SDL_DisplayMode;
-use Serafim\SDL\SDL_Event;
-use Serafim\SDL\SDLLibrary;
-
-require __DIR__ . '/vendor/autoload.php';
-
-function create_window(SDL $sdl, string $title): CData
-{
-    [$width, $height] = [640, 480];
-
-    /** @var SDL_DisplayMode|CData $mode */
-    $mode = $sdl->new('SDL_DisplayMode');
-
-    $sdl->SDL_GetDesktopDisplayMode(0, $sdl::addr($mode));
-
-    [$left, $top] = [(int)($mode->w / 2 - $width / 2), (int)($mode->h / 2 - $height / 2)];
-
-    return $sdl->SDL_CreateWindow($title, $left, $top, $width, $height, 0);
-}
-
-function message_box(SDL $sdl, string $title, string $body): void
-{
-    $titlePtr = Util::string($title);
-    $bodyPtr = Util::string($body);
-
-    $sdl->SDL_ShowSimpleMessageBox(0, $titlePtr, $bodyPtr,null);
-}
-
-// New Application
-$sdl = new SDL(SDLLibrary::resolve(), Init::SDL_INIT_VIDEO);
-
-// Render SDL Version
-echo 'SDL ' . $sdl->getVersionString() . ' was loaded!';
-
-// New Window
-$window = create_window($sdl, 'Hello World!');
-
-
-// Wait for close
-$quit = false;
-
-/** @var SDL_Event|CData $event */
-$event = $sdl->new('SDL_Event');
-
-while (! $quit) {
-    if ($sdl->SDL_WaitEvent($sdl::addr($event)) !== 0 && $event->type === 0x100) {
-        message_box($sdl, 'Bye-Bye!', \print_r($event, true));
-        $quit = true;
-    }
-}
-```
