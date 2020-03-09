@@ -72,6 +72,9 @@ class Compiler implements PluginInterface, EventSubscriberInterface
             ]));
         } catch (\Throwable $e) {
             $this->io->write('<error>' . $e->getMessage() . '</error>');
+            $this->io->write('To solve the problem, try installing the SDL library using following commands:');
+            $this->io->write(' - Linux: <comment>sudo apt install libsdl2-dev -y</comment>');
+            $this->io->write(' - MacOS: <comment>brew install sdl2</comment>');
         }
     }
 }
