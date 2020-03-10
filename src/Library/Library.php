@@ -83,7 +83,7 @@ class Library
     public static function getVersion(): string
     {
         if (self::$version === null) {
-            $ctx = \FFI::cdef(static::SDL_GET_VERSION, static::getPathname());
+            $ctx = \FFI::cdef(static::SDL_GET_VERSION, static::getLibraryPathname());
 
             $ctx->SDL_GetVersion(\FFI::addr($ver = $ctx->new('SDL_version')));
 
@@ -96,7 +96,7 @@ class Library
     /**
      * @return string
      */
-    public static function getPathname(): string
+    public static function getLibraryPathname(): string
     {
         switch (\PHP_OS_FAMILY) {
             case 'Windows':

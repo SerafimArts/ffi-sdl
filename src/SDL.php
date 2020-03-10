@@ -28,14 +28,17 @@ final class SDL implements DefinesInterface, EnumsInterface
 
     /**
      * SDL constructor.
+     *
+     * @throws \RuntimeException
      */
     public function __construct()
     {
-        $this->ffi = \FFI::cdef($this->getHeaders(), Library::getPathname());
+        $this->ffi = \FFI::cdef($this->getHeaders(), Library::getLibraryPathname());
     }
 
     /**
      * @return string
+     * @throws \RuntimeException
      */
     private function getHeaders(): string
     {
