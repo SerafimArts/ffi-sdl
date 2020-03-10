@@ -87,7 +87,7 @@ $window = $sdl->SDL_CreateWindow(
     100,                               // initial y position
     640,                               // width, in pixels
     480,                               // height, in pixels
-    0x00000002                         // flags - see below
+    SDL::SDL_WINDOW_OPENGL             // flags - see below
 );
 
 // Check that the window was successfully created
