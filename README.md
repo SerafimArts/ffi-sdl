@@ -136,7 +136,10 @@ int main(int argc, char* argv[]) {                                 |
     );                                                             | );
                                                                    | 
     if (window == NULL) {                                          | if ($window == null) {
-        printf("Could not create window: %s\n", SDL_GetError());   |     printf("Could not create window: %s\n", $sdl->SDL_GetError());
+        printf(                                                    |     printf(
+            "Could not create window: %s\n",                       |         "Could not create window: %s\n",
+            SDL_GetError()                                         |         $sdl->SDL_GetError()
+        );                                                         |     );
         return 1;                                                  |     return 1;
     }                                                              | }
                                                                    | 
