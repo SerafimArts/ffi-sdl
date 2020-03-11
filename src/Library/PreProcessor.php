@@ -20,15 +20,18 @@ class PreProcessor
      * @var string
      */
     private const PCRE_PATTERN =
-        '/\\G(?|(?:(?:\\/\\*.*?\\*\\/)(*MARK:T_GROUP_COMMENT))|(?:(?:^\\h*\\/\\/[^\\n]+)(*MARK:T_COMMENT))|' .
-        '(?:(?:^\\h*#\\h*ifdef\\h((?:\\\\s|[^\\n])+))(*MARK:T_IFDEF))|(?:(?:^\\h*#\\h*endif\\b)(*MARK:T_ENDIF))|' .
+        '/\\G(?|(?:(?:\\/\\*.*?\\*\\/)(*MARK:T_GROUP_COMMENT))|' .
+        '(?:(?:^\\h*\\/\\/[^\\n]+)(*MARK:T_COMMENT))|' .
+        '(?:(?:^\\h*#\\h*ifdef\\h((?:\\\\s|[^\\n])+))(*MARK:T_IFDEF))|' .
+        '(?:(?:^\\h*#\\h*ifndef\\h((?:\\\\s|[^\\n])+))(*MARK:T_IFNDEF))|' .
+        '(?:(?:^\\h*#\\h*endif\\b)(*MARK:T_ENDIF))|' .
         '(?:(?:^\\h*#\\h*if\\h+version\\h*([<>=]+)\\h*((?:\\\\s|[^\\n])+))(*MARK:T_IF_VERSION))|' .
         '(?:(?:[^\\n]+)(*MARK:T_SOURCE))|(?:(?:\\n+)(*MARK:T_NEW_LINE)))/Ssum';
 
     /**
      * @var bool[]
      */
-    private array $blockers = [];
+    private array $assertions = [];
 
     /**
      * @var string
@@ -36,31 +39,26 @@ class PreProcessor
     private string $version;
 
     /**
+     * @var \Closure|null
+     */
+    private ?\Closure $debug = null;
+
+    /**
      * Reader constructor.
      *
      * @param string $version
+     * @param \Closure|null $debug
      */
-    public function __construct(string $version)
+    public function __construct(string $version, \Closure $debug = null)
     {
         $this->version = $version;
-    }
-
-    /**
-     * @param string $sources
-     * @return iterable|array[]
-     */
-    private function lex(string $sources): iterable
-    {
-        \preg_match_all(self::PCRE_PATTERN, $sources, $matches, \PREG_SET_ORDER);
-
-        foreach ($matches as $match) {
-            yield $match['MARK'] => $match;
-        }
+        $this->debug = $debug;
     }
 
     /**
      * @param string $pathname
      * @return string
+     * @throws \RuntimeException
      */
     public function file(string $pathname): string
     {
@@ -79,37 +77,74 @@ class PreProcessor
      */
     public function source(string $source): string
     {
-        $this->blockers = [];
+        $this->assertions = [];
 
         $result = '';
 
         foreach ($this->lex($source) as $name => $value) {
+            $prefix = \count($this->assertions) . ':';
+
             switch ($name) {
+                case 'T_IFNDEF':
+                    $this->assertions[$prefix . $value[1]] = ! $this->assertIfDef($value[1]);
+
+                    continue 2;
+
                 case 'T_IFDEF':
-                    if (! $this->assertIfDef($value[1])) {
-                        $this->blockers[] = true;
-                    }
+                    $this->assertions[$prefix . $value[1]] = $this->assertIfDef($value[1]);
+
                     continue 2;
 
                 case 'T_IF_VERSION':
-                    if (! $this->assertVersion($value[1], $value[2])) {
-                        $this->blockers[] = true;
-                    }
+                    $this->assertions[$prefix . $value[1] . $value[2]] = $this->assertVersion($value[1], $value[2]);
                     continue 2;
 
                 case 'T_ENDIF':
-                    if (\count($this->blockers)) {
-                        \array_shift($this->blockers);
+                    if (\count($this->assertions)) {
+                        \array_pop($this->assertions);
+                        continue 2;
                     }
-                    continue 2;
+                    break;
             }
 
-            if (\count($this->blockers) === 0) {
+            if ($this->debug) {
+                ($this->debug)($value[0], $this->assertions);
+            }
+
+            if ($this->matchAllAssertions($this->assertions)) {
                 $result .= $value[0];
             }
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $assertions
+     * @return bool
+     */
+    private function matchAllAssertions(array $assertions): bool
+    {
+        foreach ($assertions as $assertion) {
+            if (! $assertion) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $sources
+     * @return iterable|array[]
+     */
+    private function lex(string $sources): iterable
+    {
+        \preg_match_all(self::PCRE_PATTERN, $sources, $matches, \PREG_SET_ORDER);
+
+        foreach ($matches as $match) {
+            yield $match['MARK'] => $match;
+        }
     }
 
     /**
@@ -120,19 +155,90 @@ class PreProcessor
     {
         switch (\strtolower(\trim($def))) {
             case '__win32__':
+            case '__win32':
+            case 'win32':
+            case '__cygwin__':
+            case '__cygwin':
+            case 'cygwin':
+            case '__mingw32__':
+            case '__mingw32':
+            case 'mingw32':
+            case '__windows__':
+            case '__windows':
+            case '__win':
                 return \PHP_OS_FAMILY === 'Windows';
 
-            case '__linux__';
-                return \PHP_OS_FAMILY === 'Linux';
-
             case '_win64':
+            case '_m_ia64':
+            case '_m_amd64':
                 return \PHP_OS_FAMILY === 'Windows' && \PHP_INT_SIZE === 8;
 
             case '_win32':
                 return \PHP_OS_FAMILY === 'Windows' && \PHP_INT_SIZE !== 8;
+
+            case '__linux__':
+            case '__linux':
+            case 'linux':
+                return \PHP_OS_FAMILY === 'Linux';
+
+            case '__osx__':
+            case '__osx':
+            case 'osx':
+            case '__apple__':
+            case '__apple':
+            case 'apple':
+            case '__macosx__':
+            case '__macosx':
+            case 'macosx':
+                return \PHP_OS_FAMILY === 'Darwin';
+
+            case '__freebsd__':
+            case '__freebsd':
+            case 'freebsd':
+            case '__freebsd_kernel__':
+            case '__freebsd_kernel':
+            case 'freebsd_kernel':
+            case '__dragonfly__':
+            case '__dragonfly':
+            case 'dragonfly':
+            case '__bsdi__':
+            case '__bsdi':
+            case 'bsdi':
+            case '__openbsd__':
+            case '__openbsd':
+            case 'openbsd':
+                return \PHP_OS_FAMILY === 'BSD';
+
+            case '__sun__':
+            case '__sun':
+            case 'sun':
+            case '__svr4__':
+            case '__svr4':
+            case 'svr4':
+            case '__solaris__':
+            case '__solaris':
+            case 'solaris':
+                return \PHP_OS_FAMILY === 'Solaris';
+
+            case '__lp64__':
+                return \PHP_INT_SIZE === 8;
+
+            case '__android__':
+            case '__android':
+            case 'android':
+            case 'egl_khr_platform_android':
+                // TODO Android
+            case '__ios__':
+            case '__ios':
+            case 'ios':
+            case '__iphoneos__':
+            case '__iphoneos':
+            case 'iphoneos':
+                // TODO IPhone
+                return false;
         }
 
-        return true;
+        return false;
     }
 
     /**

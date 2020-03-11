@@ -20,11 +20,17 @@ interface AudioSubsystemInterface
     public const AUDIO_U8 = 0x0008;
     /**< Signed 8-bit samples */
     public const AUDIO_S8 = 0x8008;
-    /**< Unsigned 16-bit samples */
+    /**
+     * Unsigned 16-bit samples
+     * @since 2.0.5
+     */
     public const AUDIO_U16LSB = 0x0010;
     /**< Signed 16-bit samples */
     public const AUDIO_S16LSB = 0x8010;
-    /**< As above, but big-endian byte order */
+    /**
+     * As above, but big-endian byte order
+     * @since 2.0.5
+     */
     public const AUDIO_U16MSB = 0x1010;
     /**< As above, but big-endian byte order */
     public const AUDIO_S16MSB = 0x9010;

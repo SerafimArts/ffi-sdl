@@ -31,6 +31,13 @@ interface WindowEventInterface
     public const SDL_WINDOWEVENT_FOCUS_GAINED = 12;
     public const SDL_WINDOWEVENT_FOCUS_LOST   = 13;
     public const SDL_WINDOWEVENT_CLOSE        = 14;
+    /**
+     * @since 2.0.5
+     */
     public const SDL_WINDOWEVENT_TAKE_FOCUS   = 15;
+
+    /**
+     * @since 2.0.5
+     */
     public const SDL_WINDOWEVENT_HIT_TEST     = 16;
 }

@@ -38,7 +38,14 @@ interface GLAttrInterface
     public const SDL_GL_CONTEXT_EGL                = 19;
     public const SDL_GL_CONTEXT_FLAGS              = 20;
     public const SDL_GL_CONTEXT_PROFILE_MASK       = 21;
+
+    /**
+     * @since 2.0.2
+     */
     public const SDL_GL_SHARE_WITH_CURRENT_CONTEXT = 22;
+    /**
+     * @since 2.0.1
+     */
     public const SDL_GL_FRAMEBUFFER_SRGB_CAPABLE   = 23;
     public const SDL_GL_CONTEXT_RELEASE_BEHAVIOR   = 24;
     public const SDL_GL_CONTEXT_RESET_NOTIFICATION = 25;

@@ -12,15 +12,16 @@ declare(strict_types=1);
 namespace Serafim\SDL\Library;
 
 use Composer\EventDispatcher\Event;
+use Composer\Script\Event as ScriptEvent;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Composer;
 use Composer\IO\IOInterface;
 
 /**
- * Class Compiler
+ * Class ComposerPlugin
  */
-class Compiler implements PluginInterface, EventSubscriberInterface
+final class ComposerPlugin implements PluginInterface, EventSubscriberInterface
 {
     /**
      * @var Composer
@@ -44,6 +45,17 @@ class Compiler implements PluginInterface, EventSubscriberInterface
     }
 
     /**
+     * @param ScriptEvent $event
+     * @return void
+     */
+    public static function compile(ScriptEvent $event): void
+    {
+        $instance = new static();
+        $instance->activate($event->getComposer(), $event->getIO());
+        $instance->runCompiler($event);
+    }
+
+    /**
      * @return array
      */
     public static function getSubscribedEvents(): array
@@ -63,6 +75,7 @@ class Compiler implements PluginInterface, EventSubscriberInterface
             $this->io->write(\sprintf('Loading SDL headers compiler (<info>v%s</info>)', Library::getVersion()));
 
             $processor = new PreProcessor(Library::getVersion());
+
             $result = $processor->file(Library::getHeadersOriginalPathname());
 
             \file_put_contents(Library::getHeadersCompiledPathname(), $result);

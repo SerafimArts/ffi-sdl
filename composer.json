@@ -42,8 +42,11 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "scripts": {
+        "post-autoload-dump": "Serafim\\SDL\\Library\\ComposerPlugin::compile"
+    },
     "extra": {
-        "class": "Serafim\\SDL\\Library\\Compiler",
+        "class": "Serafim\\SDL\\Library\\ComposerPlugin",
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }

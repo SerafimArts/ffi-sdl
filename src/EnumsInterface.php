@@ -28,6 +28,7 @@ use Serafim\SDL\Enum\GLContextFlagInterface;
 use Serafim\SDL\Enum\GLContextReleaseFlagInterface;
 use Serafim\SDL\Enum\GLContextResetNotificationInterface;
 use Serafim\SDL\Enum\GLProfileInterface;
+use Serafim\SDL\Enum\HintNameInterface;
 use Serafim\SDL\Enum\HintPriorityInterface;
 use Serafim\SDL\Enum\HitTestResultInterface;
 use Serafim\SDL\Enum\JoystickPowerLevelInterface;
@@ -90,6 +91,7 @@ interface EnumsInterface extends
     EventTypeInterface,
     EventActionInterface,
     HintPriorityInterface,
+    HintNameInterface,
     LogCategoryInterface,
     LogPriorityInterface,
     MessageBoxFlagsInterface,

@@ -24,6 +24,9 @@ interface EventTypeInterface
     public const SDL_APP_DIDENTERBACKGROUND   = self::SDL_QUIT + 4;
     public const SDL_APP_WILLENTERFOREGROUND  = self::SDL_QUIT + 5;
     public const SDL_APP_DIDENTERFOREGROUND   = self::SDL_QUIT + 6;
+    /**
+     * @since 2.0.9
+     */
     public const SDL_DISPLAYEVENT             = 0x150;
     public const SDL_WINDOWEVENT              = 0x200;
     public const SDL_SYSWMEVENT               = self::SDL_WINDOWEVENT + 1;
@@ -62,7 +65,14 @@ interface EventTypeInterface
     public const SDL_DROPCOMPLETE             = self::SDL_DROPFILE + 3;
     public const SDL_AUDIODEVICEADDED         = 0x1100;
     public const SDL_AUDIODEVICEREMOVED       = self::SDL_AUDIODEVICEADDED + 1;
+
+    /**
+     * @since 2.0.9
+     */
     public const SDL_SENSORUPDATE             = 0x1200;
+    /**
+     * @since 2.0.2
+     */
     public const SDL_RENDER_TARGETS_RESET     = 0x2000;
     public const SDL_RENDER_DEVICE_RESET      = self::SDL_RENDER_TARGETS_RESET + 1;
     public const SDL_USEREVENT                = 0x8000;
