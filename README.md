@@ -25,12 +25,10 @@ $ composer require serafim/ffi-sdl
 
 ### How Read Documentation?
 
-Let's take a look [at this example](https://wiki.libsdl.org/SDL_CreateWindow):
+Let's take a look [at this example](https://wiki.libsdl.org/SDL_CreateWindow) 
+with PHP code equivalent:
 
 ```cpp
-// Example program:
-// Using SDL2 to create an application window
-
 #include "SDL.h"
 #include <stdio.h>
 
@@ -69,6 +67,8 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 ```
+
+### PHP Result
 
 It is equivalent to the following example:
 
@@ -111,3 +111,39 @@ $sdl->SDL_Quit();
 PHP is a managed-memory language, then cleanup after shutdown is optional. It 
 means that `$sdl->SDL_DestroyWindow()` and `$sdl->SDL_Quit()` not needed... 
 maybe...
+
+## Code Comparison
+
+```cpp
+//                                                                 | //
+// C/C++                                                           | // PHP
+//                                                                 | //
+                                                                   | 
+#include "SDL.h"                                                   | $sdl = new \Serafim\SDL\SDL();
+#include <stdio.h>                                                 | 
+                                                                   | 
+int main(int argc, char* argv[]) {                                 | 
+    SDL_Window *window;                                            | 
+    SDL_Init(SDL_INIT_VIDEO);                                      | $sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
+                                                                   | 
+    window = SDL_CreateWindow(                                     | $window = $sdl->SDL_CreateWindow( 
+        "An SDL2 window",                                          |     'An SDL2 window',
+        100,                                                       |     100,
+        100,                                                       |     100, 
+        640,                                                       |     640,
+        480,                                                       |     480,
+        SDL_WINDOW_OPENGL                                          |     SDL::SDL_WINDOW_OPENGL
+    );                                                             | );
+                                                                   | 
+    if (window == NULL) {                                          | if ($window == null) {
+        printf("Could not create window: %s\n", SDL_GetError());   |     printf("Could not create window: %s\n", $sdl->SDL_GetError());
+        return 1;                                                  |     return 1;
+    }                                                              | }
+                                                                   | 
+    SDL_Delay(3000);                                               | $sdl->SDL_Delay(3000);
+    SDL_DestroyWindow(window);                                     | $sdl->SDL_DestroyWindow($window);
+    SDL_Quit();                                                    | $sdl->SDL_Quit();
+                                                                   | 
+    return 0;                                                      | return 0;
+}                                                                  | 
+```
