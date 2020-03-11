@@ -25,8 +25,7 @@ $ composer require serafim/ffi-sdl
 
 ### How Read Documentation?
 
-Let's take a look [at this example](https://wiki.libsdl.org/SDL_CreateWindow) 
-with PHP code equivalent:
+Let's take a look [at this example](https://wiki.libsdl.org/SDL_CreateWindow).
 
 ```cpp
 #include "SDL.h"
@@ -71,48 +70,6 @@ int main(int argc, char* argv[]) {
 ### PHP Result
 
 It is equivalent to the following example:
-
-```php
-<?php
-
-use Serafim\SDL\SDL;
-
-$sdl = new SDL();
-
-$sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
-
-$window = $sdl->SDL_CreateWindow(
-    'An SDL2 window',                  // window title
-    100,                               // initial x position
-    100,                               // initial y position
-    640,                               // width, in pixels
-    480,                               // height, in pixels
-    SDL::SDL_WINDOW_OPENGL             // flags - see below
-);
-
-// Check that the window was successfully created
-if ($window === null) {
-    // In the case that the window could not be made...
-    printf("Could not create window: %s\n", $sdl->SDL_GetError());
-    return 1;
-}
-
-// The window is open: could enter program loop here (see SDL_PollEvent())
-
-$sdl->SDL_Delay(3000); // Pause execution for 3000 milliseconds, for example
-
-// Close and destroy the window
-$sdl->SDL_DestroyWindow($window);
-
-// Clean up
-$sdl->SDL_Quit();
-```
-
-PHP is a managed-memory language, then cleanup after shutdown is optional. It 
-means that `$sdl->SDL_DestroyWindow()` and `$sdl->SDL_Quit()` not needed... 
-maybe...
-
-## Code Comparison
 
 ```cpp
 //                                                                 | //
