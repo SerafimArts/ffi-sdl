@@ -12,16 +12,15 @@ declare(strict_types=1);
 namespace Serafim\SDL;
 
 use FFI\CData;
-use Serafim\SDL\Compiler\LibraryInterface;
+use Serafim\SDL\Compiler\SDLImageLibrary;
 use Serafim\SDL\Compiler\SDLLibrary;
-use Serafim\SDL\Kernel\Defines;
-use Serafim\SDL\Kernel\Enums;
+use Serafim\SDL\Image\InitFlags;
 
 /**
  * @mixin \FFI
- * @mixin SDLMethods
+ * @mixin SDLImageMethods
  */
-final class SDL extends Library implements Defines, Enums
+final class Image extends Library implements InitFlags
 {
     /**
      * Note: PHPStorm meta bugfix
@@ -49,10 +48,8 @@ final class SDL extends Library implements Defines, Enums
      */
     protected function create(): \FFI
     {
-        $lib = new SDLLibrary();
+        $image = new SDLImageLibrary(new SDLLibrary());
 
-        return $lib->inDirectory(static function (LibraryInterface $lib) {
-            return \FFI::cdef(\file_get_contents($lib->getHeaders()), $lib->getLibrary());
-        });
+        return $image->ffi();
     }
 }

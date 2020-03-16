@@ -68,7 +68,7 @@ foreach (get_defined_structures(\file_get_contents(__DIR__ . '/../resources/stub
 
 \file_put_contents(__DIR__ . '/../resources/stubs/generated.php', \implode("\n", [
     '<?php',
-    'namespace {',
+    'namespace Serafim\SDL {',
     ...\array_values($pointers),
     '}',
 ]));

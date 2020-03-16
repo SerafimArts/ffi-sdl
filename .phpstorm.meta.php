@@ -1,17 +1,8 @@
 <?php
 
 namespace PHPSTORM_META {
-
-    registerArgumentsSet('sdl_bool', [
-        \Serafim\SDL\SDL::SDL_TRUE,
-        \Serafim\SDL\SDL::SDL_FALSE,
-        1,
-        0,
-    ]);
-
-    override(\Serafim\SDL\SDL::new(), map([
+    override(\Serafim\SDL\Library::new(), map([
         ''         => type(0),
-
         // mixed
         "void *"   => \FFI\CScalar::class,
 
@@ -78,36 +69,7 @@ namespace PHPSTORM_META {
         "char **"    => \CStringPtrPtr::class,
     ]));
 
-    override(\Serafim\SDL\SDL::addr(), map([
+    override(\Serafim\SDL\Library::addr(), map([
         '' => '@Ptr',
     ]));
-
-    expectedReturnValues(\Serafim\SDL\SDL::SDL_GetPlatform(),
-        'Windows',
-        'Mac OS X',
-        'Linux',
-        'iOS',
-        'Android'
-    );
-
-    expectedReturnValues(\Serafim\SDL\SDL::SDL_ReportAssertion(),
-        \Serafim\SDL\SDL::SDL_ASSERTION_RETRY,
-        \Serafim\SDL\SDL::SDL_ASSERTION_BREAK,
-        \Serafim\SDL\SDL::SDL_ASSERTION_ABORT,
-        \Serafim\SDL\SDL::SDL_ASSERTION_IGNORE,
-        \Serafim\SDL\SDL::SDL_ASSERTION_ALWAYS_IGNORE
-    );
-
-    expectedArguments(\Serafim\SDL\SDL::SDL_Init(), 0,
-        \Serafim\SDL\SDL::SDL_INIT_TIMER |
-        \Serafim\SDL\SDL::SDL_INIT_AUDIO |
-        \Serafim\SDL\SDL::SDL_INIT_VIDEO |
-        \Serafim\SDL\SDL::SDL_INIT_JOYSTICK |
-        \Serafim\SDL\SDL::SDL_INIT_HAPTIC |
-        \Serafim\SDL\SDL::SDL_INIT_GAMECONTROLLER |
-        \Serafim\SDL\SDL::SDL_INIT_EVENTS |
-        \Serafim\SDL\SDL::SDL_INIT_SENSOR |
-        \Serafim\SDL\SDL::SDL_INIT_NOPARACHUTE |
-        \Serafim\SDL\SDL::SDL_INIT_EVERYTHING
-    );
 }

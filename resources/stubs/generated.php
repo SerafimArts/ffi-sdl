@@ -1,5 +1,5 @@
 <?php
-namespace {
+namespace Serafim\SDL {
     /** @mixin \FFI\CPtr */
     class SDL_AssertDataPtr extends SDL_AssertData
     {
@@ -9,35 +9,35 @@ namespace {
     }
 
     /** @mixin \FFI\CPtr */
-    class SDL_atomic_tPtr extends SDL_atomic_t
+    class SDL_AtomicTPtr extends SDL_AtomicT
     {
         private function __construct() {}
-        private function offsetGet(int $i): SDL_atomic_t {}
-        private function offsetSet(int $i, SDL_atomic_t $d): void {}
+        private function offsetGet(int $i): SDL_AtomicT {}
+        private function offsetSet(int $i, SDL_AtomicT $d): void {}
     }
 
     /** @mixin \FFI\CPtr */
-    class SDL_mutexPtr extends SDL_mutex
+    class SDL_MutexPtr extends SDL_Mutex
     {
         private function __construct() {}
-        private function offsetGet(int $i): SDL_mutex {}
-        private function offsetSet(int $i, SDL_mutex $d): void {}
+        private function offsetGet(int $i): SDL_Mutex {}
+        private function offsetSet(int $i, SDL_Mutex $d): void {}
     }
 
     /** @mixin \FFI\CPtr */
-    class SDL_semPtr extends SDL_sem
+    class SDL_SemaphorePtr extends SDL_Semaphore
     {
         private function __construct() {}
-        private function offsetGet(int $i): SDL_sem {}
-        private function offsetSet(int $i, SDL_sem $d): void {}
+        private function offsetGet(int $i): SDL_Semaphore {}
+        private function offsetSet(int $i, SDL_Semaphore $d): void {}
     }
 
     /** @mixin \FFI\CPtr */
-    class SDL_condPtr extends SDL_cond
+    class SDL_CondPtr extends SDL_Cond
     {
         private function __construct() {}
-        private function offsetGet(int $i): SDL_cond {}
-        private function offsetSet(int $i, SDL_cond $d): void {}
+        private function offsetGet(int $i): SDL_Cond {}
+        private function offsetSet(int $i, SDL_Cond $d): void {}
     }
 
     /** @mixin \FFI\CPtr */
@@ -118,14 +118,6 @@ namespace {
         private function __construct() {}
         private function offsetGet(int $i): SDL_Surface {}
         private function offsetSet(int $i, SDL_Surface $d): void {}
-    }
-
-    /** @mixin \FFI\CPtr */
-    class SDL_BlitMapPtr extends SDL_BlitMap
-    {
-        private function __construct() {}
-        private function offsetGet(int $i): SDL_BlitMap {}
-        private function offsetSet(int $i, SDL_BlitMap $d): void {}
     }
 
     /** @mixin \FFI\CPtr */
@@ -233,22 +225,6 @@ namespace {
     }
 
     /** @mixin \FFI\CPtr */
-    class SDL_MessageBoxColorSchemePtr extends SDL_MessageBoxColorScheme
-    {
-        private function __construct() {}
-        private function offsetGet(int $i): SDL_MessageBoxColorScheme {}
-        private function offsetSet(int $i, SDL_MessageBoxColorScheme $d): void {}
-    }
-
-    /** @mixin \FFI\CPtr */
-    class SDL_MessageBoxButtonDataPtr extends SDL_MessageBoxButtonData
-    {
-        private function __construct() {}
-        private function offsetGet(int $i): SDL_MessageBoxButtonData {}
-        private function offsetSet(int $i, SDL_MessageBoxButtonData $d): void {}
-    }
-
-    /** @mixin \FFI\CPtr */
     class SDL_RendererInfoPtr extends SDL_RendererInfo
     {
         private function __construct() {}
@@ -313,11 +289,11 @@ namespace {
     }
 
     /** @mixin \FFI\CPtr */
-    class SDL_versionPtr extends SDL_version
+    class SDL_VersionPtr extends SDL_Version
     {
         private function __construct() {}
-        private function offsetGet(int $i): SDL_version {}
-        private function offsetSet(int $i, SDL_version $d): void {}
+        private function offsetGet(int $i): SDL_Version {}
+        private function offsetSet(int $i, SDL_Version $d): void {}
     }
 
 }
