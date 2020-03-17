@@ -3,12 +3,13 @@
 This is a SDL bindings for PHP
 
 > #### Note 1: API not yet fully documented
-> ##### Note 2: System functions (such as SDL_malloc or SDL_memcpy) have been removed from the API, but they can be returned if desired
+> ##### Note 2: System functions (such as SDL_malloc or SDL_memcpy) have been removed from the API
 
 ## Requirements
 
 - PHP >=7.4
 - ext-ffi
+- MacOS, Linux or MacOS (BSD or something else are not supported yet).
 
 ## Installation
 
@@ -23,87 +24,29 @@ $ composer require serafim/ffi-sdl
 
 - [https://wiki.libsdl.org/FrontPage](https://wiki.libsdl.org/FrontPage)
 
-### How Read Documentation?
-
-Let's take a look [at this example](https://wiki.libsdl.org/SDL_CreateWindow).
+### PHP Example
 
 ```cpp
-#include "SDL.h"
-#include <stdio.h>
+use Serafim\SDL\SDL;
 
-int main(int argc, char* argv[]) {
+$sdl = new \Serafim\SDL\SDL();
 
-    SDL_Window *window;                    // Declare a pointer
+$sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
 
-    SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
+$window = $sdl->SDL_CreateWindow( 
+    'An SDL2 window',
+    SDL::SDL_WINDOWPOS_UNDEFINED,
+    SDL::SDL_WINDOWPOS_UNDEFINED, 
+    640,
+    480,
+    SDL::SDL_WINDOW_OPENGL
+);
 
-    // Create an application window with the following settings:
-    window = SDL_CreateWindow(
-        "An SDL2 window",                  // window title
-        100,                               // initial x position
-        100,                               // initial y position
-        640,                               // width, in pixels
-        480,                               // height, in pixels
-        SDL_WINDOW_OPENGL                  // flags - see below
-    );
-
-    // Check that the window was successfully created
-    if (window == NULL) {
-        // In the case that the window could not be made...
-        printf("Could not create window: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    // The window is open: could enter program loop here (see SDL_PollEvent())
-
-    SDL_Delay(3000);  // Pause execution for 3000 milliseconds, for example
-
-    // Close and destroy the window
-    SDL_DestroyWindow(window);
-
-    // Clean up
-    SDL_Quit();
-    return 0;
+if ($window == null) {
+    throw new \Exception(sprintf('Could not create window: %s', $sdl->SDL_GetError());
 }
-```
 
-### PHP Result
-
-It is equivalent to the following example:
-
-```cpp
-//                                                                 | //
-// C/C++                                                           | // PHP
-//                                                                 | //
-                                                                   | 
-#include "SDL.h"                                                   | $sdl = new \Serafim\SDL\SDL();
-#include <stdio.h>                                                 | 
-                                                                   | 
-int main(int argc, char* argv[]) {                                 | 
-    SDL_Window *window;                                            | 
-    SDL_Init(SDL_INIT_VIDEO);                                      | $sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
-                                                                   | 
-    window = SDL_CreateWindow(                                     | $window = $sdl->SDL_CreateWindow( 
-        "An SDL2 window",                                          |     'An SDL2 window',
-        100,                                                       |     100,
-        100,                                                       |     100, 
-        640,                                                       |     640,
-        480,                                                       |     480,
-        SDL_WINDOW_OPENGL                                          |     SDL::SDL_WINDOW_OPENGL
-    );                                                             | );
-                                                                   | 
-    if (window == NULL) {                                          | if ($window == null) {
-        printf(                                                    |     printf(
-            "Could not create window: %s\n",                       |         "Could not create window: %s\n",
-            SDL_GetError()                                         |         $sdl->SDL_GetError()
-        );                                                         |     );
-        return 1;                                                  |     return 1;
-    }                                                              | }
-                                                                   | 
-    SDL_Delay(3000);                                               | $sdl->SDL_Delay(3000);
-    SDL_DestroyWindow(window);                                     | $sdl->SDL_DestroyWindow($window);
-    SDL_Quit();                                                    | $sdl->SDL_Quit();
-                                                                   | 
-    return 0;                                                      | return 0;
-}                                                                  | 
+$sdl->SDL_Delay(3000);
+$sdl->SDL_DestroyWindow($window);
+$sdl->SDL_Quit();
 ```

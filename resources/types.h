@@ -25,14 +25,14 @@ typedef enum {
 typedef struct SDL_AssertData {
   int always_ignore;
   unsigned int trigger_count;
-  const char *condition;
-  const char *filename;
+  const char* condition;
+  const char* filename;
   int linenum;
-  const char *function;
-  const struct SDL_AssertData *next;
+  const char* function;
+  const struct SDL_AssertData* next;
 } SDL_AssertData;
 
-typedef SDL_AssertState ( *SDL_AssertionHandler)(const SDL_AssertData *data, void *userdata);
+typedef SDL_AssertState (* SDL_AssertionHandler)(const SDL_AssertData* data, void* userdata);
 
 typedef int SDL_SpinLock;
 
@@ -67,25 +67,25 @@ typedef enum {
   SDL_THREAD_PRIORITY_TIME_CRITICAL
 } SDL_ThreadPriority;
 
-typedef int ( *SDL_ThreadFunction)(void *data);
+typedef int (* SDL_ThreadFunction)(void* data);
 
 typedef uintptr_t(__attribute__((__cdecl__)) *pfnSDL_CurrentBeginThread)(void *, unsigned, unsigned (__attribute__((__stdcall__)) *func)(void *), void *, unsigned, unsigned *);
 
 typedef void (__attribute__((__cdecl__)) *pfnSDL_CurrentEndThread)(unsigned code);
 
 typedef struct SDL_RWops {
-  Sint64 ( *size)(struct SDL_RWops *context);
-  Sint64 ( *seek)(struct SDL_RWops *context, Sint64 offset, int whence);
-  size_t ( *read)(struct SDL_RWops *context, void *ptr, size_t size, size_t maxnum);
-  size_t ( *write)(struct SDL_RWops *context, const void *ptr, size_t size, size_t num);
-  int ( *close)(struct SDL_RWops *context);
+  Sint64 ( *size)(struct SDL_RWops* context);
+  Sint64 ( *seek)(struct SDL_RWops* context, Sint64 offset, int whence);
+  size_t ( *read)(struct SDL_RWops* context, void* ptr, size_t size, size_t maxnum);
+  size_t ( *write)(struct SDL_RWops* context, const void* ptr, size_t size, size_t num);
+  int ( *close)(struct SDL_RWops* context);
   Uint32 type;
   union {
     struct {
       int append;
-      void *h;
+      void* h;
       struct {
-        void *data;
+        void* data;
         size_t size;
         size_t left;
       } buffer;
@@ -96,15 +96,15 @@ typedef struct SDL_RWops {
       Uint8 *stop;
     } mem;
     struct {
-      void *data1;
-      void *data2;
+      void* data1;
+      void* data2;
     } unknown;
   } hidden;
 } SDL_RWops;
 
 typedef Uint16 SDL_AudioFormat;
 
-typedef void ( *SDL_AudioCallback)(void *userdata, Uint8 *stream, int len);
+typedef void (* SDL_AudioCallback)(void* userdata, Uint8 *stream, int len);
 
 typedef struct SDL_AudioSpec {
   int freq;
@@ -115,12 +115,12 @@ typedef struct SDL_AudioSpec {
   Uint16 padding;
   Uint32 size;
   SDL_AudioCallback callback;
-  void *userdata;
+  void* userdata;
 } SDL_AudioSpec;
 
 struct SDL_AudioCVT;
 
-typedef void ( *SDL_AudioFilter)(struct SDL_AudioCVT *cvt, SDL_AudioFormat format);
+typedef void (* SDL_AudioFilter)(struct SDL_AudioCVT *cvt, SDL_AudioFormat format);
 
 typedef struct SDL_AudioCVT {
   int needed;
@@ -258,14 +258,14 @@ typedef struct SDL_Color {
 
 typedef struct SDL_Palette {
   int ncolors;
-  SDL_Color *colors;
+  SDL_Color* colors;
   Uint32 version;
   int refcount;
 } SDL_Palette;
 
 typedef struct SDL_PixelFormat {
   Uint32 format;
-  SDL_Palette *palette;
+  SDL_Palette* palette;
   Uint8 BitsPerPixel;
   Uint8 BytesPerPixel;
   Uint8 padding[2];
@@ -282,7 +282,7 @@ typedef struct SDL_PixelFormat {
   Uint8 Bshift;
   Uint8 Ashift;
   int refcount;
-  struct SDL_PixelFormat *next;
+  struct SDL_PixelFormat* next;
 } SDL_PixelFormat;
 
 typedef struct SDL_Point {
@@ -338,19 +338,19 @@ typedef enum {
 
 typedef struct SDL_Surface {
   Uint32 flags;
-  SDL_PixelFormat *format;
+  SDL_PixelFormat* format;
   int w, h;
   int pitch;
-  void *pixels;
-  void *userdata;
+  void* pixels;
+  void* userdata;
   int locked;
-  void *lock_data;
+  void* lock_data;
   SDL_Rect clip_rect;
-  struct SDL_BlitMap *map;
+  struct SDL_BlitMap* map;
   int refcount;
 } SDL_Surface;
 
-typedef int ( *SDL_Blit)(struct SDL_Surface *src, SDL_Rect *srcrect, struct SDL_Surface *dst, SDL_Rect *dstrect);
+typedef int (* SDL_Blit)(struct SDL_Surface* src, SDL_Rect* srcrect, struct SDL_Surface* dst, SDL_Rect* dstrect);
 
 typedef enum {
   SDL_YUV_CONVERSION_JPEG,
@@ -364,7 +364,7 @@ typedef struct {
   int w;
   int h;
   int refresh_rate;
-  void *driverdata;
+  void* driverdata;
 } SDL_DisplayMode;
 
 typedef struct SDL_Window SDL_Window;
@@ -426,7 +426,7 @@ typedef enum {
   SDL_ORIENTATION_PORTRAIT_FLIPPED
 } SDL_DisplayOrientation;
 
-typedef void *SDL_GLContext;
+typedef void* SDL_GLContext;
 
 typedef enum {
   SDL_GL_RED_SIZE,
@@ -494,7 +494,7 @@ typedef enum {
   SDL_HITTEST_RESIZE_LEFT
 } SDL_HitTestResult;
 
-typedef SDL_HitTestResult ( *SDL_HitTest)(SDL_Window *win, const SDL_Point *area, void *data);
+typedef SDL_HitTestResult (* SDL_HitTest)(SDL_Window* win, const SDL_Point* area, void* data);
 
 typedef enum {
   SDL_SCANCODE_UNKNOWN = 0,
@@ -1409,7 +1409,7 @@ typedef struct SDL_DollarGestureEvent {
 typedef struct SDL_DropEvent {
   Uint32 type;
   Uint32 timestamp;
-  char *file;
+  char* file;
   Uint32 windowID;
 } SDL_DropEvent;
 
@@ -1435,8 +1435,8 @@ typedef struct SDL_UserEvent {
   Uint32 timestamp;
   Uint32 windowID;
   Sint32 code;
-  void *data1;
-  void *data2;
+  void* data1;
+  void* data2;
 } SDL_UserEvent;
 
 struct SDL_SysWMmsg;
@@ -1446,7 +1446,7 @@ typedef struct SDL_SysWMmsg SDL_SysWMmsg;
 typedef struct SDL_SysWMEvent {
   Uint32 type;
   Uint32 timestamp;
-  SDL_SysWMmsg *msg;
+  SDL_SysWMmsg* msg;
 } SDL_SysWMEvent;
 
 typedef union SDL_Event {
@@ -1486,7 +1486,7 @@ typedef enum {
   SDL_GETEVENT
 } SDL_EventAction;
 
-typedef int ( *SDL_EventFilter)(void *userdata, SDL_Event *event);
+typedef int (* SDL_EventFilter)(void* userdata, SDL_Event* event);
 
 struct _SDL_Haptic;
 
@@ -1631,7 +1631,7 @@ typedef enum {
   SDL_NUM_LOG_PRIORITIES
 } SDL_LogPriority;
 
-typedef void ( *SDL_LogOutputFunction)(void *userdata, int category, SDL_LogPriority priority, const char *message);
+typedef void (* SDL_LogOutputFunction)(void* userdata, int category, SDL_LogPriority priority, const char* message);
 
 typedef enum {
   SDL_MESSAGEBOX_ERROR = 0x00000010,
@@ -1647,7 +1647,7 @@ typedef enum {
 typedef struct {
   Uint32 flags;
   int buttonid;
-  const char *text;
+  const char* text;
 } SDL_MessageBoxButtonData;
 
 typedef struct {
@@ -1669,12 +1669,12 @@ typedef struct {
 
 typedef struct {
   Uint32 flags;
-  SDL_Window *window;
-  const char *title;
-  const char *message;
+  SDL_Window* window;
+  const char* title;
+  const char* message;
   int numbuttons;
-  const SDL_MessageBoxButtonData *buttons;
-  const SDL_MessageBoxColorScheme *colorScheme;
+  const SDL_MessageBoxButtonData* buttons;
+  const SDL_MessageBoxColorScheme* colorScheme;
 } SDL_MessageBoxData;
 
 typedef enum {
@@ -1693,7 +1693,7 @@ typedef enum {
 } SDL_RendererFlags;
 
 typedef struct SDL_RendererInfo {
-  const char *name;
+  const char* name;
   Uint32 flags;
   Uint32 num_texture_formats;
   Uint32 texture_formats[16];
@@ -1743,7 +1743,7 @@ typedef struct SDL_WindowShapeMode {
   SDL_WindowShapeParams parameters;
 } SDL_WindowShapeMode;
 
-typedef Uint32 ( *SDL_TimerCallback)(Uint32 interval, void *param);
+typedef Uint32 (* SDL_TimerCallback)(Uint32 interval, void* param);
 
 typedef int SDL_TimerID;
 
@@ -1753,7 +1753,7 @@ typedef struct SDL_Version {
   Uint8 patch;
 } SDL_Version;
 
-typedef void ( *SDL_HintCallback)(void *userdata, const char *name, const char *oldValue, const char *newValue);
+typedef void (* SDL_HintCallback)(void* userdata, const char* name, const char* oldValue, const char* newValue);
 
 
 // =====================================================================================================================
@@ -1777,7 +1777,7 @@ typedef void ( *SDL_HintCallback)(void *userdata, const char *name, const char *
 
 #if version >= 2.0.4
     #ifdef __WIN32__
-        typedef void ( *SDL_WindowsMessageHook)(void *userdata, void *hWnd, unsigned int message, Uint64 wParam, Sint64 lParam);
+        typedef void (* SDL_WindowsMessageHook)(void* userdata, void* hWnd, unsigned int message, Uint64 wParam, Sint64 lParam);
     #endif
 #endif
 
@@ -1788,7 +1788,7 @@ typedef void ( *SDL_HintCallback)(void *userdata, const char *name, const char *
 // =====================================================================================================================
 
 #if version >= 2.0.6
-    typedef void*VkInstance;
+    typedef void* VkInstance;
     typedef VkInstance SDL_VulkanInstance;
 
     typedef uint64_t VkSurfaceKHR;
@@ -1804,8 +1804,8 @@ typedef void ( *SDL_HintCallback)(void *userdata, const char *name, const char *
 #if version >= 2.0.7
     typedef void *(*SDL_MallocFunc)(size_t size);
     typedef void *(*SDL_CallocFunc)(size_t nmemb, size_t size);
-    typedef void *(*SDL_ReallocFunc)(void *mem, size_t size);
-    typedef void (*SDL_FreeFunc)(void *mem);
+    typedef void *(*SDL_ReallocFunc)(void* mem, size_t size);
+    typedef void (*SDL_FreeFunc)(void* mem);
 #endif
 
 // =====================================================================================================================

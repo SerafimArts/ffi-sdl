@@ -19,8 +19,8 @@ use FFI\CIntPtr;
 use FFI\CIntPtrPtr;
 use FFI\CPtr;
 use FFI\CPtrPtr;
-use Serafim\SDL\Kernel\Defines\InitFlags;
-use Serafim\SDL\Kernel\Enum\AssertState;
+use Serafim\SDL\Kernel\Assert\State;
+use Serafim\SDL\Kernel\InitFlags;
 
 /**
  * @formatter:off
@@ -601,7 +601,7 @@ interface SDLMethods
      * Note: PHP contains a similar implementation @see \PHP_OS_FAMILY
      *
      * <code>
-     *  extern const char *SDL_GetPlatform(void);
+     *  extern const char* SDL_GetPlatform(void);
      * </code>
      *
      * @see https://wiki.libsdl.org/SDL_GetPlatform
@@ -638,7 +638,7 @@ interface SDLMethods
 
     /**
      * <code>
-     *  extern int SDL_RegisterApp(char *name, Uint32 style, void *hInst);
+     *  extern int SDL_RegisterApp(char* name, Uint32 style, void* hInst);
      * </code>
      *
      * @since 2.0.2
@@ -665,14 +665,14 @@ interface SDLMethods
      * TODO Is it worth it to remove from the API?
      *
      * <code>
-     *  extern SDL_AssertState SDL_ReportAssertion(SDL_AssertData *data, const char *func, const char *file, int line);
+     *  extern SDL_AssertState SDL_ReportAssertion(SDL_AssertData* data, const char* func, const char* file, int line);
      * </code>
      *
      * @param SDL_AssertDataPtr|CPtr $data
      * @param string|CCharPtr $func
      * @param string|CCharPtr $file
      * @param int $line
-     * @return int|int<AssertState>
+     * @return int|int<State>
      */
     public function SDL_ReportAssertion(SDL_AssertDataPtr $data, string $func, string $file, int $line): int;
 

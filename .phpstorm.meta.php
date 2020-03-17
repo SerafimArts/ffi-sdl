@@ -72,4 +72,8 @@ namespace PHPSTORM_META {
     override(\Serafim\SDL\Library::addr(), map([
         '' => '@Ptr',
     ]));
+
+    override(\Serafim\SDL\Library::cast(), map([
+        '' => '@',
+    ]));
 }

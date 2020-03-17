@@ -21,11 +21,11 @@ use FFI\CStruct;
  *  {
  *      int always_ignore;
  *      unsigned int trigger_count;
- *      const char *condition;
- *      const char *filename;
+ *      const char* condition;
+ *      const char* filename;
  *      int linenum;
- *      const char *function;
- *      const struct SDL_AssertData *next;
+ *      const char* function;
+ *      const struct SDL_AssertData* next;
  *  } SDL_AssertData;
  * </code>
  *
@@ -322,14 +322,14 @@ class SDL_AudioCVT extends CData
     public int $len_cvt;
 
     /**
-     * buffer must be len*len_mult big
+     * buffer must be len* len_mult big
      *
      * @var int
      */
     public int $len_mult;
 
     /**
-     * Given len, final size is len*len_ratio
+     * Given len, final size is len* len_ratio
      */
     public float $len_ratio;
 
@@ -380,7 +380,7 @@ class SDL_PixelFormat extends CData
     public int $format;
 
     /**
-     * SDL_Palette *palette;
+     * SDL_Palette* palette;
      *
      * @var SDL_Palette|SDL_Palette[]|CData|null
      */
@@ -499,7 +499,7 @@ class SDL_PixelFormat extends CData
     public int $refcount;
 
     /**
-     * struct SDL_PixelFormat *next;
+     * struct SDL_PixelFormat* next;
      *
      * @var SDL_PixelFormat|SDL_PixelFormat[]|CData|null
      */
@@ -521,7 +521,7 @@ class SDL_Palette extends CData
     public int $ncolors;
 
     /**
-     * SDL_Color *colors;
+     * SDL_Color* colors;
      *
      * @var SDL_Color|SDL_Color[]|CData|null
      */

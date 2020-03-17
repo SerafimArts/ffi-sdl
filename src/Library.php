@@ -15,50 +15,173 @@ use FFI\CData;
 use FFI\CPtr;
 use FFI\CScalar;
 use FFI\CType;
+use FFI\Exception;
+use Serafim\SDL\Compiler\PreProcessor;
+use Serafim\SDL\Exception\SDLException;
 
 /**
  * Class Library
  */
-abstract class Library
+abstract class Library implements LibraryInterface
 {
-    /**
-     * @var self|null
-     */
-    private static ?self $instance = null;
-
     /**
      * @var \FFI
      */
     protected \FFI $ffi;
 
     /**
-     * Library constructor.
+     * @var string
      */
-    public function __construct()
+    protected const HEADERS_COMPILED_PATHNAME = __DIR__ . '/../out/%s-%s-%s-x%s.h';
+
+    /**
+     * @var string
+     */
+    protected const HEADERS_SOURCE_PATHNAME = __DIR__ . '/../resources/%s.h';
+
+    /**
+     * @var string
+     */
+    private const ERROR_LOADING = 'Please install the dependency using a "%s" command (or)';
+
+    /**
+     * Library constructor.
+     *
+     * @param \FFI $ctx
+     */
+    protected function __construct(\FFI $ctx)
     {
-        $this->ffi = $this->create();
+        $this->ffi = $ctx;
     }
 
     /**
      * @return \FFI
      */
-    abstract protected function create(): \FFI;
-
-    /**
-     * @return static
-     */
-    public static function getInstance(): self
+    protected function ffi(): \FFI
     {
-        return self::$instance ??= new static();
+        try {
+            return \FFI::cdef(\file_get_contents($this->getHeaders()), $this->getLibrary());
+        } catch (Exception $e) {
+            $message = $e->getMessage() . ': ' . $this->getInstallationCommand();
+
+            throw new SDLException($message);
+        }
     }
 
     /**
-     * @param static|null $instance
-     * @return void
+     * @return string
      */
-    public static function setInstance(?self $instance): void
+    public function getWorkingDirectory(): string
     {
-        self::$instance = $instance;
+        return \dirname($this->getLibrary());
+    }
+
+    /**
+     * @param string $directory
+     * @param \Closure $then
+     * @return mixed
+     */
+    protected function chdir(string $directory, \Closure $then)
+    {
+        $before = \getcwd();
+
+        \chdir($directory);
+
+        try {
+            return $then();
+        } finally {
+            if ($before !== false) {
+                \chdir($before);
+            }
+        }
+    }
+
+    /**
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function getHeaders(): string
+    {
+        if (! \is_file($this->getCompiledHeaders())) {
+            $result = (new PreProcessor($this->getVersion()))
+                ->file($this->getOriginalHeaders());
+
+            \file_put_contents($this->getCompiledHeaders(), $result);
+        }
+
+        return $this->getCompiledHeaders();
+    }
+
+    /**
+     * @return string
+     */
+    private function getCompiledHeaders(): string
+    {
+        return \vsprintf(static::HEADERS_COMPILED_PATHNAME, [
+            $this->getNormalizedName(),
+            $this->getVersion(),
+            \strtolower(\PHP_OS_FAMILY),
+            \PHP_INT_SIZE === 8 ? '64' : '86',
+        ]);
+    }
+
+    /**
+     * @return string
+     */
+    private function getNormalizedName(): string
+    {
+        return \str_replace(' ', '-', \strtolower($this->getName()));
+    }
+
+    /**
+     * @return string
+     */
+    private function getOriginalHeaders(): string
+    {
+        return \vsprintf(static::HEADERS_SOURCE_PATHNAME, [
+            $this->getNormalizedName(),
+        ]);
+    }
+
+    /**
+     * @return string
+     */
+    private function getInstallationCommand(): string
+    {
+        switch (\PHP_OS_FAMILY) {
+            case 'Windows':
+                return 'Internal binary data error';
+
+            case 'Linux':
+                return \sprintf(self::ERROR_LOADING, $this->getLinuxInstallationCommand());
+
+            case 'Darwin':
+                return \sprintf(self::ERROR_LOADING, $this->getMacOSInstallationCommand());
+
+            default:
+                return '<unknown>';
+        }
+    }
+
+    /**
+     * @return string
+     */
+    abstract protected function getLinuxInstallationCommand(): string;
+
+    /**
+     * @return string
+     */
+    abstract protected function getMacOSInstallationCommand(): string;
+
+    /**
+     * @param string|CType $type
+     * @param CData $pointer
+     * @return CData
+     */
+    public function cast($type, CData $pointer): CData
+    {
+        /** @noinspection StaticInvocationViaThisInspection */
+        return $this->ffi->cast($type, $pointer);
     }
 
     /**
