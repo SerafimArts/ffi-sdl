@@ -69,9 +69,9 @@ abstract class Library
      */
     public function new($type, bool $owned = true, bool $persistent = false): CData
     {
-        if (\is_string($type)) {
-            [$type, $depth] = $this->normalize($type);
-        }
+        [$type, $depth] = \is_string($type)
+            ? $this->normalize($type)
+            : [$type, 0];
 
         /** @noinspection StaticInvocationViaThisInspection */
         $result = $this->ffi->new($type, $owned, $persistent);

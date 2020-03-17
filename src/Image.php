@@ -13,15 +13,20 @@ namespace Serafim\SDL;
 
 use FFI\CData;
 use Serafim\SDL\Compiler\SDLImageLibrary;
-use Serafim\SDL\Compiler\SDLLibrary;
+use Serafim\SDL\Image\ImageType;
 use Serafim\SDL\Image\InitFlags;
 
 /**
  * @mixin \FFI
  * @mixin SDLImageMethods
  */
-final class Image extends Library implements InitFlags
+final class Image extends Library implements InitFlags, ImageType
 {
+    /**
+     * @var string
+     */
+    private string $dir;
+
     /**
      * Note: PHPStorm meta bugfix
      *
@@ -48,8 +53,6 @@ final class Image extends Library implements InitFlags
      */
     protected function create(): \FFI
     {
-        $image = new SDLImageLibrary(new SDLLibrary());
-
-        return $image->ffi();
+        return (new SDLImageLibrary())->ffi();
     }
 }

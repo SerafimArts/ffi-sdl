@@ -56,21 +56,6 @@ class SDLImageLibrary extends Library
     private static ?string $version = null;
 
     /**
-     * @var SDLLibrary
-     */
-    private SDLLibrary $sdl;
-
-    /**
-     * SDLImageLibrary constructor.
-     *
-     * @param SDLLibrary $sdl
-     */
-    public function __construct(SDLLibrary $sdl)
-    {
-        $this->sdl = $sdl;
-    }
-
-    /**
      * @return string
      */
     public function getName(): string
@@ -84,13 +69,11 @@ class SDLImageLibrary extends Library
     public function getVersion(): string
     {
         if (self::$version === null) {
-            self::$version = $this->sdl->inDirectory(function () {
-                $ctx = \FFI::cdef(static::SDL_GET_VERSION, $this->getLibrary());
+            $ctx = \FFI::cdef(static::SDL_GET_VERSION, $this->getLibrary());
 
-                $ver = $ctx->IMG_Linked_Version();
+            $ver = $ctx->IMG_Linked_Version()[0];
 
-                return \sprintf('%d.%d.%d', $ver->major, $ver->minor, $ver->patch);
-            });
+            return \sprintf('%d.%d.%d', $ver->major, $ver->minor, $ver->patch);
         }
 
         return self::$version;
@@ -130,15 +113,5 @@ class SDLImageLibrary extends Library
     protected function getMacOSInstallationCommand(): string
     {
         return 'brew install sdl2_image';
-    }
-
-    /**
-     * @return \FFI
-     */
-    public function ffi(): \FFI
-    {
-        return $this->sdl->inDirectory(function() {
-            return parent::ffi();
-        });
     }
 }
