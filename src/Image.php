@@ -103,7 +103,7 @@ final class Image extends Library implements InitFlags, ImageType
      * @param int $flags
      * @return int
      */
-    public function IMG_Init(int $flags): int
+    public function init(int $flags): int
     {
         return $this->sdl(fn() => $this->ffi->IMG_Init($flags));
     }
@@ -116,9 +116,9 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern const SDL_version *IMG_Linked_Version(void);
      * </code>
      *
-     * @return SDL_VersionPtr
+     * @return VersionPtr
      */
-    public function IMG_Linked_Version(): CData
+    public function linkedVersion(): CData
     {
         $result = $this->ffi->IMG_Linked_Version();
 
@@ -134,7 +134,7 @@ final class Image extends Library implements InitFlags, ImageType
      *
      * @return void
      */
-    public function IMG_Quit(): void
+    public function quit(): void
     {
         $this->ffi->IMG_Quit();
     }
@@ -155,12 +155,12 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadTyped_RW(SDL_RWops *src, int freesrc, const char *type);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @param int $freeSrc
      * @param string $type
-     * @return SDL_SurfacePtr|null
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadTyped_RW(CData $src, int $freeSrc, string $type): ?CData
+    public function loadTypedRW(CData $src, int $freeSrc, string $type): ?CData
     {
         $result = $this->ffi->IMG_LoadTyped_RW(
             $this->cast('SDL_RWops*', $src),
@@ -168,7 +168,7 @@ final class Image extends Library implements InitFlags, ImageType
             $type
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -188,13 +188,15 @@ final class Image extends Library implements InitFlags, ImageType
      * </code>
      *
      * @param string $file
-     * @return SDL_SurfacePtr|null
+     * @return SurfacePtr|null
      */
-    public function IMG_Load(string $file): ?CData
+    public function load(string $file): ?CData
     {
-        $result = $this->ffi->IMG_Load($file);
+        return $this->sdl(function () use ($file) {
+            $result = $this->ffi->IMG_Load($file);
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+            return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        });
     }
 
     /**
@@ -206,18 +208,18 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_Load_RW(SDL_RWops *src, int freesrc);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @param int $freeSrc
-     * @return SDL_SurfacePtr|null
+     * @return SurfacePtr|null
      */
-    public function IMG_Load_RW(CData $src, int $freeSrc): ?CData
+    public function loadRW(CData $src, int $freeSrc): ?CData
     {
         $result = $this->ffi->IMG_Load_RW(
             $this->cast('SDL_RWops*', $src),
             $freeSrc
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -229,18 +231,18 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Texture* IMG_LoadTexture(SDL_Renderer *renderer, const char *file);
      * </code>
      *
-     * @param CData|SDL_RendererPtr $renderer
+     * @param CData|RendererPtr $renderer
      * @param string $file
-     * @return SDL_TexturePtr|null
+     * @return TexturePtr|null
      */
-    public function IMG_LoadTexture(CData $renderer, string $file): ?CData
+    public function loadTexture(CData $renderer, string $file): ?CData
     {
         $result = $this->ffi->IMG_LoadTexture(
             $this->cast('SDL_Renderer*', $renderer),
             $file
         );
 
-        return $result ? $this->sdl->cast('SDL_Texture*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Texture*', $result) : null;
     }
 
     /**
@@ -248,7 +250,7 @@ final class Image extends Library implements InitFlags, ImageType
      * @param mixed ...$args
      * @return int
      */
-    public function IMG_SetError(string $message, ...$args): int
+    public function setError(string $message, ...$args): int
     {
         return $this->ffi->SDL_SetError($message, ...$args);
     }
@@ -256,7 +258,7 @@ final class Image extends Library implements InitFlags, ImageType
     /**
      * @return string
      */
-    public function IMG_GetError(): string
+    public function getError(): string
     {
         return $this->ffi->SDL_GetError();
     }
@@ -264,7 +266,7 @@ final class Image extends Library implements InitFlags, ImageType
     /**
      * @return void
      */
-    public function IMG_ClearError(): void
+    public function clearError(): void
     {
         $this->ffi->SDL_ClearError();
     }
@@ -278,12 +280,12 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Texture* IMG_LoadTexture_RW(SDL_Renderer *renderer, SDL_RWops *src, int freesrc);
      * </code>
      *
-     * @param CData|SDL_RendererPtr $renderer
-     * @param CData|SDL_RWopsPtr $src
+     * @param CData|RendererPtr $renderer
+     * @param CData|RWopsPtr $src
      * @param int $freeSrc
-     * @return SDL_TexturePtr|null
+     * @return TexturePtr|null
      */
-    public function IMG_LoadTexture_RW(CData $renderer, CData $src, int $freeSrc): ?CData
+    public function loadTextureRW(CData $renderer, CData $src, int $freeSrc): ?CData
     {
         $result = $this->ffi->IMG_LoadTexture_RW(
             $this->sdl->cast('SDL_Renderer*', $renderer),
@@ -291,7 +293,7 @@ final class Image extends Library implements InitFlags, ImageType
             $freeSrc
         );
 
-        return $result ? $this->sdl->cast('SDL_Texture*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Texture*', $result) : null;
     }
 
     /**
@@ -308,13 +310,13 @@ final class Image extends Library implements InitFlags, ImageType
      *  );
      * </code>
      *
-     * @param CData|SDL_RendererPtr $renderer
-     * @param CData|SDL_RWopsPtr $src
+     * @param CData|RendererPtr $renderer
+     * @param CData|RWopsPtr $src
      * @param int $freeSrc
      * @param string $type
-     * @return SDL_TexturePtr|null
+     * @return TexturePtr|null
      */
-    public function IMG_LoadTextureTyped_RW(CData $renderer, CData $src, int $freeSrc, string $type): ?CData
+    public function loadTextureTypedRW(CData $renderer, CData $src, int $freeSrc, string $type): ?CData
     {
         $result = $this->ffi->IMG_LoadTextureTyped_RW(
             $this->cast('SDL_Renderer*', $renderer),
@@ -323,7 +325,7 @@ final class Image extends Library implements InitFlags, ImageType
             $type
         );
 
-        return $result ? $this->sdl->cast('SDL_Texture*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Texture*', $result) : null;
     }
 
     /**
@@ -333,10 +335,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isICO(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isICO(SDL_RWopsPtr $src): int
+    public function isIco(CData $src): int
     {
         return $this->ffi->IMG_isICO(
             $this->cast('SDL_RWops*', $src)
@@ -350,10 +352,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isCUR(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isCUR(SDL_RWopsPtr $src): int
+    public function isCur(CData $src): int
     {
         return $this->ffi->IMG_isCUR(
             $this->cast('SDL_RWops*', $src)
@@ -367,10 +369,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isBMP(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isBMP(SDL_RWopsPtr $src): int
+    public function isBmp(CData $src): int
     {
         return $this->ffi->IMG_isBMP(
             $this->cast('SDL_RWops*', $src)
@@ -384,10 +386,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isGIF(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isGIF(SDL_RWopsPtr $src): int
+    public function isGif(CData $src): int
     {
         return $this->ffi->IMG_isGIF(
             $this->cast('SDL_RWops*', $src)
@@ -401,10 +403,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isJPG(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isJPG(SDL_RWopsPtr $src): int
+    public function isJpg(CData $src): int
     {
         return $this->ffi->IMG_isJPG(
             $this->cast('SDL_RWops*', $src)
@@ -418,10 +420,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isLBM(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isLBM(SDL_RWopsPtr $src): int
+    public function isLbm(CData $src): int
     {
         return $this->ffi->IMG_isLBM(
             $this->cast('SDL_RWops*', $src)
@@ -435,10 +437,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isPCX(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isPCX(SDL_RWopsPtr $src): int
+    public function isPcx(CData $src): int
     {
         return $this->ffi->IMG_isPCX(
             $this->cast('SDL_RWops*', $src)
@@ -452,10 +454,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isPNG(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isPNG(SDL_RWopsPtr $src): int
+    public function isPng(CData $src): int
     {
         return $this->ffi->IMG_isPNG(
             $this->cast('SDL_RWops*', $src)
@@ -469,10 +471,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isPNM(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isPNM(SDL_RWopsPtr $src): int
+    public function isPnm(CData $src): int
     {
         return $this->ffi->IMG_isPNM(
             $this->cast('SDL_RWops*', $src)
@@ -486,10 +488,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isSVG(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isSVG(SDL_RWopsPtr $src): int
+    public function isSvg(CData $src): int
     {
         return $this->ffi->IMG_isSVG(
             $this->cast('SDL_RWops*', $src)
@@ -503,10 +505,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isTIF(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isTIF(SDL_RWopsPtr $src): int
+    public function isTif(CData $src): int
     {
         return $this->ffi->IMG_isTIF(
             $this->cast('SDL_RWops*', $src)
@@ -520,10 +522,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isXCF(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isXCF(SDL_RWopsPtr $src): int
+    public function isXcf(CData $src): int
     {
         return $this->ffi->IMG_isXCF(
             $this->cast('SDL_RWops*', $src)
@@ -537,10 +539,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isXPM(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isXPM(SDL_RWopsPtr $src): int
+    public function isXpm(CData $src): int
     {
         return $this->ffi->IMG_isXPM(
             $this->cast('SDL_RWops*', $src)
@@ -554,10 +556,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isXV(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isXV(SDL_RWopsPtr $src): int
+    public function isXv(CData $src): int
     {
         return $this->ffi->IMG_isXV(
             $this->cast('SDL_RWops*', $src)
@@ -571,10 +573,10 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_isWEBP(SDL_RWops *src);
      * </code>
      *
-     * @param SDL_RWopsPtr $src
+     * @param CData|RWopsPtr $src
      * @return int
      */
-    public function IMG_isWEBP(SDL_RWopsPtr $src): int
+    public function isWebp(CData $src): int
     {
         return $this->ffi->IMG_isWEBP(
             $this->cast('SDL_RWops*', $src)
@@ -588,16 +590,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadICO_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadICO_RW(CData $src): ?CData
+    public function loadIcoRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadICO_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -607,16 +609,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadCUR_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadCUR_RW(CData $src): ?CData
+    public function loadCurRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadCUR_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -626,16 +628,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadBMP_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadBMP_RW(CData $src): ?CData
+    public function loadBmpRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadBMP_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -645,16 +647,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadGIF_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadGIF_RW(CData $src): ?CData
+    public function loadGifRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadGIF_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -664,16 +666,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadJPG_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadJPG_RW(CData $src): ?CData
+    public function loadJpgRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadJPG_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -683,16 +685,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadLBM_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadLBM_RW(CData $src): ?CData
+    public function loadLbmRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadLBM_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -702,16 +704,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadPCX_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadPCX_RW(CData $src): ?CData
+    public function loadPcxRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadPCX_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -721,16 +723,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadPNG_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadPNG_RW(CData $src): ?CData
+    public function loadPngRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadPNG_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -740,16 +742,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadPNM_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadPNM_RW(CData $src): ?CData
+    public function loadPnmRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadPNM_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -759,16 +761,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadSVG_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadSVG_RW(CData $src): ?CData
+    public function loadSvgRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadSVG_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -778,16 +780,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadTGA_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadTGA_RW(CData $src): ?CData
+    public function loadTgaRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadTGA_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -797,16 +799,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadTIF_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadTIF_RW(CData $src): ?CData
+    public function loadTifRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadTIF_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -816,16 +818,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadXCF_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadXCF_RW(CData $src): ?CData
+    public function loadXcfRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadXCF_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -835,16 +837,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadXPM_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadXPM_RW(CData $src): ?CData
+    public function loadXpmRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadXPM_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -854,16 +856,16 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadXV_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadXV_RW(CData $src): ?CData
+    public function loadXvRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadXV_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -873,20 +875,20 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern SDL_Surface* IMG_LoadWEBP_RW(SDL_RWops *src);
      * </code>
      *
-     * @param CData|SDL_RWopsPtr $src
-     * @return SDL_SurfacePtr|null
+     * @param CData|RWopsPtr $src
+     * @return SurfacePtr|null
      */
-    public function IMG_LoadWEBP_RW(CData $src): ?CData
+    public function loadWebpRW(CData $src): ?CData
     {
         $result = $this->ffi->IMG_LoadWEBP_RW(
             $this->cast('SDL_RWops*', $src)
         );
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
-     * Load xpm as a XPM image for use as a surface, if XPM support is compiled
+     * load xpm as a XPM image for use as a surface, if XPM support is compiled
      * into the SDL_image library.
      *
      * <code>
@@ -894,13 +896,13 @@ final class Image extends Library implements InitFlags, ImageType
      * </code>
      *
      * @param string|CData|CCharPtrPtr $xpm
-     * @return SDL_SurfacePtr|null
+     * @return SurfacePtr|null
      */
-    public function IMG_ReadXPMFromArray(CData $xpm): ?CData
+    public function readXpmFromArray(CData $xpm): ?CData
     {
         $result = $this->ffi->IMG_ReadXPMFromArray($xpm);
 
-        return $result ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
     }
 
     /**
@@ -910,11 +912,11 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_SavePNG(SDL_Surface *surface, const char *file);
      * </code>
      *
-     * @param CData|SDL_SurfacePtr $surface
+     * @param CData|SurfacePtr $surface
      * @param string $file
      * @return int
      */
-    public function IMG_SavePNG(CData $surface, string $file): int
+    public function savePng(CData $surface, string $file): int
     {
         return $this->ffi->IMG_SavePNG(
             $this->cast('SDL_Surface*', $surface),
@@ -929,12 +931,12 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_SavePNG_RW(SDL_Surface *surface, SDL_RWops *dst, int freedst);
      * </code>
      *
-     * @param CData|SDL_SurfacePtr $surface
-     * @param CData|SDL_RWopsPtr $dst
+     * @param CData|SurfacePtr $surface
+     * @param CData|RWopsPtr $dst
      * @param int $freeDst
      * @return int
      */
-    public function IMG_SavePNG_RW(CData $surface, CData $dst, int $freeDst): int
+    public function savePngRW(CData $surface, CData $dst, int $freeDst): int
     {
         return $this->ffi->IMG_SavePNG_RW(
             $this->cast('SDL_Surface*', $surface),
@@ -950,11 +952,11 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_SaveJPG(SDL_Surface *surface, const char *file);
      * </code>
      *
-     * @param CData|SDL_SurfacePtr $surface
+     * @param CData|SurfacePtr $surface
      * @param string $file
      * @return int
      */
-    public function IMG_SaveJPG(CData $surface, string $file): int
+    public function saveJpg(CData $surface, string $file): int
     {
         return $this->ffi->IMG_SaveJPG(
             $this->cast('SDL_Surface*', $surface),
@@ -969,13 +971,13 @@ final class Image extends Library implements InitFlags, ImageType
      *  extern int IMG_SaveJPG_RW(SDL_Surface *surface, SDL_RWops *dst, int freedst, int quality);
      * </code>
      *
-     * @param CData|SDL_SurfacePtr $surface
-     * @param CData|SDL_RWopsPtr $dst
+     * @param CData|SurfacePtr $surface
+     * @param CData|RWopsPtr $dst
      * @param int $freeDst
      * @param int $quality
      * @return int
      */
-    public function IMG_SaveJPG_RW(CData $surface, CData $dst, int $freeDst, int $quality): int
+    public function saveJpgRW(CData $surface, CData $dst, int $freeDst, int $quality): int
     {
         return $this->ffi->IMG_SaveJPG_RW(
             $this->cast('SDL_Surface*', $surface),

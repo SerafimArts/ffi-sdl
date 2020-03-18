@@ -11,13 +11,14 @@ declare(strict_types=1);
 
 namespace Serafim\SDL;
 
+use FFI\CPtr;
 use FFI\CData;
 use FFI\CScalar;
 use FFI\CStruct;
 
 /**
  * <code>
- *  typedef struct SDL_AssertData
+ *  typedef struct AssertData
  *  {
  *      int always_ignore;
  *      unsigned int trigger_count;
@@ -25,14 +26,14 @@ use FFI\CStruct;
  *      const char* filename;
  *      int linenum;
  *      const char* function;
- *      const struct SDL_AssertData* next;
- *  } SDL_AssertData;
+ *      const struct AssertData* next;
+ *  } AssertData;
  * </code>
  *
- * @see SDLMethods::SDL_ReportAssertion
- * @see SDLMethods::SDL_GetAssertionReport
+ * @see SDLMethods::ReportAssertion
+ * @see SDLMethods::GetAssertionReport
  */
-class SDL_AssertData extends CStruct
+class AssertData extends CStruct
 {
     /**
      * @var int
@@ -77,15 +78,15 @@ class SDL_AssertData extends CStruct
  * <code>
  *  typedef struct {
  *      int value;
- *  } SDL_AtomicT;
+ *  } AtomicT;
  * </code>
  *
- * @see SDLMethods::SDL_AtomicCAS
- * @see SDLMethods::SDL_AtomicSet
- * @see SDLMethods::SDL_AtomicGet
- * @see SDLMethods::SDL_AtomicAdd
+ * @see SDLMethods::AtomicCAS
+ * @see SDLMethods::AtomicSet
+ * @see SDLMethods::AtomicGet
+ * @see SDLMethods::AtomicAdd
  */
-class SDL_AtomicT extends CStruct
+class AtomicT extends CStruct
 {
     /**
      * The atomic integer value
@@ -96,38 +97,38 @@ class SDL_AtomicT extends CStruct
 }
 
 /**
- * The SDL mutex structure, defined in SDL_sysmutex.c
+ * The SDL mutex structure, defined in sysmutex.c
  *
  * TODO Finish the description of this structure
  */
-class SDL_Mutex extends CData
+class Mutex extends CData
 {
 }
 
 /**
- * The SDL semaphore structure, defined in SDL_syssem.c
+ * The SDL semaphore structure, defined in syssem.c
  *
  * TODO Finish the description of this structure
  */
-class SDL_Semaphore extends CData
+class Semaphore extends CData
 {
 }
 
 /**
- * The SDL condition variable structure, defined in SDL_syscond.c
+ * The SDL condition variable structure, defined in syscond.c
  *
  * TODO Finish the description of this structure
  */
-class SDL_Cond extends CData
+class Cond extends CData
 {
 }
 
 /**
- * The SDL thread structure, defined in SDL_thread.c
+ * The SDL thread structure, defined in thread.c
  *
  * TODO Finish the description of this structure
  */
-class SDL_Thread extends CData
+class Thread extends CData
 {
 }
 
@@ -136,7 +137,7 @@ class SDL_Thread extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_RWops extends CData
+class RWops extends CData
 {
     /**
      * Contains the size of the file in this rwops, or -1 if unknown
@@ -176,7 +177,7 @@ class SDL_RWops extends CData
     public ?int $write;
 
     /**
-     * Close and free an allocated SDL_RWops structure.
+     * Close and free an allocated RWops structure.
      *
      * Contains 0 if successful or -1 on write error when flushing data.
      *
@@ -196,7 +197,7 @@ class SDL_RWops extends CData
 }
 
 /**
- *  The calculated values in this structure are calculated by SDL_OpenAudio().
+ *  The calculated values in this structure are calculated by OpenAudio().
  *
  *  For multi-channel audio, the default SDL channel mapping is:
  *  2:  FL FR                       (stereo)
@@ -209,7 +210,7 @@ class SDL_RWops extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_AudioSpec extends CData
+class AudioSpec extends CData
 {
     /**
      * DSP frequency -- samples per second
@@ -251,7 +252,7 @@ class SDL_AudioSpec extends CData
     public int $size;
 
     /**
-     * Callback that feeds the audio device (NULL to use SDL_QueueAudio()).
+     * Callback that feeds the audio device (NULL to use QueueAudio()).
      *
      * @var \Closure|CData
      */
@@ -266,11 +267,11 @@ class SDL_AudioSpec extends CData
 /**
  * A structure that contains audio data conversion information.
  *
- * @see https://wiki.libsdl.org/SDL_AudioCVT
+ * @see https://wiki.libsdl.org/AudioCVT
  *
  * TODO Finish the description of this structure
  */
-class SDL_AudioCVT extends CData
+class AudioCVT extends CData
 {
     /**
      * Set to 1 if conversion possible
@@ -351,9 +352,9 @@ class SDL_AudioCVT extends CData
 }
 
 /**
- * SDL_AudioStream is a new audio conversion interface.
+ * AudioStream is a new audio conversion interface.
  *
- * The benefits vs SDL_AudioCVT:
+ * The benefits vs AudioCVT:
  *  - it can handle resampling data in chunks without generating
  *      artifacts, when it doesn't have the complete buffer available.
  *  - it can handle incoming data in any variable size.
@@ -361,7 +362,7 @@ class SDL_AudioCVT extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_AudioStream extends CData
+class AudioStream extends CData
 {
 }
 
@@ -370,7 +371,7 @@ class SDL_AudioStream extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_PixelFormat extends CData
+class PixelFormat extends CData
 {
     /**
      * Uint32 format;
@@ -380,11 +381,11 @@ class SDL_PixelFormat extends CData
     public int $format;
 
     /**
-     * SDL_Palette* palette;
+     * Palette* palette;
      *
-     * @var SDL_Palette|SDL_Palette[]|CData|null
+     * @var Palette|Palette[]|CData|null
      */
-    public ?SDL_Palette $palette;
+    public ?Palette $palette;
 
     /**
      * Uint8 BitsPerPixel;
@@ -499,11 +500,11 @@ class SDL_PixelFormat extends CData
     public int $refcount;
 
     /**
-     * struct SDL_PixelFormat* next;
+     * struct PixelFormat* next;
      *
-     * @var SDL_PixelFormat|SDL_PixelFormat[]|CData|null
+     * @var PixelFormat|PixelFormat[]|CData|null
      */
-    public ?SDL_PixelFormat $next;
+    public ?PixelFormat $next;
 }
 
 /**
@@ -511,7 +512,7 @@ class SDL_PixelFormat extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_Palette extends CData
+class Palette extends CData
 {
     /**
      * int ncolors;
@@ -521,11 +522,11 @@ class SDL_Palette extends CData
     public int $ncolors;
 
     /**
-     * SDL_Color* colors;
+     * Color* colors;
      *
-     * @var SDL_Color|SDL_Color[]|CData|null
+     * @var Color|Color[]|CData|null
      */
-    public ?SDL_Color $colors;
+    public ?Color $colors;
 
     /**
      * Uint32 version;
@@ -547,7 +548,7 @@ class SDL_Palette extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_Color extends CData
+class Color extends CData
 {
     /**
      * Uint8 r;
@@ -583,7 +584,7 @@ class SDL_Color extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_Rect extends CData
+class Rect extends CData
 {
     /**
      * @var int
@@ -611,7 +612,7 @@ class SDL_Rect extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_Surface extends CData
+class Surface extends CData
 {
     /**
      * @var int
@@ -619,9 +620,9 @@ class SDL_Surface extends CData
     public int $flags;
 
     /**
-     * @var SDL_PixelFormat|SDL_PixelFormat[]|CData
+     * @var PixelFormat|PixelFormat[]|CData
      */
-    public SDL_PixelFormat $format;
+    public PixelFormat $format;
 
     /**
      * @var int
@@ -659,14 +660,14 @@ class SDL_Surface extends CData
     public ?CData $lock_data;
 
     /**
-     * @var SDL_Rect|CData
+     * @var Rect|CData
      */
-    public SDL_Rect $clip_rect;
+    public Rect $clip_rect;
 
     /**
-     * @var SDL_BlitMap|SDL_BlitMap[]|CData
+     * @var BlitMap|BlitMap[]|CData
      */
-    public SDL_BlitMap $map;
+    public BlitMap $map;
 
     /**
      * @var int
@@ -679,16 +680,16 @@ class SDL_Surface extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_BlitMap extends CData
+class BlitMap extends CData
 {
 }
 
 /**
- * Class SDL_DisplayMode
+ * Class DisplayMode
  *
  * TODO Finish the description of this structure
  */
-class SDL_DisplayMode extends CData
+class DisplayMode extends CData
 {
     /**
      * Pixel format
@@ -731,7 +732,7 @@ class SDL_DisplayMode extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_Window extends CData
+class Window extends CData
 {
 }
 
@@ -740,7 +741,7 @@ class SDL_Window extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_GLContext extends CData
+class GLContext extends CData
 {
 }
 
@@ -749,7 +750,7 @@ class SDL_GLContext extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_Cursor extends CData
+class Cursor extends CData
 {
 }
 
@@ -758,7 +759,7 @@ class SDL_Cursor extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_JoystickGUID extends CData
+class JoystickGUID extends CData
 {
     /**
      * @var array|int[]
@@ -771,7 +772,7 @@ class SDL_JoystickGUID extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_Joystick extends CData
+class Joystick extends CData
 {
 }
 
@@ -780,19 +781,19 @@ class SDL_Joystick extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_GameController extends CData
+class GameController extends CData
 {
 }
 
 /**
- * Class SDL_GameControllerButtonBind
+ * Class GameControllerButtonBind
  *
  * TODO Finish the description of this structure
  */
-class SDL_GameControllerButtonBind extends CData
+class GameControllerButtonBind extends CData
 {
     /**
-     * SDL_GameControllerBindType bindType;
+     * GameControllerBindType bindType;
      *
      * @var int
      */
@@ -805,15 +806,15 @@ class SDL_GameControllerButtonBind extends CData
      *  struct { int hat; int hat_mask; } hat;
      * } value;
      *
-     * @var SDL_GameControllerButtonBindValue
+     * @var GameControllerButtonBindValue
      */
-    public SDL_GameControllerButtonBindValue $value;
+    public GameControllerButtonBindValue $value;
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_GameControllerButtonBindValue extends CData
+class GameControllerButtonBindValue extends CData
 {
     /**
      * int button;
@@ -832,15 +833,15 @@ class SDL_GameControllerButtonBindValue extends CData
     /**
      * struct { int hat; int hat_mask; } hat;
      *
-     * @var SDL_GameControllerButtonBindValueHat|CData
+     * @var GameControllerButtonBindValueHat|CData
      */
-    public SDL_GameControllerButtonBindValueHat $hat;
+    public GameControllerButtonBindValueHat $hat;
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_GameControllerButtonBindValueHat extends CData
+class GameControllerButtonBindValueHat extends CData
 {
     /**
      * int hat;
@@ -860,10 +861,10 @@ class SDL_GameControllerButtonBindValueHat extends CData
 /**
  * TODO Finish the description of this structure
  */
-class SDL_Finger extends CData
+class Finger extends CData
 {
     /**
-     * SDL_FingerID id;
+     * FingerID id;
      *
      * @var int
      */
@@ -896,61 +897,61 @@ class SDL_Finger extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_Event extends CData
+class Event extends CData
 {
     public int                       $type;
 
-    public SDL_CommonEvent           $common;
+    public CommonEvent           $common;
 
-    public SDL_DisplayEvent          $display;
+    public DisplayEvent          $display;
 
-    public SDL_WindowEvent           $window;
+    public WindowEvent           $window;
 
-    public SDL_KeyboardEvent         $key;
+    public KeyboardEvent         $key;
 
-    public SDL_TextEditingEvent      $edit;
+    public TextEditingEvent      $edit;
 
-    public SDL_TextInputEvent        $text;
+    public TextInputEvent        $text;
 
-    public SDL_MouseMotionEvent      $motion;
+    public MouseMotionEvent      $motion;
 
-    public SDL_MouseButtonEvent      $button;
+    public MouseButtonEvent      $button;
 
-    public SDL_MouseWheelEvent       $wheel;
+    public MouseWheelEvent       $wheel;
 
-    public SDL_JoyAxisEvent          $jaxis;
+    public JoyAxisEvent          $jaxis;
 
-    public SDL_JoyBallEvent          $jball;
+    public JoyBallEvent          $jball;
 
-    public SDL_JoyHatEvent           $jhat;
+    public JoyHatEvent           $jhat;
 
-    public SDL_JoyButtonEvent        $jbutton;
+    public JoyButtonEvent        $jbutton;
 
-    public SDL_JoyDeviceEvent        $jdevice;
+    public JoyDeviceEvent        $jdevice;
 
-    public SDL_ControllerAxisEvent   $caxis;
+    public ControllerAxisEvent   $caxis;
 
-    public SDL_ControllerButtonEvent $cbutton;
+    public ControllerButtonEvent $cbutton;
 
-    public SDL_ControllerDeviceEvent $cdevice;
+    public ControllerDeviceEvent $cdevice;
 
-    public SDL_AudioDeviceEvent      $adevice;
+    public AudioDeviceEvent      $adevice;
 
-    public SDL_SensorEvent           $sensor;
+    public SensorEvent           $sensor;
 
-    public SDL_QuitEvent             $quit;
+    public QuitEvent             $quit;
 
-    public SDL_UserEvent             $user;
+    public UserEvent             $user;
 
-    public SDL_SysWMEvent            $syswm;
+    public SysWMEvent            $syswm;
 
-    public SDL_TouchFingerEvent      $tfinger;
+    public TouchFingerEvent      $tfinger;
 
-    public SDL_MultiGestureEvent     $mgesture;
+    public MultiGestureEvent     $mgesture;
 
-    public SDL_DollarGestureEvent    $dgesture;
+    public DollarGestureEvent    $dgesture;
 
-    public SDL_DropEvent             $drop;
+    public DropEvent             $drop;
 
     /**
      * @var array|int[]
@@ -961,234 +962,234 @@ class SDL_Event extends CData
 /**
  * TODO Finish the description of this structure
  */
-class SDL_CommonEvent extends CData
+class CommonEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_DisplayEvent extends CData
+class DisplayEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_WindowEvent extends CData
+class WindowEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_KeyboardEvent extends CData
+class KeyboardEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_TextInputEvent extends CData
+class TextInputEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_MouseMotionEvent extends CData
+class MouseMotionEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_MouseButtonEvent extends CData
+class MouseButtonEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_TextEditingEvent extends CData
+class TextEditingEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_MouseWheelEvent extends CData
+class MouseWheelEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_JoyAxisEvent extends CData
+class JoyAxisEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_JoyBallEvent extends CData
+class JoyBallEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_JoyHatEvent extends CData
+class JoyHatEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_JoyButtonEvent extends CData
+class JoyButtonEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_JoyDeviceEvent extends CData
+class JoyDeviceEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_ControllerAxisEvent extends CData
+class ControllerAxisEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_ControllerButtonEvent extends CData
+class ControllerButtonEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_ControllerDeviceEvent extends CData
+class ControllerDeviceEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_AudioDeviceEvent extends CData
+class AudioDeviceEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_SensorEvent extends CData
+class SensorEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_QuitEvent extends CData
+class QuitEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_UserEvent extends CData
+class UserEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_SysWMEvent extends CData
+class SysWMEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_TouchFingerEvent extends CData
+class TouchFingerEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_MultiGestureEvent extends CData
+class MultiGestureEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_DollarGestureEvent extends CData
+class DollarGestureEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_DropEvent extends CData
+class DropEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_EventAction extends CData
+class EventAction extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_EventFilter extends CData
+class EventFilter extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_Haptic extends CData
+class Haptic extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_HapticEffect extends CData
+class HapticEffect extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_LogPriority extends CData
+class LogPriority extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_LogOutputFunction extends CData
+class LogOutputFunction extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_MessageBoxData extends CData
+class MessageBoxData extends CData
 {
     /**
-     * SDL_MessageBoxFlags
+     * MessageBoxFlags
      *
      * @var int
      */
@@ -1197,7 +1198,7 @@ class SDL_MessageBoxData extends CData
     /**
      * Parent window, can be NULL
      *
-     * @var SDL_Window|CData
+     * @var Window|CData
      */
     public CData $window;
 
@@ -1221,14 +1222,14 @@ class SDL_MessageBoxData extends CData
     public int $numbuttons;
 
     /**
-     * @var SDL_MessageBoxButtonData[]|CData[]
+     * @var MessageBoxButtonData[]|CData[]
      */
     public array $buttons;
 
     /**
-     * SDL_MessageBoxColorScheme, can be NULL to use system settings
+     * MessageBoxColorScheme, can be NULL to use system settings
      *
-     * @var SDL_MessageBoxColorScheme|CData
+     * @var MessageBoxColorScheme|CData
      */
     public CData $colorScheme;
 }
@@ -1236,10 +1237,10 @@ class SDL_MessageBoxData extends CData
 /**
  * TODO Finish the description of this structure
  */
-class SDL_MessageBoxColorScheme extends CData
+class MessageBoxColorScheme extends CData
 {
     /**
-     * @var array|SDL_MessageBoxColor[]
+     * @var array|MessageBoxColor[]
      */
     public array $colors;
 }
@@ -1247,7 +1248,7 @@ class SDL_MessageBoxColorScheme extends CData
 /**
  * TODO Finish the description of this structure
  */
-class SDL_MessageBoxColor extends CData
+class MessageBoxColor extends CData
 {
     public int $r;
 
@@ -1259,17 +1260,17 @@ class SDL_MessageBoxColor extends CData
 /**
  * TODO Finish the description of this structure
  */
-class SDL_MessageBoxButtonData extends CData
+class MessageBoxButtonData extends CData
 {
     /**
-     * SDL_MessageBoxButtonFlags
+     * MessageBoxButtonFlags
      *
      * @var int
      */
     public int $flags;
 
     /**
-     * User defined button id (value returned via SDL_ShowMessageBox)
+     * User defined button id (value returned via ShowMessageBox)
      *
      * @var int
      */
@@ -1286,63 +1287,63 @@ class SDL_MessageBoxButtonData extends CData
 /**
  * TODO Finish the description of this structure
  */
-class SDL_RendererInfo extends CData
+class RendererInfo extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_Renderer extends CData
+class Renderer extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_Texture extends CData
+class Texture extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_FRect extends CData
+class FRect extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_SensorType extends CData
+class SensorType extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_SensorID extends CData
+class SensorID extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_Sensor extends CData
+class Sensor extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_WindowShapeMode extends CData
+class WindowShapeMode extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_WindowsMessageHook extends CData
+class WindowsMessageHook extends CData
 {
 }
 
@@ -1356,21 +1357,21 @@ class IDirect3DDevice9 extends CData
 /**
  * TODO Finish the description of this structure
  */
-class SDL_TimerCallback extends CData
+class TimerCallback extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_TimerID extends CData
+class TimerID extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
  */
-class SDL_Version extends CData
+class Version extends CData
 {
     /**
      * @var int
@@ -1393,7 +1394,7 @@ class SDL_Version extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_VulkanInstance extends CData
+class VulkanInstance extends CData
 {
 }
 
@@ -1402,6 +1403,602 @@ class SDL_VulkanInstance extends CData
  *
  * TODO Finish the description of this structure
  */
-class SDL_VulkanSurface extends CData
+class VulkanSurface extends CData
 {
+}
+
+// =============================================================================
+//  Pointers
+// =============================================================================
+
+/** @mixin CPtr */
+class AssertDataPtr extends AssertData
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): AssertData
+    {
+    }
+
+    private function offsetSet(int $i, AssertData $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class AtomicTPtr extends AtomicT
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): AtomicT
+    {
+    }
+
+    private function offsetSet(int $i, AtomicT $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class MutexPtr extends Mutex
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Mutex
+    {
+    }
+
+    private function offsetSet(int $i, Mutex $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class SemaphorePtr extends Semaphore
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Semaphore
+    {
+    }
+
+    private function offsetSet(int $i, Semaphore $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class CondPtr extends Cond
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Cond
+    {
+    }
+
+    private function offsetSet(int $i, Cond $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class ThreadPtr extends Thread
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Thread
+    {
+    }
+
+    private function offsetSet(int $i, Thread $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class RWopsPtr extends RWops
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): RWops
+    {
+    }
+
+    private function offsetSet(int $i, RWops $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class AudioSpecPtr extends AudioSpec
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): AudioSpec
+    {
+    }
+
+    private function offsetSet(int $i, AudioSpec $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class AudioCVTPtr extends AudioCVT
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): AudioCVT
+    {
+    }
+
+    private function offsetSet(int $i, AudioCVT $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class AudioStreamPtr extends AudioStream
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): AudioStream
+    {
+    }
+
+    private function offsetSet(int $i, AudioStream $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class PixelFormatPtr extends PixelFormat
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): PixelFormat
+    {
+    }
+
+    private function offsetSet(int $i, PixelFormat $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class PalettePtr extends Palette
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Palette
+    {
+    }
+
+    private function offsetSet(int $i, Palette $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class ColorPtr extends Color
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Color
+    {
+    }
+
+    private function offsetSet(int $i, Color $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class RectPtr extends Rect
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Rect
+    {
+    }
+
+    private function offsetSet(int $i, Rect $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class SurfacePtr extends Surface
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Surface
+    {
+    }
+
+    private function offsetSet(int $i, Surface $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class DisplayModePtr extends DisplayMode
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): DisplayMode
+    {
+    }
+
+    private function offsetSet(int $i, DisplayMode $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class WindowPtr extends Window
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Window
+    {
+    }
+
+    private function offsetSet(int $i, Window $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class WindowPtrPtr extends WindowPtr
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): WindowPtr
+    {
+    }
+
+    private function offsetSet(int $i, WindowPtr $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class CursorPtr extends Cursor
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Cursor
+    {
+    }
+
+    private function offsetSet(int $i, Cursor $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class JoystickPtr extends Joystick
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Joystick
+    {
+    }
+
+    private function offsetSet(int $i, Joystick $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class GameControllerPtr extends GameController
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): GameController
+    {
+    }
+
+    private function offsetSet(int $i, GameController $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class FingerPtr extends Finger
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Finger
+    {
+    }
+
+    private function offsetSet(int $i, Finger $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class EventPtr extends Event
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Event
+    {
+    }
+
+    private function offsetSet(int $i, Event $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class EventFilterPtr extends EventFilter
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): EventFilter
+    {
+    }
+
+    private function offsetSet(int $i, EventFilter $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class HapticPtr extends Haptic
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Haptic
+    {
+    }
+
+    private function offsetSet(int $i, Haptic $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class HapticEffectPtr extends HapticEffect
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): HapticEffect
+    {
+    }
+
+    private function offsetSet(int $i, HapticEffect $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class LogOutputFunctionPtr extends LogOutputFunction
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): LogOutputFunction
+    {
+    }
+
+    private function offsetSet(int $i, LogOutputFunction $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class MessageBoxDataPtr extends MessageBoxData
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): MessageBoxData
+    {
+    }
+
+    private function offsetSet(int $i, MessageBoxData $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class RendererInfoPtr extends RendererInfo
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): RendererInfo
+    {
+    }
+
+    private function offsetSet(int $i, RendererInfo $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class RendererPtr extends Renderer
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Renderer
+    {
+    }
+
+    private function offsetSet(int $i, Renderer $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class RendererPtrPtr extends RendererPtr
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): RendererPtr
+    {
+    }
+
+    private function offsetSet(int $i, RendererPtr $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class TexturePtr extends Texture
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Texture
+    {
+    }
+
+    private function offsetSet(int $i, Texture $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class FRectPtr extends FRect
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): FRect
+    {
+    }
+
+    private function offsetSet(int $i, FRect $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class SensorPtr extends Sensor
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Sensor
+    {
+    }
+
+    private function offsetSet(int $i, Sensor $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class WindowShapeModePtr extends WindowShapeMode
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): WindowShapeMode
+    {
+    }
+
+    private function offsetSet(int $i, WindowShapeMode $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class IDirect3DDevice9Ptr extends IDirect3DDevice9
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): IDirect3DDevice9
+    {
+    }
+
+    private function offsetSet(int $i, IDirect3DDevice9 $d): void
+    {
+    }
+}
+
+/** @mixin CPtr */
+class VersionPtr extends Version
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Version
+    {
+    }
+
+    private function offsetSet(int $i, Version $d): void
+    {
+    }
 }

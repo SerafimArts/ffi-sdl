@@ -35,6 +35,70 @@ final class SDL extends Library implements Enums
     clang;
 
     /**
+     * @var string[]
+     */
+    private const FUNCTION_MAPPINGS = [
+        // TLS
+        'tlsCreate'                   => 'TLSCreate',
+        'tlsGet'                      => 'TLSCreate',
+        'tlsSet'                      => 'TLSSet',
+        // RW
+        'rwFromFile'                  => 'RWFromFile',
+        'rwFromFP'                    => 'RWFromFP',
+        'rwFromMem'                   => 'RWFromMem',
+        'rwFromConstMem'              => 'RWFromConstMem',
+        'allocRw'                     => 'allocRW',
+        'freeRw'                      => 'FreeRW',
+        'rwSize'                      => 'RWSize',
+        'rwSeek'                      => 'RWSeek',
+        'rwTell'                      => 'RWTell',
+        'rwRead'                      => 'RWRead',
+        'rwWrite'                     => 'RWWrite',
+        'rwClose'                     => 'RWClose',
+        'loadFileRw'                  => 'loadFile_RW',
+        // Audio: Wav
+        'loadWavRw'                   => 'loadWAV_RW',
+        'freeWav'                     => 'freeWAV',
+        // BMP
+        'loadBmpRw'                   => 'loadBMP_RW',
+        'saveBmpRw'                   => 'saveBMP_RW',
+        // OpenGL
+        'glLoadLibrary'               => 'GL_LoadLibrary',
+        'glGetProcAddress'            => 'GL_GetProcAddress',
+        'glUnloadLibrary'             => 'GL_UnloadLibrary',
+        'glExtensionSupported'        => 'GL_ExtensionSupported',
+        'glResetAttributes'           => 'GL_ResetAttributes',
+        'glSetAttribute'              => 'GL_SetAttribute',
+        'glGetAttribute'              => 'GL_GetAttribute',
+        'glCreateContext'             => 'GL_CreateContext',
+        'glMakeCurrent'               => 'GL_MakeCurrent',
+        'glGetCurrentWindow'          => 'GL_GetCurrentWindow',
+        'glGetCurrentContext'         => 'GL_GetCurrentContext',
+        'glGetDrawableSize'           => 'GL_GetDrawableSize',
+        'glSetSwapInterval'           => 'GL_SetSwapInterval',
+        'glGetSwapInterval'           => 'GL_GetSwapInterval',
+        'glSwapWindow'                => 'GL_SwapWindow',
+        'glDeleteContext'             => 'GL_DeleteContext',
+        'glBindTexture'               => 'GL_BindTexture',
+        'glUnbindTexture'             => 'GL_UnbindTexture',
+        // ScanCode
+        'getKeyFromScanCode'          => 'getKeyFromScancode',
+        'getScanCodeFromKey'          => 'getScancodeFromKey',
+        'getScanCodeName'             => 'getScancodeName',
+        'getScanCodeFromName'         => 'getScancodeFromName',
+        // Joystick
+        'joystickGetDeviceInstanceId' => 'joystickGetDeviceInstanceID',
+        'joystickFromInstanceId'      => 'joystickFromInstanceID',
+        'joystickInstanceId'          => 'joystickInstanceID',
+        // DX
+        'getDXGIOutputInfo'           => 'DXGIGetOutputInfo',
+        // SIMD
+        'getSIMDAlignment'            => 'SIMDGetAlignment',
+        'allocSIMD'                   => 'SIMDAlloc',
+        'freeSIMD'                    => 'SIMDFree',
+    ];
+
+    /**
      * @var string
      */
     private const LIBRARY_WIN64 = __DIR__ . '/../bin/x64/SDL2.dll';
@@ -112,22 +176,6 @@ final class SDL extends Library implements Enums
     }
 
     /**
-     * @return string
-     */
-    protected function getLinuxInstallationCommand(): string
-    {
-        return 'sudo apt install libsdl2-2.0-0 -y';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getMacOSInstallationCommand(): string
-    {
-        return 'brew install sdl2';
-    }
-
-    /**
      * Note: PHPStorm meta bugfix
      *
      * {@inheritDoc}
@@ -145,5 +193,39 @@ final class SDL extends Library implements Enums
     public static function addr(CData $type): CData
     {
         return parent::addr($type);
+    }
+
+    /**
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call(string $name, array $arguments)
+    {
+        if (isset(self::FUNCTION_MAPPINGS[$name])) {
+            $name = self::FUNCTION_MAPPINGS[$name];
+        }
+
+        if (\strpos($name, 'SDL_') !== 0) {
+            $name = 'SDL_' . \ucfirst($name);
+        }
+
+        return parent::__call($name, $arguments);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLinuxInstallationCommand(): string
+    {
+        return 'sudo apt install libsdl2-2.0-0 -y';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getMacOSInstallationCommand(): string
+    {
+        return 'brew install sdl2';
     }
 }
