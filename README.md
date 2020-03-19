@@ -26,17 +26,17 @@ installed using the following command in a root of your project.
 $ composer require serafim/ffi-sdl
 ```
 
-### Linux
+#### Linux
 
 - `sudo apt install libsdl2-2.0-0 -y` for `\Serafim\SDL\SDL` API.
 - `sudo apt install libsdl2-image-2.0-0 -y` for `\Serafim\SDL\Image` API.
 
-### MacOS
+#### MacOS
 
 - `brew install sdl2` for `\Serafim\SDL\SDL` API.
 - `brew install sdl2_image` for `\Serafim\SDL\Image` API.
 
-### Windows
+#### Windows
 
 - Binaries are already included
 
@@ -45,7 +45,7 @@ $ composer require serafim/ffi-sdl
 - [PHP SDL2 API](docs/api.md)
 - [SDL2 official documentation](https://wiki.libsdl.org/FrontPage)
 
-### Notes
+#### Notes
 
 - API not yet fully documented and may not work in places.
 - Low level system functions (such as `SDL_malloc` or `SDL_memcpy`) have been removed.
