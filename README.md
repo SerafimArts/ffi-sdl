@@ -42,12 +42,13 @@ $ composer require serafim/ffi-sdl
 
 ## Documentation
 
-Notes:
-- API not yet fully documented and may not work in places.
-- Low level system functions (such as `SDL_malloc` or `SDL_memcpy`) have been removed.
-
 - [PHP SDL2 API](docs/api.md)
 - [SDL2 official documentation](https://wiki.libsdl.org/FrontPage)
+
+### Notes
+
+- API not yet fully documented and may not work in places.
+- Low level system functions (such as `SDL_malloc` or `SDL_memcpy`) have been removed.
 
 ## Example
 
