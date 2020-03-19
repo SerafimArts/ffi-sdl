@@ -63,10 +63,12 @@ class PreProcessor
      */
     public function file(string $pathname): string
     {
-        $source = @\file_get_contents($pathname);
+        $source = @\file_get_contents($pathname = \trim($pathname));
 
         if (! \is_string($source)) {
-            throw new \RuntimeException('Error while reading file ' . $pathname);
+            $last = \error_get_last();
+
+            throw new \RuntimeException('Error while reading file ' . $pathname . ': ' . $last['message']);
         }
 
         return $this->source($source, \dirname($pathname));
