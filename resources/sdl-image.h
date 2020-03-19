@@ -63,7 +63,3 @@ extern int IMG_SavePNG(SDL_Surface* surface, const char* file);
 extern int IMG_SavePNG_RW(SDL_Surface* surface, SDL_RWops* dst, int freedst);
 extern int IMG_SaveJPG(SDL_Surface* surface, const char* file, int quality);
 extern int IMG_SaveJPG_RW(SDL_Surface* surface, SDL_RWops* dst, int freedst, int quality);
-
-extern int SDL_SetError(const char* fmt, ...) __attribute__ (( format( __printf__, 1, 1 +1)));
-extern const char* SDL_GetError(void);
-extern void SDL_ClearError(void);

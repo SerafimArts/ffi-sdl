@@ -241,32 +241,6 @@ final class Image extends Library implements InitFlags, ImageType
     }
 
     /**
-     * @param string $message
-     * @param mixed ...$args
-     * @return int
-     */
-    public function setError(string $message, ...$args): int
-    {
-        return $this->ffi->SDL_SetError($message, ...$args);
-    }
-
-    /**
-     * @return string
-     */
-    public function getError(): string
-    {
-        return $this->ffi->SDL_GetError();
-    }
-
-    /**
-     * @return void
-     */
-    public function clearError(): void
-    {
-        $this->ffi->SDL_ClearError();
-    }
-
-    /**
      * Load an image directly into a render texture.
      *
      * @see Image::IMG_Load_RW()

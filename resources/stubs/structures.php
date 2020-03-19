@@ -15,6 +15,9 @@ use FFI\CPtr;
 use FFI\CData;
 use FFI\CScalar;
 use FFI\CStruct;
+use Serafim\SDL\Kernel\Keyboard\Key;
+use Serafim\SDL\Kernel\Keyboard\KeyMode;
+use Serafim\SDL\Kernel\Keyboard\ScanCode;
 
 /**
  * <code>
@@ -972,17 +975,166 @@ class DisplayEvent extends CData
 }
 
 /**
- * TODO Finish the description of this structure
+ * A structure that contains window state change event data.
+ *
+ * <code>
+ *  typedef struct SDL_WindowEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Uint32 windowID;
+ *      Uint8 event;
+ *      Uint8 padding1;
+ *      Uint8 padding2;
+ *      Uint8 padding3;
+ *      Sint32 data1;
+ *      Sint32 data2;
+ *  } SDL_WindowEvent;
+ * </code>
+ *
+ * @see https://wiki.libsdl.org/SDL_WindowEvent
  */
 class WindowEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $windowID;
+
+    /**
+     * @var int
+     */
+    public int $event;
+
+    /**
+     * @var int
+     */
+    public int $padding1;
+
+    /**
+     * @var int
+     */
+    public int $padding2;
+
+    /**
+     * @var int
+     */
+    public int $padding3;
+
+    /**
+     * @var int
+     */
+    public int $data1;
+
+    /**
+     * @var int
+     */
+    public int $data2;
 }
 
 /**
- * TODO Finish the description of this structure
+ * A structure that contains keyboard button event information.
+ *
+ * <code>
+ *  typedef struct SDL_KeyboardEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Uint32 windowID;
+ *      Uint8 state;
+ *      Uint8 repeat;
+ *      Uint8 padding2;
+ *      Uint8 padding3;
+ *      SDL_Keysym keysym;
+ *  } SDL_KeyboardEvent;
+ * </code>
+ * @see https://wiki.libsdl.org/SDL_KeyboardEvent
  */
 class KeyboardEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $windowID;
+
+    /**
+     * @var int
+     */
+    public int $state;
+
+    /**
+     * @var int
+     */
+    public int $repeat;
+
+    /**
+     * @var int
+     */
+    public int $padding2;
+
+    /**
+     * @var int
+     */
+    public int $padding3;
+
+    /**
+     * @var KeySym
+     */
+    public KeySym $keysym;
+}
+
+/**
+ * <code>
+ *  typedef struct SDL_Keysym {
+ *      SDL_Scancode scancode;
+ *      SDL_Keycode sym;
+ *      Uint16 mod;
+ *      Uint32 unused;
+ *  } SDL_Keysym;
+ * </code>
+ *
+ * @see https://wiki.libsdl.org/SDL_Keysym
+ */
+class KeySym extends CData
+{
+    /**
+     * @var int|ScanCode
+     */
+    public int $scancode;
+
+    /**
+     * @var int|Key
+     */
+    public int $sym;
+
+    /**
+     * @var int|KeyMode
+     */
+    public int $mod;
+
+    /**
+     * @deprecated Unused
+     * @var int
+     */
+    public int $unused;
 }
 
 /**
