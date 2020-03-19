@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Assert;
 
-use Serafim\SDL\SDLMethods;
+use Serafim\SDL\NativeApi;
 
 /**
  * An enumeration of assertion handling states.
@@ -27,7 +27,7 @@ use Serafim\SDL\SDLMethods;
  * </code>
  *
  * @see https://wiki.libsdl.org/SDL_AssertState
- * @see SDLMethods::SDL_ReportAssertion
+ * @see NativeApi::SDL_ReportAssertion
  */
 interface State
 {

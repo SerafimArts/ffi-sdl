@@ -2,38 +2,63 @@
 
 This is a SDL bindings for PHP
 
-> #### Note 1: API not yet fully documented
-> ##### Note 2: System functions (such as SDL_malloc or SDL_memcpy) have been removed from the API
+- [System Requirements](#requirements)
+- [Installation](#installation)
+    - [Linux](#linux)
+    - [MacOS](#macos)
+    - [Windows](#windows)
+- [Documentation](#documentation)
+- [Example](#example)
 
 ## Requirements
 
 - PHP >=7.4
 - ext-ffi
 - MacOS, Linux or MacOS (BSD or something else are not supported yet).
+- SDL >= 2.0
 
 ## Installation
 
 Library is available as composer repository and can be 
-installed using the following command in a root of your project:
+installed using the following command in a root of your project.
 
 ```bash
 $ composer require serafim/ffi-sdl
 ```
 
+### Linux
+
+- `sudo apt install libsdl2-2.0-0 -y` for `\Serafim\SDL\SDL` API.
+- `sudo apt install libsdl2-image-2.0-0 -y` for `\Serafim\SDL\Image` API.
+
+### MacOS
+
+- `brew install sdl2` for `\Serafim\SDL\SDL` API.
+- `brew install sdl2_image` for `\Serafim\SDL\Image` API.
+
+### Windows
+
+- Binaries are already included
+
 ## Documentation
 
-- [https://wiki.libsdl.org/FrontPage](https://wiki.libsdl.org/FrontPage)
+Notes:
+- API not yet fully documented and may not work in places.
+- Low level system functions (such as `SDL_malloc` or `SDL_memcpy`) have been removed.
 
-### PHP Example
+- [PHP SDL2 API](docs/api.md)
+- [SDL2 official documentation](https://wiki.libsdl.org/FrontPage)
+
+## Example
 
 ```cpp
 use Serafim\SDL\SDL;
 
 $sdl = new \Serafim\SDL\SDL();
 
-$sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
+$sdl->init(SDL::SDL_INIT_VIDEO);
 
-$window = $sdl->SDL_CreateWindow( 
+$window = $sdl->createWindow( 
     'An SDL2 window',
     SDL::SDL_WINDOWPOS_UNDEFINED,
     SDL::SDL_WINDOWPOS_UNDEFINED, 
@@ -46,7 +71,7 @@ if ($window == null) {
     throw new \Exception(sprintf('Could not create window: %s', $sdl->SDL_GetError());
 }
 
-$sdl->SDL_Delay(3000);
-$sdl->SDL_DestroyWindow($window);
-$sdl->SDL_Quit();
+$sdl->delay(3000);
+$sdl->destroyWindow($window);
+$sdl->quit();
 ```

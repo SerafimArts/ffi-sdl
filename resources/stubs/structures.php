@@ -30,8 +30,8 @@ use FFI\CStruct;
  *  } AssertData;
  * </code>
  *
- * @see SDLMethods::ReportAssertion
- * @see SDLMethods::GetAssertionReport
+ * @see NativeApi::ReportAssertion
+ * @see NativeApi::GetAssertionReport
  */
 class AssertData extends CStruct
 {
@@ -81,10 +81,10 @@ class AssertData extends CStruct
  *  } AtomicT;
  * </code>
  *
- * @see SDLMethods::AtomicCAS
- * @see SDLMethods::AtomicSet
- * @see SDLMethods::AtomicGet
- * @see SDLMethods::AtomicAdd
+ * @see NativeApi::AtomicCAS
+ * @see NativeApi::AtomicSet
+ * @see NativeApi::AtomicGet
+ * @see NativeApi::AtomicAdd
  */
 class AtomicT extends CStruct
 {
@@ -738,8 +738,6 @@ class Window extends CData
 
 /**
  * An opaque handle to an OpenGL context
- *
- * TODO Finish the description of this structure
  */
 class GLContext extends CData
 {

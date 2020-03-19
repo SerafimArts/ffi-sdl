@@ -18,6 +18,7 @@ use FFI\CType;
 use FFI\Exception;
 use Serafim\SDL\Compiler\PreProcessor;
 use Serafim\SDL\Exception\SDLException;
+use Serafim\SDL\Exception\VersionException;
 
 /**
  * Class Library
@@ -25,9 +26,9 @@ use Serafim\SDL\Exception\SDLException;
 abstract class Library implements LibraryInterface
 {
     /**
-     * @var \FFI
+     * @var string|null
      */
-    protected \FFI $ffi;
+    protected ?string $version = null;
 
     /**
      * @var string
@@ -42,7 +43,17 @@ abstract class Library implements LibraryInterface
     /**
      * @var string
      */
+    private const ERROR_VERSION_COMPAT = 'Method %s::%s() is available since %s >= %s, but %s is installed';
+
+    /**
+     * @var string
+     */
     private const ERROR_LOADING = 'Please install the dependency using a "%s" command (or)';
+
+    /**
+     * @var \FFI
+     */
+    protected \FFI $ffi;
 
     /**
      * Library constructor.
@@ -55,7 +66,97 @@ abstract class Library implements LibraryInterface
     }
 
     /**
+     * @return string
+     */
+    public function getWorkingDirectory(): string
+    {
+        return \dirname($this->getLibrary());
+    }
+
+    /**
+     * @param string|CType $type
+     * @param CData $pointer
+     * @return CData
+     */
+    public function cast($type, CData $pointer): CData
+    {
+        /** @noinspection StaticInvocationViaThisInspection */
+        return $this->ffi->cast($type, $pointer);
+    }
+
+    /**
+     * @param string|CType $type
+     * @param bool $owned
+     * @param bool $persistent
+     * @return CData
+     */
+    public function new($type, bool $owned = true, bool $persistent = false): CData
+    {
+        [$type, $depth] = \is_string($type)
+            ? $this->getRealStructName($type)
+            : [$type, 0];
+
+        /** @noinspection StaticInvocationViaThisInspection */
+        $result = $this->ffi->new($type, $owned, $persistent);
+
+        while ($depth-- > 0) {
+            $result = static::addr($result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string $type
+     * @return array
+     */
+    protected function getRealStructName(string $type): array
+    {
+        $depth = 0;
+        $chunks = \explode('\\', $type);
+        $type = \end($chunks);
+
+        while (\substr($type, -3) === 'Ptr') {
+            $type = \substr($type, 0, -3);
+            $depth++;
+        }
+
+        return [$type, $depth];
+    }
+
+    /**
+     * @param CData|CScalar|CPtr $type
+     * @return CPtr|CData
+     */
+    public static function addr(CData $type): CData
+    {
+        return \FFI::addr($type);
+    }
+
+    /**
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call(string $name, array $arguments)
+    {
+        return $this->ffi->$name(...$arguments);
+    }
+
+    /**
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public static function __callStatic(string $name, array $arguments)
+    {
+        return \FFI::$name(...$arguments);
+    }
+
+    /**
      * @return \FFI
+     * @throws SDLException
+     * @throws \RuntimeException
      */
     protected function ffi(): \FFI
     {
@@ -65,34 +166,6 @@ abstract class Library implements LibraryInterface
             $message = $e->getMessage() . ': ' . $this->getInstallationCommand();
 
             throw new SDLException($message);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getWorkingDirectory(): string
-    {
-        return \dirname($this->getLibrary());
-    }
-
-    /**
-     * @param string $directory
-     * @param \Closure $then
-     * @return mixed
-     */
-    protected function chdir(string $directory, \Closure $then)
-    {
-        $before = \getcwd();
-
-        \chdir($directory);
-
-        try {
-            return $then();
-        } finally {
-            if ($before !== false) {
-                \chdir($before);
-            }
         }
     }
 
@@ -174,82 +247,52 @@ abstract class Library implements LibraryInterface
     abstract protected function getMacOSInstallationCommand(): string;
 
     /**
-     * @param string|CType $type
-     * @param CData $pointer
-     * @return CData
+     * @param string $version
+     * @param string|null $method
+     * @return void
+     * @throws VersionException
      */
-    public function cast($type, CData $pointer): CData
+    protected function assertVersion(string $version, ?string $method = null): void
     {
-        /** @noinspection StaticInvocationViaThisInspection */
-        return $this->ffi->cast($type, $pointer);
-    }
+        if (! $this->gteThan($version)) {
+            $message = \vsprintf(self::ERROR_VERSION_COMPAT, [
+                static::class,
+                \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS)[1]['function'] ?? '<unknown>',
+                $this->getName(),
+                $version,
+                $this->getVersion(),
+            ]);
 
-    /**
-     * @param string|CType $type
-     * @param bool $owned
-     * @param bool $persistent
-     * @return CData
-     */
-    public function new($type, bool $owned = true, bool $persistent = false): CData
-    {
-        [$type, $depth] = \is_string($type)
-            ? $this->normalize($type)
-            : [$type, 0];
-
-        /** @noinspection StaticInvocationViaThisInspection */
-        $result = $this->ffi->new($type, $owned, $persistent);
-
-        while ($depth-- > 0) {
-            $result = static::addr($result);
+            throw new VersionException($message);
         }
-
-        return $result;
     }
 
     /**
-     * @param string $type
-     * @return array
+     * @param string $version
+     * @return bool
      */
-    private function normalize(string $type): array
+    private function gteThan(string $version): bool
     {
-        $depth = 0;
-        $chunks = \explode('\\', $type);
-        $type = \end($chunks);
-
-        while (\substr($type, -3) === 'Ptr') {
-            $type = \substr($type, 0, -3);
-            $depth++;
-        }
-
-        return [$type, $depth];
+        return \version_compare($this->getVersion(), $version) >= 0;
     }
 
     /**
-     * @param CData|CScalar|CPtr $type
-     * @return CPtr|CData
-     */
-    public static function addr(CData $type): CData
-    {
-        return \FFI::addr($type);
-    }
-
-    /**
-     * @param string $name
-     * @param array $arguments
+     * @param string $directory
+     * @param \Closure $then
      * @return mixed
      */
-    public function __call(string $name, array $arguments)
+    protected function chdir(string $directory, \Closure $then)
     {
-        return $this->ffi->$name(...$arguments);
-    }
+        $before = \getcwd();
 
-    /**
-     * @param string $name
-     * @param array $arguments
-     * @return mixed
-     */
-    public static function __callStatic(string $name, array $arguments)
-    {
-        return \FFI::$name(...$arguments);
+        \chdir($directory);
+
+        try {
+            return $then();
+        } finally {
+            if ($before !== false) {
+                \chdir($before);
+            }
+        }
     }
 }

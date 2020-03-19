@@ -58,10 +58,13 @@ interface Enums extends
     OpenGL\GLAttr,
     OpenGL\GLProfile,
     OpenGL\GLContextFlag,
+    OpenGL\GLSwapInterval,
     OpenGL\GLContextReleaseFlag,
     OpenGL\GLContextResetNotification,
     // Power
     Power\State,
+    // RWops
+    RWops\SeekWhence,
     // Sensor
     Sensor\Type,
     // Touch
