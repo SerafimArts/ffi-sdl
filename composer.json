@@ -18,8 +18,7 @@
     ],
     "require": {
         "php": ">=7.4",
-        "ext-ffi": "*",
-        "serafim/ffi-utils": "dev-master@dev"
+        "ext-ffi": "*"
     },
     "autoload": {
         "psr-4": {
