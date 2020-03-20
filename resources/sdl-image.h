@@ -1,20 +1,19 @@
 
 #define FFI_SCOPE "sdl-image"
 
-#include "types.h"
+#include "sdl-types.h"
+#include "sdl-image-types.h"
 
-extern const SDL_Version* IMG_Linked_Version(void);
 
-typedef enum
-{
-    IMG_INIT_JPG = 0x00000001,
-    IMG_INIT_PNG = 0x00000002,
-    IMG_INIT_TIF = 0x00000004,
-    IMG_INIT_WEBP = 0x00000008
-} IMG_InitFlags;
+// =====================================================================================================================
+//  Function Definitions
+// =====================================================================================================================
+
 
 extern int IMG_Init(int flags);
 extern void IMG_Quit(void);
+
+extern const SDL_Version* IMG_Linked_Version(void);
 
 extern SDL_Surface* IMG_LoadTyped_RW(SDL_RWops* src, int freesrc, const char* type);
 extern SDL_Surface* IMG_Load(const char* file);

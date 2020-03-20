@@ -1,7 +1,7 @@
 
 #define FFI_SCOPE "sdl"
 
-#include "types.h"
+#include "sdl-types.h"
 
 // =====================================================================================================================
 //  Function Definitions

@@ -21,7 +21,7 @@ use Serafim\SDL\Exception\SDLException;
 use Serafim\SDL\Exception\VersionException;
 
 /**
- * Class Library
+ * @mixin \FFI
  */
 abstract class Library implements LibraryInterface
 {
@@ -63,6 +63,30 @@ abstract class Library implements LibraryInterface
     protected function __construct(\FFI $ctx)
     {
         $this->ffi = $ctx;
+    }
+
+    /**
+     * @param string $dir
+     * @param \Closure $expr
+     * @return mixed
+     */
+    public function inWorkingDirectory(string $dir, \Closure $expr)
+    {
+        if (\PHP_OS_FAMILY !== 'Windows') {
+            return $expr();
+        }
+
+        $before = \getcwd();
+
+        \chdir($dir);
+
+        try {
+            return $expr();
+        } finally {
+            if (\is_string($before)) {
+                \chdir($before);
+            }
+        }
     }
 
     /**
@@ -274,25 +298,5 @@ abstract class Library implements LibraryInterface
     private function gteThan(string $version): bool
     {
         return \version_compare($this->getVersion(), $version) >= 0;
-    }
-
-    /**
-     * @param string $directory
-     * @param \Closure $then
-     * @return mixed
-     */
-    protected function chdir(string $directory, \Closure $then)
-    {
-        $before = \getcwd();
-
-        \chdir($directory);
-
-        try {
-            return $then();
-        } finally {
-            if ($before !== false) {
-                \chdir($before);
-            }
-        }
     }
 }

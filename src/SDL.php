@@ -29,8 +29,6 @@ use Serafim\SDL\Kernel\OpenGL\GLSwapInterval;
 use Serafim\SDL\Kernel\RWops\SeekWhence;
 
 /**
- * @mixin \FFI
- *
  * @formatter:off
  * @method void addEventWatch(EventFilterPtr $filter, CPtr $userdata)
  * @method void addHintCallback(string $name, int $callback, CPtr $userdata)
