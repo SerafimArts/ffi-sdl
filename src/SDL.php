@@ -74,7 +74,7 @@ use Serafim\SDL\Kernel\RWops\SeekWhence;
  * @method CursorPtr createCursor(int $data, int $mask, int $w, int $h, int $hot_x, int $hot_y)
  * @method MutexPtr createMutex()
  * @method SurfacePtr createRGBSurface(int $flags, int $width, int $height, int $depth, int $Rmask, int $Gmask, int $Bmask, int $Amask)
- * @method SurfacePtr createRGBSurfaceFrom(CPtr $pixels, int $width, int $height, int $depth, int $pitch, int $Rmask, int $Gmask, int $Bmask, int $Amask)
+ * @method SurfacePtr createRGBSurfaceFrom(CData|CPtr $pixels, int $width, int $height, int $depth, int $pitch, int $Rmask, int $Gmask, int $Bmask, int $Amask)
  * @method SurfacePtr createRGBSurfaceWithFormat(int $flags, int $width, int $height, int $depth, int $format)
  * @method SurfacePtr createRGBSurfaceWithFormatFrom(CPtr $pixels, int $width, int $height, int $depth, int $pitch, int $format)
  * @method RendererPtr createRenderer(WindowPtr $window, int $index, int $flags)
@@ -84,8 +84,8 @@ use Serafim\SDL\Kernel\RWops\SeekWhence;
  * @method CursorPtr createSystemCursor(int|CIntPtr $id)
  * @method TexturePtr createTexture(RendererPtr $renderer, int $format, int $access, int $w, int $h)
  * @method TexturePtr createTextureFromSurface(RendererPtr $renderer, SurfacePtr $surface)
- * @method ThreadPtr createThread(\Closure $fn, string|CCharPtr $name, CPtr $data, \Closure $pfnBeginThread, \Closure $pfnEndThread)
- * @method ThreadPtr createThreadWithStackSize(\Closure $fn, string|CCharPtr $name, int $stacksize, CPtr $data, \Closure $pfnBeginThread, \Closure $pfnEndThread)
+ * @method ThreadPtr createThread(\Closure $fn, string|CCharPtr $name, ?CPtr $data, ?\Closure $pfnBeginThread, ?\Closure $pfnEndThread)
+ * @method ThreadPtr createThreadWithStackSize(\Closure $fn, string|CCharPtr $name, int $stacksize, CPtr $data, ?\Closure $pfnBeginThread, ?\Closure $pfnEndThread)
  * @method WindowPtr createWindow(string $title, int $x, int $y, int $w, int $h, int $flags)
  * @method int createWindowAndRenderer(int $width, int $height, int $window_flags, WindowPtrPtr $window, RendererPtrPtr $renderer)
  * @method WindowPtr createWindowFrom(CPtr $data)
@@ -251,7 +251,6 @@ use Serafim\SDL\Kernel\RWops\SeekWhence;
  * @method int getWindowOpacity(WindowPtr $window, float $out_opacity)
  * @method int getWindowPixelFormat(WindowPtr $window)
  * @method void getWindowPosition(WindowPtr $window, int $x, int $y)
- * @method void getWindowSize(WindowPtr $window, int $w, int $h)
  * @method SurfacePtr|Surface[] getWindowSurface(WindowPtr $window)
  * @method string getWindowTitle(WindowPtr $window)
  * @method int|CIntPtr getYUVConversionMode()
@@ -419,7 +418,7 @@ use Serafim\SDL\Kernel\RWops\SeekWhence;
  * @method int removeTimer(int $id)
  * @method int renderClear(RendererPtr $renderer)
  * @method int renderCopy(RendererPtr $renderer, TexturePtr $texture, RectPtr|null $srcrect, RectPtr|null $dstrect)
- * @method int renderCopyEx(RendererPtr $renderer, TexturePtr $texture, RectPtr|null $srcrect, RectPtr|null $dstrect, float $angle, int $center, int $flip)
+ * @method int renderCopyEx(RendererPtr $renderer, TexturePtr $texture, RectPtr|null $srcrect, RectPtr|null $dstrect, float|null $angle, int|null $center, int|null $flip)
  * @method int renderCopyExF(RendererPtr $renderer, TexturePtr $texture, RectPtr|null $srcrect, FRectPtr|null $dstrect, float $angle, int $center, int $flip)
  * @method int renderCopyF(RendererPtr $renderer, TexturePtr $texture, RectPtr|null $srcrect, FRectPtr|null $dstrect)
  * @method int renderDrawLine(RendererPtr $renderer, int $x1, int $y1, int $x2, int $y2)
@@ -505,7 +504,7 @@ use Serafim\SDL\Kernel\RWops\SeekWhence;
  * @method int setSurfacePalette(SurfacePtr $surface, PalettePtr $palette)
  * @method int setSurfaceRLE(SurfacePtr $surface, int $flag)
  * @method void setTextInputRect(RectPtr $rect)
- * @method int setTextureAlphaMod(TexturePtr $texture, int $alpha)
+ * @method int setTextureAlphaMod(TexturePtr $texture, float $alpha)
  * @method int setTextureBlendMode(TexturePtr $texture, int|CIntPtr $blendMode)
  * @method int setTextureColorMod(TexturePtr $texture, int $r, int $g, int $b)
  * @method int setThreadPriority(int $priority)
@@ -1402,6 +1401,28 @@ class SDL extends Library implements Enums
         if ($this->ffi->SDL_TLSSet($id, $value, $destructor) !== 0) {
             throw new SDLException($this->ffi->SDL_GetError());
         }
+    }
+
+    /**
+     * Use this function to get the size of a window's client area.
+     *
+     * <code>
+     * </code>
+     *
+     * @param WindowPtr|CData $window
+     * @return array|int[]
+     */
+    public function getWindowSize(CData $window): array
+    {
+        /**
+         * @var CInt $width
+         * @var CInt $height
+         */
+        [$width, $height] = [$this->ffi->new('int'), $this->ffi->new('int')];
+
+        $this->ffi->SDL_GetWindowSize($window, self::addr($width), self::addr($height));
+
+        return [$width->cdata, $height->cdata];
     }
 
     /**

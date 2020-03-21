@@ -15,11 +15,12 @@ namespace Serafim\SDL;
 
 use FFI\CCharPtrPtr;
 use FFI\CData;
+use Serafim\SDL\Exception\SDLException;
 use Serafim\SDL\Image\ImageType;
 use Serafim\SDL\Image\InitFlags;
 
 /**
- * @mixin \FFI
+ * Class Image
  */
 final class Image extends Library implements InitFlags, ImageType
 {
@@ -197,13 +198,17 @@ final class Image extends Library implements InitFlags, ImageType
      * @noinspection PhpSignatureMismatchDuringInheritanceInspection
      *
      * @param string $file
-     * @return SurfacePtr|null
+     * @return SurfacePtr
      */
-    public function load(string $file): ?CData
+    public function load(string $file): CData
     {
         $result = $this->ffi->IMG_Load($file);
 
-        return $result !== null ? $this->sdl->cast('SDL_Surface*', $result) : null;
+        if ($result === null) {
+            throw new SDLException($this->sdl->getError());
+        }
+
+        return $this->sdl->cast('SDL_Surface*', $result);
     }
 
     /**
@@ -991,7 +996,7 @@ final class Image extends Library implements InitFlags, ImageType
      *
      * @param CData|SurfacePtr $surface
      * @param CData|RWopsPtr $dst
-     * @param int $freeDst
+     * @param bool $freeDst
      * @param int $quality
      * @return int
      */
@@ -1004,6 +1009,14 @@ final class Image extends Library implements InitFlags, ImageType
         $dst = $this->cast('SDL_RWops*', $dst);
 
         return $this->ffi->IMG_SaveJPG_RW($surface, $dst, (int)$freeDst, $quality);
+    }
+
+    /**
+     * @return SDL
+     */
+    public function sdl(): SDL
+    {
+        return $this->sdl;
     }
 
     /**
@@ -1051,7 +1064,7 @@ final class Image extends Library implements InitFlags, ImageType
     }
 
     /**
-     * Note: PHPStorm meta bugfix
+     * Note: PHPStorm meta bug fix
      *
      * {@inheritDoc}
      */
@@ -1061,7 +1074,7 @@ final class Image extends Library implements InitFlags, ImageType
     }
 
     /**
-     * Note: PHPStorm meta bugfix
+     * Note: PHPStorm meta bug fix
      *
      * {@inheritDoc}
      */

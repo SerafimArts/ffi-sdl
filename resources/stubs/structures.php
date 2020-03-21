@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Serafim\SDL;
 
-use FFI\CPtr;
 use FFI\CData;
+use FFI\CPtr;
 use FFI\CScalar;
 use FFI\CStruct;
 use Serafim\SDL\Kernel\Keyboard\Key;
@@ -902,57 +902,57 @@ class Event extends CData
 {
     public int                       $type;
 
-    public CommonEvent           $common;
+    public CommonEvent               $common;
 
-    public DisplayEvent          $display;
+    public DisplayEvent              $display;
 
-    public WindowEvent           $window;
+    public WindowEvent               $window;
 
-    public KeyboardEvent         $key;
+    public KeyboardEvent             $key;
 
-    public TextEditingEvent      $edit;
+    public TextEditingEvent          $edit;
 
-    public TextInputEvent        $text;
+    public TextInputEvent            $text;
 
-    public MouseMotionEvent      $motion;
+    public MouseMotionEvent          $motion;
 
-    public MouseButtonEvent      $button;
+    public MouseButtonEvent          $button;
 
-    public MouseWheelEvent       $wheel;
+    public MouseWheelEvent           $wheel;
 
-    public JoyAxisEvent          $jaxis;
+    public JoyAxisEvent              $jaxis;
 
-    public JoyBallEvent          $jball;
+    public JoyBallEvent              $jball;
 
-    public JoyHatEvent           $jhat;
+    public JoyHatEvent               $jhat;
 
-    public JoyButtonEvent        $jbutton;
+    public JoyButtonEvent            $jbutton;
 
-    public JoyDeviceEvent        $jdevice;
+    public JoyDeviceEvent            $jdevice;
 
-    public ControllerAxisEvent   $caxis;
+    public ControllerAxisEvent       $caxis;
 
-    public ControllerButtonEvent $cbutton;
+    public ControllerButtonEvent     $cbutton;
 
-    public ControllerDeviceEvent $cdevice;
+    public ControllerDeviceEvent     $cdevice;
 
-    public AudioDeviceEvent      $adevice;
+    public AudioDeviceEvent          $adevice;
 
-    public SensorEvent           $sensor;
+    public SensorEvent               $sensor;
 
-    public QuitEvent             $quit;
+    public QuitEvent                 $quit;
 
-    public UserEvent             $user;
+    public UserEvent                 $user;
 
-    public SysWMEvent            $syswm;
+    public SysWMEvent                $syswm;
 
-    public TouchFingerEvent      $tfinger;
+    public TouchFingerEvent          $tfinger;
 
-    public MultiGestureEvent     $mgesture;
+    public MultiGestureEvent         $mgesture;
 
-    public DollarGestureEvent    $dgesture;
+    public DollarGestureEvent        $dgesture;
 
-    public DropEvent             $drop;
+    public DropEvent                 $drop;
 
     /**
      * @var array|int[]
@@ -1056,6 +1056,7 @@ class WindowEvent extends CData
  *      SDL_Keysym keysym;
  *  } SDL_KeyboardEvent;
  * </code>
+ *
  * @see https://wiki.libsdl.org/SDL_KeyboardEvent
  */
 class KeyboardEvent extends CData
@@ -1149,6 +1150,59 @@ class TextInputEvent extends CData
  */
 class MouseMotionEvent extends CData
 {
+    /**
+     * ::SDL_MOUSEMOTION
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * In milliseconds, populated using SDL_GetTicks()
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * The window with mouse focus, if any
+     * @var int
+     */
+    public int $windowID;
+
+    /**
+     * The mouse instance id, or SDL_TOUCH_MOUSEID
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * The current button state
+     * @var int
+     */
+    public int $state;
+
+    /**
+     * X coordinate, relative to window
+     * @var int
+     */
+    public int $x;
+
+    /**
+     * Y coordinate, relative to window
+     * @var int
+     */
+    public int $y;
+
+    /**
+     * The relative motion in the X direction
+     * @var int
+     */
+    public int $xrel;
+
+    /**
+     * The relative motion in the Y direction
+     * @var int
+     */
+    public int $yrel;
 }
 
 /**

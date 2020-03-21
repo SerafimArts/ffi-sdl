@@ -266,7 +266,7 @@ use Serafim\SDL\Kernel\InitFlags;
  * @method int SDL_GetWindowOpacity(WindowPtr $window, float $out_opacity)
  * @method int SDL_GetWindowPixelFormat(WindowPtr $window)
  * @method void SDL_GetWindowPosition(WindowPtr $window, int $x, int $y)
- * @method void SDL_GetWindowSize(WindowPtr $window, int $w, int $h)
+ * @method void SDL_GetWindowSize(WindowPtr $window, CIntPtr $w, CIntPtr $h)
  * @method SurfacePtr|Surface[] SDL_GetWindowSurface(WindowPtr $window)
  * @method string SDL_GetWindowTitle(WindowPtr $window)
  * @method int|CIntPtr SDL_GetYUVConversionMode()
