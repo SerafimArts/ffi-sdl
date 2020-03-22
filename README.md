@@ -55,10 +55,13 @@ $ composer require serafim/ffi-sdl
 
 ## Example
 
-```cpp
+```php
 use Serafim\SDL\SDL;
+use Serafim\SDL\Event;
+use Serafim\SDL\Kernel\Event\Type;
 
-$sdl = new \Serafim\SDL\SDL();
+
+$sdl = new SDL();
 
 $sdl->init(SDL::SDL_INIT_VIDEO);
 
@@ -72,10 +75,17 @@ $window = $sdl->createWindow(
 );
 
 if ($window == null) {
-    throw new \Exception(sprintf('Could not create window: %s', $sdl->SDL_GetError());
+    throw new \Exception(sprintf('Could not create window: %s', $sdl->getError()));
 }
 
-$sdl->delay(3000);
+$event = $sdl->new(Event::class);
+
+while($sdl->pollEvent($sdl::addr($event))) {
+    if ($event->type === Type::SDL_QUIT) {
+        break;
+    }
+}
+
 $sdl->destroyWindow($window);
 $sdl->quit();
 ```
