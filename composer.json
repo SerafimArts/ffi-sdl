@@ -4,12 +4,19 @@
     "type": "library",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/SerafimArts/SDL/issues",
-        "source": "https://github.com/SerafimArts/SDL"
+        "issues": "https://github.com/SerafimArts/ffi-sdl/issues",
+        "source": "https://github.com/SerafimArts/ffi-sdl"
     },
     "keywords": [
+        "sdl",
+        "ffi",
+        "bindings",
+        "opengl",
+        "graphics",
+        "library",
+        "direct media"
     ],
-    "homepage": "https://github.com/SerafimArts/SDL",
+    "homepage": "https://github.com/SerafimArts/ffi-sdl",
     "authors": [
         {
             "name": "Kirill Nesmeyanov",
@@ -26,6 +33,7 @@
         }
     },
     "require-dev": {
+        "serafim/ffi-ide-helper": "^1.0",
         "illuminate/support": "~7.2",
         "phpunit/phpunit": "~9.0",
         "symfony/var-dumper": "~5.0"

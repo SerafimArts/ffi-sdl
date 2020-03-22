@@ -1,73 +1,76 @@
 <?php
 
+/**
+ * This file is part of SDL package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace PHPSTORM_META {
-    override(\FFI::new(), map([
-        ''         => type(0),
-        // mixed
-        "void *"   => \FFI\CScalar::class,
 
+    registerArgumentsSet('ffiCType',
+        "void *",
         // floats
-        "float"    => \FFI\CFloat::class,
-        "float *"  => \FFI\CFloatPtr::class,
-        "float **" => \FFI\CFloatPtrPtr::class,
+        "float",
+        "float *",
+        "float **",
 
-        "double"    => \FFI\CFloat::class,
-        "double *"  => \FFI\CFloatPtr::class,
-        "double **" => \FFI\CFloatPtrPtr::class,
+        "double",
+        "double *",
+        "double **",
 
-        "long double"    => \FFI\CFloat::class,
-        "long double *"  => \FFI\CFloatPtr::class,
-        "long double **" => \FFI\CFloatPtrPtr::class,
-
+        "long double",
+        "long double *",
+        "long double **",
         // integers
-        "int"            => \FFI\CInt::class,
-        "int *"          => \FFI\CIntPtr::class,
-        "int **"         => \FFI\CIntPtrPtr::class,
+        "int",
+        "int *",
+        "int **",
+        "uint8_t",
+        "uint8_t *",
+        "uint8_t **",
 
-        "uint8_t"    => \FFI\CInt::class,
-        "uint8_t *"  => \FFI\CIntPtr::class,
-        "uint8_t **" => \FFI\CIntPtrPtr::class,
+        "int8_t",
+        "int8_t*",
+        "int8_t *",
+        "int8_t**",
+        "int8_t **",
 
-        "int8_t"    => \FFI\CInt::class,
-        "int8_t*"   => \FFI\CIntPtr::class,
-        "int8_t *"  => \FFI\CIntPtr::class,
-        "int8_t**"  => \FFI\CIntPtrPtr::class,
-        "int8_t **" => \FFI\CIntPtrPtr::class,
+        "uint16_t",
+        "uint16_t *",
+        "uint16_t **",
 
-        "uint16_t"    => \FFI\CInt::class,
-        "uint16_t *"  => \FFI\CIntPtr::class,
-        "uint16_t **" => \FFI\CIntPtrPtr::class,
+        "int16_t",
+        "int16_t *",
+        "int16_t **",
 
-        "int16_t"    => \FFI\CInt::class,
-        "int16_t *"  => \FFI\CIntPtr::class,
-        "int16_t **" => \FFI\CIntPtrPtr::class,
+        "uint32_t",
+        "uint32_t *",
+        "uint32_t **",
 
-        "uint32_t"    => \FFI\CInt::class,
-        "uint32_t *"  => \FFI\CIntPtr::class,
-        "uint32_t **" => \FFI\CIntPtrPtr::class,
+        "int32_t",
+        "int32_t *",
+        "int32_t **",
 
-        "int32_t"    => \FFI\CInt::class,
-        "int32_t *"  => \FFI\CIntPtr::class,
-        "int32_t **" => \FFI\CIntPtrPtr::class,
+        "uint64_t",
+        "uint64_t *",
+        "uint64_t **",
 
-        "uint64_t"    => \FFI\CInt::class,
-        "uint64_t *"  => \FFI\CIntPtr::class,
-        "uint64_t **" => \FFI\CIntPtrPtr::class,
-
-        "int64_t"    => \FFI\CInt::class,
-        "int64_t *"  => \FFI\CIntPtr::class,
-        "int64_t **" => \FFI\CIntPtrPtr::class,
+        "int64_t",
+        "int64_t *",
+        "int64_t **",
 
         // bool
-        "bool"       => \FFI\CBool::class,
-        "bool *"     => \FFI\CBoolPtr::class,
-        "bool **"    => \FFI\CBoolPtrPtr::class,
+        "bool",
+        "bool *",
+        "bool **",
 
         // string
-        "char"       => \FFI\CChar::class,
-        "char *"     => \FFI\CStringPtr::class,
-        "char **"    => \FFI\CStringPtrPtr::class,
-    ]));
+        "char",
+        "char *",
+        "char **",
+    );
 
     override(\Serafim\SDL\SDL::new(), map([
         ''         => type(0),
@@ -86,15 +89,13 @@ namespace PHPSTORM_META {
         "long double"    => \FFI\CFloat::class,
         "long double *"  => \FFI\CFloatPtr::class,
         "long double **" => \FFI\CFloatPtrPtr::class,
-
         // integers
         "int"            => \FFI\CInt::class,
         "int *"          => \FFI\CIntPtr::class,
         "int **"         => \FFI\CIntPtrPtr::class,
-
-        "uint8_t"    => \FFI\CInt::class,
-        "uint8_t *"  => \FFI\CIntPtr::class,
-        "uint8_t **" => \FFI\CIntPtrPtr::class,
+        "uint8_t"        => \FFI\CInt::class,
+        "uint8_t *"      => \FFI\CIntPtr::class,
+        "uint8_t **"     => \FFI\CIntPtrPtr::class,
 
         "int8_t"    => \FFI\CInt::class,
         "int8_t*"   => \FFI\CIntPtr::class,
@@ -137,7 +138,7 @@ namespace PHPSTORM_META {
         "char **"    => \FFI\CStringPtrPtr::class,
     ]));
 
-    override(\Serafim\SDL\Library::new(), map([
+    override(\Serafim\SDL\Support\GracefulProxyTrait::new(), map([
         ''         => type(0),
         // mixed
         "void *"   => \FFI\CScalar::class,
@@ -154,15 +155,13 @@ namespace PHPSTORM_META {
         "long double"    => \FFI\CFloat::class,
         "long double *"  => \FFI\CFloatPtr::class,
         "long double **" => \FFI\CFloatPtrPtr::class,
-
         // integers
         "int"            => \FFI\CInt::class,
         "int *"          => \FFI\CIntPtr::class,
         "int **"         => \FFI\CIntPtrPtr::class,
-
-        "uint8_t"    => \FFI\CInt::class,
-        "uint8_t *"  => \FFI\CIntPtr::class,
-        "uint8_t **" => \FFI\CIntPtrPtr::class,
+        "uint8_t"        => \FFI\CInt::class,
+        "uint8_t *"      => \FFI\CIntPtr::class,
+        "uint8_t **"     => \FFI\CIntPtrPtr::class,
 
         "int8_t"    => \FFI\CInt::class,
         "int8_t*"   => \FFI\CIntPtr::class,
@@ -205,11 +204,16 @@ namespace PHPSTORM_META {
         "char **"    => \FFI\CStringPtrPtr::class,
     ]));
 
-    override(\Serafim\SDL\Library::addr(), map([
+    override(\Serafim\SDL\SDL::addr(), map([
+        '' => '@Ptr',
+    ]));
+    override(\Serafim\SDL\Support\GracefulProxyTrait::addr(), map([
         '' => '@Ptr',
     ]));
 
-    override(\Serafim\SDL\Library::cast(), map([
-        '' => '@',
-    ]));
+    expectedArguments(\Serafim\SDL\SDL::new(), 0, argumentsSet('ffiCType'));
+    expectedArguments(\Serafim\SDL\Support\GracefulProxyTrait::new(), 0, argumentsSet('ffiCType'));
+
+    expectedArguments(\Serafim\SDL\SDL::cast(), 0, argumentsSet('ffiCType'));
+    expectedArguments(\Serafim\SDL\Support\GracefulProxyTrait::cast(), 0, argumentsSet('ffiCType'));
 }

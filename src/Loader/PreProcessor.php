@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Compiler;
+namespace Serafim\SDL\Loader;
 
 /**
  * Class Preprocessor

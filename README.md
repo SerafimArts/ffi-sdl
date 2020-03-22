@@ -7,6 +7,7 @@ This is a SDL bindings for PHP
     - [Linux](#linux)
     - [MacOS](#macos)
     - [Windows](#windows)
+- [Extensions](#extensions)
 - [Documentation](#documentation)
 - [Example](#example)
 
@@ -28,17 +29,19 @@ $ composer require serafim/ffi-sdl
 
 #### Linux
 
-- `sudo apt install libsdl2-2.0-0 -y` for `\Serafim\SDL\SDL` API.
-- `sudo apt install libsdl2-image-2.0-0 -y` for `\Serafim\SDL\Image` API.
+- `sudo apt install libsdl2-2.0-0 -y`
 
 #### MacOS
 
-- `brew install sdl2` for `\Serafim\SDL\SDL` API.
-- `brew install sdl2_image` for `\Serafim\SDL\Image` API.
+- `brew install sdl2`
 
 #### Windows
 
-- Binaries are already included
+- SDL (2.0.12) binaries are already bundled
+
+## Extensions
+
+- [SDL Image](https://github.com/SerafimArts/ffi-sdl-image)
 
 ## Documentation
 

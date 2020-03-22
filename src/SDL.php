@@ -27,6 +27,10 @@ use Serafim\SDL\Kernel\Enums;
 use Serafim\SDL\Kernel\OpenGL\GLAttr;
 use Serafim\SDL\Kernel\OpenGL\GLSwapInterval;
 use Serafim\SDL\Kernel\RWops\SeekWhence;
+use Serafim\SDL\Loader\LibraryInterface;
+use Serafim\SDL\Support\GracefulProxyTrait;
+use Serafim\SDL\Support\SingletonTrait;
+use Serafim\SDL\Support\VersionComparisonTrait;
 
 /**
  * @formatter:off
@@ -570,41 +574,11 @@ use Serafim\SDL\Kernel\RWops\SeekWhence;
  * @method int writeU8(RWopsPtr $dst, int $value)
  * @formatter:on
  */
-class SDL extends Library implements Enums
+class SDL implements Enums
 {
-    /**
-     * @var string
-     */
-    protected const SDL_GET_VERSION = <<<'C'
-        typedef struct SDL_Version
-        {
-            uint8_t major;
-            uint8_t minor;
-            uint8_t patch;
-        } SDL_Version;
-        
-        void SDL_GetVersion(SDL_Version * ver);
-    C;
-
-    /**
-     * @var string
-     */
-    private const LIBRARY_WIN64 = __DIR__ . '/../bin/x64/SDL2.dll';
-
-    /**
-     * @var string
-     */
-    private const LIBRARY_WIN86 = __DIR__ . '/../bin/x86/SDL2.dll';
-
-    /**
-     * @var string
-     */
-    private const LIBRARY_LINUX = 'libSDL2-2.0.so.0';
-
-    /**
-     * @var string
-     */
-    private const LIBRARY_MAC = 'libSDL2-2.0.0.dylib';
+    use SingletonTrait;
+    use GracefulProxyTrait;
+    use VersionComparisonTrait;
 
     /**
      * @var \FFI|SDLNativeApiAutocomplete
@@ -619,7 +593,46 @@ class SDL extends Library implements Enums
      */
     public function __construct()
     {
-        parent::__construct($this->ffi());
+        $this->ffi = $this->info()->ffi;
+
+        self::setInstance($this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getLibrary(): LibraryInterface
+    {
+        return new Library();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getOutputPath(): string
+    {
+        return __DIR__ . '/../out/';
+    }
+
+    /**
+     * Use this function to get the version of SDL that is linked against your program.
+     *
+     * <code>
+     *  extern void SDL_GetVersion(SDL_Version* ver);
+     * </code>
+     *
+     * @return Version
+     */
+    public function getVersion(): CData
+    {
+        $version = $this->ffi->new('SDL_Version');
+
+        /** @var VersionPtr $ptr */
+        $ptr = self::addr($version);
+
+        $this->ffi->SDL_GetVersion($ptr);
+
+        return $version;
     }
 
     /**
@@ -929,29 +942,13 @@ class SDL extends Library implements Enums
     }
 
     /**
-     * Overriding this method fixes the bug of PhpStorm .phpstorm.meta.php
-     *
-     * {@inheritDoc}
+     * @param CData|CPtr $type
+     * @return CPtr|CData
+     * @noinspection PhpSignatureMismatchDuringInheritanceInspection
      */
     public static function addr(CData $type): CData
     {
-        // Assert is needed to suppress the PhpStorm [EA] plugin's warnings
-        \assert(true);
-
-        return parent::addr($type);
-    }
-
-    /**
-     * Overriding this method fixes the bug of PhpStorm .phpstorm.meta.php
-     *
-     * {@inheritDoc}
-     */
-    public function new($type, bool $owned = true, bool $persistent = false): CData
-    {
-        // Assert is needed to suppress the PhpStorm [EA] plugin's warnings
-        \assert(true);
-
-        return parent::new($type, $owned, $persistent);
+        return \FFI::addr($type);
     }
 
     /**
@@ -1423,94 +1420,5 @@ class SDL extends Library implements Enums
         $this->ffi->SDL_GetWindowSize($window, self::addr($width), self::addr($height));
 
         return [$width->cdata, $height->cdata];
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return 'SDL';
-    }
-
-    /**
-     * @return string
-     * @throws \LogicException
-     */
-    public function getVersion(): string
-    {
-        if ($this->version === null) {
-            $ctx = \FFI::cdef(static::SDL_GET_VERSION, $this->getLibrary());
-
-            $ctx->SDL_GetVersion(\FFI::addr($ver = $ctx->new('SDL_Version')));
-
-            return $this->version = \sprintf('%d.%d.%d', $ver->major, $ver->minor, $ver->patch);
-        }
-
-        return $this->version;
-    }
-
-    /**
-     * @return string
-     * @throws \LogicException
-     */
-    public function getLibrary(): string
-    {
-        switch (\PHP_OS_FAMILY) {
-            case 'Windows':
-                return \PHP_INT_SIZE === 8 ? self::LIBRARY_WIN64 : self::LIBRARY_WIN86;
-
-            case 'Linux':
-                return self::LIBRARY_LINUX;
-
-            case 'Darwin':
-                return self::LIBRARY_MAC;
-
-            default:
-                throw new \LogicException('Unsupported OS');
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __call(string $name, array $arguments)
-    {
-        if (\strpos($name, 'SDL_') !== 0) {
-            $name = 'SDL_' . \ucfirst($name);
-        }
-
-        return parent::__call($name, $arguments);
-    }
-
-    /**
-     * @param string $type
-     * @return array
-     */
-    protected function getRealStructName(string $type): array
-    {
-        [$name, $depth] = parent::getRealStructName($type);
-
-        if (\strpos($name, 'SDL_') !== 0 && \ctype_upper($name[0] ?? '')) {
-            $name = 'SDL_' . $name;
-        }
-
-        return [$name, $depth];
-    }
-
-    /**
-     * @return string
-     */
-    protected function getLinuxInstallationCommand(): string
-    {
-        return 'sudo apt install libsdl2-2.0-0 -y';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getMacOSInstallationCommand(): string
-    {
-        return 'brew install sdl2';
     }
 }

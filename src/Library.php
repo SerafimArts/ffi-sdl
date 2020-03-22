@@ -11,292 +11,126 @@ declare(strict_types=1);
 
 namespace Serafim\SDL;
 
-use FFI\CData;
-use FFI\CPtr;
-use FFI\CScalar;
-use FFI\CType;
-use FFI\Exception;
-use Serafim\SDL\Compiler\PreProcessor;
-use Serafim\SDL\Exception\SDLException;
-use Serafim\SDL\Exception\VersionException;
+use Serafim\SDL\Loader\BitDepth;
+use Serafim\SDL\Loader\LibraryInterface;
+use Serafim\SDL\Loader\OperatingSystem;
 
 /**
- * @mixin \FFI
+ * Class Library
  */
-abstract class Library implements LibraryInterface
+class Library implements LibraryInterface
 {
+    /**
+     * @var string
+     */
+    protected const SDL_GET_VERSION = <<<'C'
+        typedef struct SDL_Version
+        {
+            uint8_t major;
+            uint8_t minor;
+            uint8_t patch;
+        } SDL_Version;
+        
+        void SDL_GetVersion(SDL_Version * ver);
+    C;
+
+    /**
+     * @var string
+     */
+    private const LIBRARY_WIN64 = __DIR__ . '/../bin/x64/SDL2.dll';
+
+    /**
+     * @var string
+     */
+    private const LIBRARY_WIN86 = __DIR__ . '/../bin/x86/SDL2.dll';
+
+    /**
+     * @var string
+     */
+    private const LIBRARY_LINUX = 'libSDL2-2.0.so.0';
+
+    /**
+     * @var string
+     */
+    private const LIBRARY_MAC = 'libSDL2-2.0.0.dylib';
+
     /**
      * @var string|null
      */
-    protected ?string $version = null;
+    private ?string $version = null;
 
     /**
-     * @var string
+     * {@inheritDoc}
      */
-    protected const HEADERS_COMPILED_PATHNAME = __DIR__ . '/../out/%s-%s-%s-x%s.h';
-
-    /**
-     * @var string
-     */
-    protected const HEADERS_SOURCE_PATHNAME = __DIR__ . '/../resources/%s.h';
-
-    /**
-     * @var string
-     */
-    private const ERROR_VERSION_COMPAT = 'Method %s::%s() is available since %s >= %s, but %s is installed';
-
-    /**
-     * @var string
-     */
-    private const ERROR_LOADING = 'Please install the dependency using a "%s" command (or)';
-
-    /**
-     * @var \FFI
-     */
-    protected \FFI $ffi;
-
-    /**
-     * Library constructor.
-     *
-     * @param \FFI $ctx
-     */
-    protected function __construct(\FFI $ctx)
+    public function getName(): string
     {
-        $this->ffi = $ctx;
+        return 'SDL';
     }
 
     /**
-     * @param string $dir
-     * @param \Closure $expr
-     * @return mixed
-     */
-    public function inWorkingDirectory(string $dir, \Closure $expr)
-    {
-        if (\PHP_OS_FAMILY !== 'Windows') {
-            return $expr();
-        }
-
-        $before = \getcwd();
-
-        \chdir($dir);
-
-        try {
-            return $expr();
-        } finally {
-            if (\is_string($before)) {
-                \chdir($before);
-            }
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getWorkingDirectory(): string
-    {
-        return \dirname($this->getLibrary());
-    }
-
-    /**
-     * @param string|CType $type
-     * @param CData $pointer
-     * @return CData
-     */
-    public function cast($type, CData $pointer): CData
-    {
-        /** @noinspection StaticInvocationViaThisInspection */
-        return $this->ffi->cast($type, $pointer);
-    }
-
-    /**
-     * @param string|CType $type
-     * @param bool $owned
-     * @param bool $persistent
-     * @return CData
-     */
-    public function new($type, bool $owned = true, bool $persistent = false): CData
-    {
-        [$type, $depth] = \is_string($type)
-            ? $this->getRealStructName($type)
-            : [$type, 0];
-
-        /** @noinspection StaticInvocationViaThisInspection */
-        $result = $this->ffi->new($type, $owned, $persistent);
-
-        while ($depth-- > 0) {
-            $result = static::addr($result);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param string $type
-     * @return array
-     */
-    protected function getRealStructName(string $type): array
-    {
-        $depth = 0;
-        $chunks = \explode('\\', $type);
-        $type = \end($chunks);
-
-        while (\substr($type, -3) === 'Ptr') {
-            $type = \substr($type, 0, -3);
-            $depth++;
-        }
-
-        return [$type, $depth];
-    }
-
-    /**
-     * @param CData|CScalar|CPtr $type
-     * @return CPtr|CData
-     */
-    public static function addr(CData $type): CData
-    {
-        return \FFI::addr($type);
-    }
-
-    /**
-     * @param string $name
-     * @param array $arguments
-     * @return mixed
-     */
-    public function __call(string $name, array $arguments)
-    {
-        return $this->ffi->$name(...$arguments);
-    }
-
-    /**
-     * @param string $name
-     * @param array $arguments
-     * @return mixed
-     */
-    public static function __callStatic(string $name, array $arguments)
-    {
-        return \FFI::$name(...$arguments);
-    }
-
-    /**
-     * @return \FFI
-     * @throws SDLException
-     * @throws \RuntimeException
-     */
-    protected function ffi(): \FFI
-    {
-        try {
-            return \FFI::cdef(\file_get_contents($this->getHeaders()), $this->getLibrary());
-        } catch (Exception $e) {
-            $message = $e->getMessage() . ': ' . $this->getInstallationCommand();
-
-            throw new SDLException($message);
-        }
-    }
-
-    /**
-     * @return string
-     * @throws \RuntimeException
+     * {@inheritDoc}
      */
     public function getHeaders(): string
     {
-        if (! \is_file($this->getCompiledHeaders())) {
-            $result = (new PreProcessor($this->getVersion()))
-                ->file($this->getOriginalHeaders());
+        return __DIR__ . '/../resources/sdl.h';
+    }
 
-            \file_put_contents($this->getCompiledHeaders(), $result);
+    /**
+     * {@inheritDoc}
+     */
+    public function getVersion(string $library): string
+    {
+        if ($this->version === null) {
+            $ctx = \FFI::cdef(static::SDL_GET_VERSION, $library);
+
+            $ctx->SDL_GetVersion(\FFI::addr($ver = $ctx->new('SDL_Version')));
+
+            return $this->version = \sprintf('%d.%d.%d', $ver->major, $ver->minor, $ver->patch);
         }
 
-        return $this->getCompiledHeaders();
+        return $this->version;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    private function getCompiledHeaders(): string
+    public function getLibrary(OperatingSystem $os, BitDepth $bits): ?string
     {
-        return \vsprintf(static::HEADERS_COMPILED_PATHNAME, [
-            $this->getNormalizedName(),
-            $this->getVersion(),
-            \strtolower(\PHP_OS_FAMILY),
-            \PHP_INT_SIZE === 8 ? '64' : '86',
-        ]);
-    }
+        switch (true) {
+            case $os->isWindows() && $bits->is64BitDepth():
+                return self::LIBRARY_WIN64;
 
-    /**
-     * @return string
-     */
-    private function getNormalizedName(): string
-    {
-        return \str_replace(' ', '-', \strtolower($this->getName()));
-    }
+            case $os->isWindows() && $bits->is32BitDepth():
+                return self::LIBRARY_WIN86;
 
-    /**
-     * @return string
-     */
-    private function getOriginalHeaders(): string
-    {
-        return \vsprintf(static::HEADERS_SOURCE_PATHNAME, [
-            $this->getNormalizedName(),
-        ]);
-    }
+            case $os->isLinux():
+                return self::LIBRARY_LINUX;
 
-    /**
-     * @return string
-     */
-    private function getInstallationCommand(): string
-    {
-        switch (\PHP_OS_FAMILY) {
-            case 'Windows':
-                return 'Internal binary data error';
-
-            case 'Linux':
-                return \sprintf(self::ERROR_LOADING, $this->getLinuxInstallationCommand());
-
-            case 'Darwin':
-                return \sprintf(self::ERROR_LOADING, $this->getMacOSInstallationCommand());
-
-            default:
-                return '<unknown>';
+            case $os->isMac():
+                return self::LIBRARY_MAC;
         }
+
+        return null;
     }
 
     /**
-     * @return string
+     * @param OperatingSystem $os
+     * @param BitDepth $bits
+     * @return string|null
      */
-    abstract protected function getLinuxInstallationCommand(): string;
-
-    /**
-     * @return string
-     */
-    abstract protected function getMacOSInstallationCommand(): string;
-
-    /**
-     * @param string $version
-     * @param string|null $method
-     * @return void
-     * @throws VersionException
-     */
-    protected function assertVersion(string $version, ?string $method = null): void
+    public function suggest(OperatingSystem $os, BitDepth $bits): ?string
     {
-        if (! $this->gteThan($version)) {
-            $message = \vsprintf(self::ERROR_VERSION_COMPAT, [
-                static::class,
-                \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS)[1]['function'] ?? '<unknown>',
-                $this->getName(),
-                $version,
-                $this->getVersion(),
-            ]);
+        switch (true) {
+            case $os->isWindows();
+                return 'Try to open issue on GitHub: https://github.com/SerafimArts/ffi-sdl/issues';
 
-            throw new VersionException($message);
+            case $os->isLinux():
+                return 'Dependency installation required: "sudo apt install libsdl2-2.0-0 -y"';
+
+            case $os->isMac():
+                return 'Dependency installation required: "brew install sdl2"';
         }
-    }
 
-    /**
-     * @param string $version
-     * @return bool
-     */
-    private function gteThan(string $version): bool
-    {
-        return \version_compare($this->getVersion(), $version) >= 0;
+        return null;
     }
 }

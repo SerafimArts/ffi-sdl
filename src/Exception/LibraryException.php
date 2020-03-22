@@ -12,10 +12,8 @@ declare(strict_types=1);
 namespace Serafim\SDL\Exception;
 
 /**
- * Class SDLException
+ * Class LibraryException
  */
-class SDLException extends LibraryException
+class LibraryException extends \RuntimeException
 {
-
 }
-

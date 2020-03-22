@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL;
+namespace Serafim\SDL\Loader;
 
 /**
  * Interface LibraryInterface
@@ -27,17 +27,22 @@ interface LibraryInterface
     public function getHeaders(): string;
 
     /**
+     * @param string $library
      * @return string
      */
-    public function getVersion(): string;
+    public function getVersion(string $library): string;
 
     /**
-     * @return string
+     * @param OperatingSystem $os
+     * @param BitDepth $bits
+     * @return string|null
      */
-    public function getLibrary(): string;
+    public function getLibrary(OperatingSystem $os, BitDepth $bits): ?string;
 
     /**
-     * @return string
+     * @param OperatingSystem $os
+     * @param BitDepth $bits
+     * @return string|null
      */
-    public function getWorkingDirectory(): string;
+    public function suggest(OperatingSystem $os, BitDepth $bits): ?string;
 }
