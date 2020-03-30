@@ -15,7 +15,8 @@ This is a SDL bindings for PHP
 
 - PHP >=7.4
 - ext-ffi
-- MacOS, Linux or MacOS (BSD or something else are not supported yet).
+- Windows, Linux or MacOS 
+    - Android, iOS, BSD or something else are not supported yet
 - SDL >= 2.0
 
 ## Installation
