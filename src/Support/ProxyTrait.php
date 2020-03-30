@@ -34,4 +34,24 @@ trait ProxyTrait
     {
         return \FFI::$name(...$arguments);
     }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function __get(string $name)
+    {
+        return $this->ffi->$name;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @return mixed
+     * @noinspection MagicMethodsValidityInspection
+     */
+    public function __set(string $name, $value): void
+    {
+        $this->ffi->$name = $value;
+    }
 }
