@@ -611,6 +611,24 @@ class Rect extends CData
 }
 
 /**
+ * A structure that defines a two dimensional point.
+ *
+ * TODO Finish the description of this structure
+ */
+class Point extends CData
+{
+    /**
+     * @var int
+     */
+    public int $x;
+
+    /**
+     * @var int
+     */
+    public int $y;
+}
+
+/**
  * A structure that contains a collection of pixels used in software blitting.
  *
  * TODO Finish the description of this structure
@@ -1835,6 +1853,23 @@ class RectPtr extends Rect
     }
 
     private function offsetSet(int $i, Rect $d): void
+    {
+    }
+}
+
+
+/** @mixin CPtr */
+class PointPtr extends Point
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): Point
+    {
+    }
+
+    private function offsetSet(int $i, Point $d): void
     {
     }
 }
