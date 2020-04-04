@@ -9,13 +9,13 @@
 
 declare(strict_types=1);
 
-namespace SDL\Exception;
+namespace SDL\Tests;
+
+use PHPUnit\Framework\TestCase as BaseTestCase;
 
 /**
- * Class SDLException
+ * Class TestCase
  */
-class SDLException extends LibraryException
+abstract class TestCase extends BaseTestCase
 {
-
 }
-

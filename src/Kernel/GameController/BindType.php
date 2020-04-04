@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Kernel\GameController;
+namespace SDL\Kernel\GameController;
 
 /**
  * Interface GameControllerBindTypeInterface

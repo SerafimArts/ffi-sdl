@@ -29,18 +29,17 @@
     },
     "autoload": {
         "psr-4": {
-            "Serafim\\SDL\\": "src"
+            "SDL\\": "src"
         }
     },
     "require-dev": {
         "serafim/ffi-ide-helper": "^1.0",
-        "illuminate/support": "~7.2",
         "phpunit/phpunit": "~9.0",
         "symfony/var-dumper": "~5.0"
     },
     "autoload-dev": {
         "psr-4": {
-            "Serafim\\SDL\\Tests\\": "tests"
+            "SDL\\Tests\\": "tests"
         }
     },
     "config": {

@@ -9,13 +9,18 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Loader;
+namespace SDL\Loader;
 
 /**
  * Class Preprocessor
  */
 class PreProcessor
 {
+    /**
+     * @var string
+     */
+    private const PATTERN_VER = '/^\d+(\.\d+)*$/um';
+
     /**
      * @var string
      */
@@ -26,34 +31,111 @@ class PreProcessor
         '(?:(?:^\\h*#\\h*ifdef\\h((?:\\\\s|[^\\n])+))(*MARK:T_IFDEF))|' .
         '(?:(?:^\\h*#\\h*ifndef\\h((?:\\\\s|[^\\n])+))(*MARK:T_IFNDEF))|' .
         '(?:(?:^\\h*#\\h*endif\\b)(*MARK:T_ENDIF))|' .
-        '(?:(?:^\\h*#\\h*if\\h+version\\h*([<>=]+)\\h*((?:\\\\s|[^\\n])+))(*MARK:T_IF_VERSION))|' .
+        '(?:(?:^\\h*#\\h*if\\h(.+?)\\h*([!<>=]+)\\h*((?:\\\\s|[^\\n])+))(*MARK:T_IF))|' .
         '(?:(?:[^\\n]+)(*MARK:T_SOURCE))|(?:(?:\\n+)(*MARK:T_NEW_LINE)))/Ssum';
 
     /**
-     * @var bool[]
+     * @var array|string[]
      */
-    private array $assertions = [];
+    private array $defines = [];
 
     /**
-     * @var string
+     * @var array|string[]
      */
-    private string $version;
+    private array $includes = [];
 
     /**
-     * @var \Closure|null
+     * PreProcessor constructor.
      */
-    private ?\Closure $debug = null;
-
-    /**
-     * Reader constructor.
-     *
-     * @param string $version
-     * @param \Closure|null $debug
-     */
-    public function __construct(string $version, \Closure $debug = null)
+    public function __construct()
     {
-        $this->version = $version;
-        $this->debug = $debug;
+        $this->bootDefaultDefines();
+        $this->bootDefaultIncludeDirectory();
+    }
+
+    /**
+     * @return void
+     */
+    private function bootDefaultIncludeDirectory(): void
+    {
+        $this->includes[] = __DIR__ . '/../../resources';
+    }
+
+    /**
+     * @param string $dir
+     * @return void
+     */
+    public function addIncludeDirectory(string $dir): void
+    {
+        $this->includes[] = $dir;
+    }
+
+    /**
+     * @param string $define
+     * @param string $value
+     * @return void
+     */
+    private function defineWrapped(string $define, string $value): void
+    {
+        $this->define('_' . $define, $value);
+        $this->define('__' . $define, $value);
+        $this->define('__' . $define . '__', $value);
+    }
+
+    /**
+     * @return void
+     */
+    private function bootDefaultDefines(): void
+    {
+        $define = function (string ...$defines): void {
+            foreach ($defines as $def) {
+                $this->defineWrapped($def, '1');
+            }
+        };
+
+        $define(\PHP_INT_SIZE === 8 ? 'amd64' : 'i386');
+
+        switch (\PHP_OS_FAMILY) {
+            case 'Windows':
+                $define('cygwin', 'mingw32', 'windows', 'win');
+                $define(\PHP_INT_SIZE === 8 ? 'win64' : 'win32');
+                break;
+
+            case 'Linux':
+                $define('linux');
+                break;
+
+            case 'Darwin':
+                $define('osx', 'apple', 'macosx');
+                break;
+
+            case 'BSD':
+                $define('freebsd', 'freebsd_kernel', 'dragonfly', 'bsdi', 'openbsd');
+                break;
+
+            case 'Solaris':
+                $define('sun', 'svr4', 'solaris');
+                break;
+        }
+    }
+
+    /**
+     * @param string $define
+     * @param string $value
+     * @return void
+     */
+    public function define(string $define, string $value): void
+    {
+        $this->defines[$define] = $value;
+    }
+
+    /**
+     * @param string $define
+     * @return void
+     */
+    public function undef(string $define): void
+    {
+        unset($this->defines[$define]);
     }
 
     /**
@@ -76,72 +158,90 @@ class PreProcessor
 
     /**
      * @param string $source
-     * @param string|null $dir
+     * @param string|null $cwd
      * @return string
      * @throws \RuntimeException
      */
-    public function source(string $source, string $dir = null): string
+    public function source(string $source, string $cwd = null): string
     {
-        $this->assertions = [];
-
         $result = '';
 
-        foreach ($this->lex($source) as $name => $value) {
-            $prefix = \count($this->assertions) . ':';
-
-            switch ($name) {
-                case 'T_INCLUDE':
-                    $file = \stripslashes(\trim($value[1], '"<>'));
-
-                    $result .= $this->file(($dir ?? '.') . '/' . $file);
-                    break;
-                case 'T_IFNDEF':
-                    $this->assertions[$prefix . $value[1]] = ! $this->assertIfDef($value[1]);
-
-                    continue 2;
-
-                case 'T_IFDEF':
-                    $this->assertions[$prefix . $value[1]] = $this->assertIfDef($value[1]);
-
-                    continue 2;
-
-                case 'T_IF_VERSION':
-                    $this->assertions[$prefix . $value[1] . $value[2]] = $this->assertVersion($value[1], $value[2]);
-                    continue 2;
-
-                case 'T_ENDIF':
-                    if (\count($this->assertions)) {
-                        \array_pop($this->assertions);
-                        continue 2;
-                    }
-                    break;
-            }
-
-            if ($this->debug) {
-                ($this->debug)($value[0], $this->assertions);
-            }
-
-            if ($this->matchAllAssertions($this->assertions)) {
-                $result .= $value[0];
-            }
+        foreach ($this->execute($source, $cwd) as $value) {
+            $result .= $value;
         }
 
         return $result;
     }
 
     /**
-     * @param array $assertions
-     * @return bool
+     * @param string $file
+     * @param string|null $cwd
+     * @return string
      */
-    private function matchAllAssertions(array $assertions): bool
+    private function lookup(string $file, string $cwd = null): string
     {
-        foreach ($assertions as $assertion) {
-            if (! $assertion) {
-                return false;
+        if (\is_string($cwd) && \is_file($cwd . '/' . $file)) {
+            return $cwd . '/' . $file;
+        }
+
+        foreach ($this->includes as $dir) {
+            if (\is_file($dir . '/' . $file)) {
+                return $dir . '/' . $file;
             }
         }
 
-        return true;
+        return './' . $file;
+    }
+
+    /**
+     * @param string $source
+     * @param string|null $dir
+     * @return \Traversable|string[]
+     */
+    private function execute(string $source, string $dir = null): \Traversable
+    {
+        $assertions = [];
+
+        $lexemes = $this->lex($source);
+
+        foreach ($lexemes as $name => $value) {
+            $prefix = \count($assertions) . ':';
+
+            switch ($name) {
+                case 'T_INCLUDE':
+                    $file = \stripslashes(\trim($value[1], '"<>'));
+
+                    yield $this->file($this->lookup($file, $dir));
+                    break;
+
+                case 'T_IFNDEF':
+                    $assertions[$prefix . $value[1]] = ! $this->assertIfDef($value[1]);
+                    continue 2;
+
+                case 'T_IFDEF':
+                    $assertions[$prefix . $value[1]] = $this->assertIfDef($value[1]);
+                    continue 2;
+
+                case 'T_IF':
+                    $assertions[$prefix . $value[0]] = $this->assertIf(
+                        $this->preprocess($value[1]),
+                        $this->preprocess($value[3]),
+                        $value[2]
+                    );
+                    continue 2;
+
+                case 'T_ENDIF':
+                    if (\count($assertions)) {
+                        \array_pop($assertions);
+                        continue 2;
+                    }
+                    break;
+            }
+
+            if ($this->matchAllAssertions($assertions)) {
+                yield $this->preprocess($value[0]);
+            }
+        }
     }
 
     /**
@@ -158,124 +258,91 @@ class PreProcessor
     }
 
     /**
+     * @param string $source
+     * @return string
+     */
+    private function preprocess(string $source): string
+    {
+        foreach ($this->defines as $from => $to) {
+            $pattern = \sprintf('/\b%s\b/sum', \preg_quote($from, '/'));
+
+            $source = \preg_replace($pattern, $to, $source);
+        }
+
+        return $source;
+    }
+
+    /**
      * @param string $def
      * @return bool
      */
     private function assertIfDef(string $def): bool
     {
-        switch (\strtolower(\trim($def))) {
-            case '__win32__':
-            case '__win32':
-            case 'win32':
-            case '__cygwin__':
-            case '__cygwin':
-            case 'cygwin':
-            case '__mingw32__':
-            case '__mingw32':
-            case 'mingw32':
-            case '__windows__':
-            case '__windows':
-            case '__win':
-                return \PHP_OS_FAMILY === 'Windows';
-
-            case '_win64':
-            case '_m_ia64':
-            case '_m_amd64':
-                return \PHP_OS_FAMILY === 'Windows' && \PHP_INT_SIZE === 8;
-
-            case '_win32':
-                return \PHP_OS_FAMILY === 'Windows' && \PHP_INT_SIZE !== 8;
-
-            case '__linux__':
-            case '__linux':
-            case 'linux':
-                return \PHP_OS_FAMILY === 'Linux';
-
-            case '__osx__':
-            case '__osx':
-            case 'osx':
-            case '__apple__':
-            case '__apple':
-            case 'apple':
-            case '__macosx__':
-            case '__macosx':
-            case 'macosx':
-                return \PHP_OS_FAMILY === 'Darwin';
-
-            case '__freebsd__':
-            case '__freebsd':
-            case 'freebsd':
-            case '__freebsd_kernel__':
-            case '__freebsd_kernel':
-            case 'freebsd_kernel':
-            case '__dragonfly__':
-            case '__dragonfly':
-            case 'dragonfly':
-            case '__bsdi__':
-            case '__bsdi':
-            case 'bsdi':
-            case '__openbsd__':
-            case '__openbsd':
-            case 'openbsd':
-                return \PHP_OS_FAMILY === 'BSD';
-
-            case '__sun__':
-            case '__sun':
-            case 'sun':
-            case '__svr4__':
-            case '__svr4':
-            case 'svr4':
-            case '__solaris__':
-            case '__solaris':
-            case 'solaris':
-                return \PHP_OS_FAMILY === 'Solaris';
-
-            case '__lp64__':
-                return \PHP_INT_SIZE === 8;
-
-            case '__android__':
-            case '__android':
-            case 'android':
-            case 'egl_khr_platform_android':
-                // TODO Android
-            case '__ios__':
-            case '__ios':
-            case 'ios':
-            case '__iphoneos__':
-            case '__iphoneos':
-            case 'iphoneos':
-                // TODO IPhone
-                return false;
-        }
-
-        return false;
+        return isset($this->defines[$def]);
     }
 
     /**
-     * @param string $cmp
-     * @param string $version
+     * @param string $a
+     * @param string $b
+     * @param string $operator
      * @return bool
      */
-    private function assertVersion(string $cmp, string $version): bool
+    private function assertIf(string $a, string $b, string $operator): bool
     {
-        $version = \trim($version);
+        if (\preg_match(self::PATTERN_VER, $a) && \preg_match(self::PATTERN_VER, $b)) {
+            return $this->compare(\version_compare($a, $b), $operator);
+        }
 
-        switch ($cmp) {
+        return $this->compare($a <=> $b, $operator);
+    }
+
+    /**
+     * @param int $result
+     * @param string $operator
+     * @return bool
+     */
+    private function compare(int $result, string $operator): bool
+    {
+        switch ($operator) {
             case '>':
-                return \version_compare($this->version, $version) > 0;
+                return $result > 0;
+
             case '<':
-                return \version_compare($this->version, $version) < 0;
+                return $result < 0;
+
             case '>=':
-                return \version_compare($this->version, $version) >= 0;
+                return $result >= 0;
+
             case '<=':
-                return \version_compare($this->version, $version) <= 0;
+                return $result <= 0;
+
             case '=':
             case '==':
             case '===':
-                return \version_compare($this->version, $version) === 0;
+                return $result === 0;
+
+            case '<>':
+            case '!=':
+            case '!==':
+                return $result !== 0;
 
             default:
-                throw new \LogicException('Unsupported operator: ' . $cmp);
+                throw new \LogicException('Unsupported operator: ' . $operator);
         }
+    }
+
+    /**
+     * @param array $assertions
+     * @return bool
+     */
+    private function matchAllAssertions(array $assertions): bool
+    {
+        foreach ($assertions as $assertion) {
+            if (! $assertion) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

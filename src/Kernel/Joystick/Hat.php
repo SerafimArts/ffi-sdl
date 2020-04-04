@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Kernel\Joystick;
+namespace SDL\Kernel\Joystick;
 
 /**
  * Interface Hat

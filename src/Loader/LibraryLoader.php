@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Loader;
+namespace SDL\Loader;
 
 use FFI\Exception;
 use FFI\ParserException;
-use Serafim\SDL\Exception\LibraryException;
+use SDL\Exception\LibraryException;
 
 /**
  * Class LibraryLoader
  */
-final class LibraryLoader
+class LibraryLoader
 {
     /**
      * @var string
@@ -52,6 +52,11 @@ final class LibraryLoader
     private string $output;
 
     /**
+     * @var array|string[]
+     */
+    private array $defines = [];
+
+    /**
      * LibraryLoader constructor.
      *
      * @param string $output
@@ -64,6 +69,16 @@ final class LibraryLoader
 
         $this->os = $os ?? OperatingSystem::current();
         $this->bits = $bits ?? BitDepth::current();
+    }
+
+    /**
+     * @param string $define
+     * @param string $value
+     * @return void
+     */
+    public function define(string $define, string $value): void
+    {
+        $this->defines[$define] = $value;
     }
 
     /**
@@ -164,10 +179,10 @@ final class LibraryLoader
      * @param string $version
      * @return string
      */
-    private function compile(LibraryInterface $library, string $output, string $version): string
+    protected function compile(LibraryInterface $library, string $output, string $version): string
     {
-        $processor = new PreProcessor($version);
-        $result = $processor->file($library->getHeaders());
+        $result = $this->preprocessor($library, $version)
+            ->file($library->getHeaders());
 
         \file_put_contents($output, $result);
 
@@ -183,5 +198,22 @@ final class LibraryLoader
         $suggest = $library->suggest($this->os, $this->bits);
 
         return $suggest ?? \sprintf(self::ERROR_SUGGEST, (string)$this->os, (string)$this->bits);
+    }
+
+    /**
+     * @param LibraryInterface $library
+     * @param string $version
+     * @return PreProcessor
+     */
+    protected function preprocessor(LibraryInterface $library, string $version): PreProcessor
+    {
+        $processor = new PreProcessor();
+        $processor->define('__' . \strtolower(\str_replace(' ', '_', $library->getName())) . '__', $version);
+
+        foreach ($this->defines as $define => $value) {
+            $processor->define($define, $value);
+        }
+
+        return $processor;
     }
 }

@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL;
+namespace SDL;
 
 use FFI\CCharPtr;
 use FFI\CData;
@@ -20,8 +20,6 @@ use FFI\CIntPtr;
 use FFI\CIntPtrPtr;
 use FFI\CPtr;
 use FFI\CPtrPtr;
-use Serafim\SDL\Kernel\Assert\State;
-use Serafim\SDL\Kernel\InitFlags;
 
 /**
  * @formatter:off

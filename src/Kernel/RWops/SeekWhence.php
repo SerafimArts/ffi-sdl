@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Kernel\RWops;
+namespace SDL\Kernel\RWops;
 
 /**
  * @see https://wiki.libsdl.org/SDL_RWseek#whence

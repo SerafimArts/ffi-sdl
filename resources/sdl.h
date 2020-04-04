@@ -455,7 +455,7 @@ extern void SDL_Quit(void);
 //   https://discourse.libsdl.org/t/sdl-2-0-1-released/40
 // =====================================================================================================================
 
-#if version >= 2.0.1
+#if __sdl_version__ >= 2.0.1
     extern char* SDL_GetBasePath(void);
     extern char* SDL_GetPrefPath(const char* org, const char* app);
     extern int SDL_UpdateYUVTexture(SDL_Texture* texture, const SDL_Rect* rect, const Uint8* Yplane, int Ypitch, const Uint8* Uplane, int Upitch, const Uint8* Vplane, int Vpitch);
@@ -474,7 +474,7 @@ extern void SDL_Quit(void);
 //   https://discourse.libsdl.org/t/sdl-2-0-2-released/41
 // =====================================================================================================================
 
-#if version >= 2.0.2
+#if __sdl_version__ >= 2.0.2
     extern void SDL_GL_ResetAttributes(void);
     // mapped from SDL_GameControllerAddMappingsFromFile
     extern int SDL_GameControllerAddMappingsFromRW(SDL_RWops* rw, int freerw);
@@ -506,7 +506,7 @@ extern void SDL_Quit(void);
 //   FIXME Possible errors line "C function not found"
 // =====================================================================================================================
 
-#if version >= 2.0.4
+#if __sdl_version__ >= 2.0.4
     extern int SDL_QueueAudio(SDL_AudioDeviceID dev, const void* data, Uint32 len);
     extern Uint32 SDL_GetQueuedAudioSize(SDL_AudioDeviceID dev);
     extern void SDL_ClearQueuedAudio(SDL_AudioDeviceID dev);
@@ -533,7 +533,7 @@ extern void SDL_Quit(void);
 //   https://discourse.libsdl.org/t/sdl-2-0-5-released/42
 // =====================================================================================================================
 
-#if version >= 2.0.5
+#if __sdl_version__ >= 2.0.5
     extern Uint32 SDL_DequeueAudio(SDL_AudioDeviceID dev, void* data, Uint32 len);
     extern int SDL_GetHintBoolean(const char* name, int default_value);
     extern int SDL_RenderSetIntegerScale(SDL_Renderer* renderer, int enable);
@@ -558,7 +558,7 @@ extern void SDL_Quit(void);
 //   https://discourse.libsdl.org/t/sdl-2-0-6-prerelease/23024
 // =====================================================================================================================
 
-#if version >= 2.0.6
+#if __sdl_version__ >= 2.0.6
     // TODO SDL_Vulkan_XXX is the platform-specific code.
     // TODO Perhaps this can cause errors on Linux or MacOS.
     // TODO Need to check =)
@@ -607,7 +607,7 @@ extern void SDL_Quit(void);
 //   https://discourse.libsdl.org/t/sdl-2-0-7-released/23279
 // =====================================================================================================================
 
-#if version >= 2.0.7
+#if __sdl_version__ >= 2.0.7
     extern SDL_AudioStream* SDL_NewAudioStream(const SDL_AudioFormat src_format, const Uint8 src_channels, const int src_rate, const SDL_AudioFormat dst_format, const Uint8 dst_channels, const int dst_rate);
     extern int SDL_AudioStreamPut(SDL_AudioStream* stream, const void* buf, int len);
     extern int SDL_AudioStreamGet(SDL_AudioStream* stream, void* buf, int len);
@@ -630,7 +630,7 @@ extern void SDL_Quit(void);
 //   https://discourse.libsdl.org/t/sdl-2-0-8-released/23957
 // =====================================================================================================================
 
-#if version >= 2.0.8
+#if __sdl_version__ >= 2.0.8
     extern void SDL_SetYUVConversionMode(SDL_YUV_CONVERSION_MODE mode);
     extern SDL_YUV_CONVERSION_MODE SDL_GetYUVConversionMode(void);
 
@@ -653,7 +653,7 @@ extern void SDL_Quit(void);
 //   https://discourse.libsdl.org/t/sdl-2-0-9-released/25228
 // =====================================================================================================================
 
-#if version >= 2.0.9
+#if __sdl_version__ >= 2.0.9
     // New Sensor API: Methods
     extern int SDL_NumSensors(void);
     extern const char* SDL_SensorGetDeviceName(int device_index);
@@ -699,7 +699,7 @@ extern void SDL_Quit(void);
 //   SDL >= 2.0.10
 // =====================================================================================================================
 
-#if version >= 2.0.10
+#if __sdl_version__ >= 2.0.10
     extern size_t SDL_SIMDGetAlignment(void);
     extern void* SDL_SIMDAlloc(const size_t len);
     extern void SDL_SIMDFree(void* ptr);

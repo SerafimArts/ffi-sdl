@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Kernel\Mouse;
+namespace SDL\Kernel\Mouse;
 
 /**
  * Interface SystemCursorInterface

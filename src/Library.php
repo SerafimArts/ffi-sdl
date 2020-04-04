@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL;
+namespace SDL;
 
-use Serafim\SDL\Loader\BitDepth;
-use Serafim\SDL\Loader\LibraryInterface;
-use Serafim\SDL\Loader\OperatingSystem;
+use SDL\Loader\BitDepth;
+use SDL\Loader\LibraryInterface;
+use SDL\Loader\OperatingSystem;
 
 /**
  * Class Library
@@ -73,6 +73,14 @@ class Library implements LibraryInterface
     public function getHeaders(): string
     {
         return __DIR__ . '/../resources/sdl.h';
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeHeaders(): string
+    {
+        return __DIR__ . '/../resources/sdl-types.h';
     }
 
     /**

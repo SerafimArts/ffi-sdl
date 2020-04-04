@@ -9,17 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Support;
+namespace SDL\Support;
 
-use Serafim\SDL\Exception\VersionException;
+use SDL\Exception\VersionException;
+use SDL\Loader\LibraryInformation;
 
 /**
  * Trait VersionComparisonTrait
  */
 trait VersionComparisonTrait
 {
-    use LoaderTrait;
-
     /**
      * @var string|null
      */
@@ -41,12 +40,17 @@ trait VersionComparisonTrait
     }
 
     /**
+     * @return LibraryInformation
+     */
+    abstract protected function getLibraryInformation(): LibraryInformation;
+
+    /**
      * @param string $version
      * @return bool
      */
     private function gteThan(string $version): bool
     {
-        return \version_compare($this->info()->version, $version) >= 0;
+        return \version_compare($this->getLibraryInformation()->version, $version) >= 0;
     }
 
     /**
@@ -56,12 +60,14 @@ trait VersionComparisonTrait
      */
     protected function getVersionErrorMessage(string $version, string $method): string
     {
+        $info = $this->getLibraryInformation();
+
         return \vsprintf('Method %s::%s() is available since %s >= %s, but %s is installed', [
             static::class,
             $method,
-            $this->info()->name,
+            $info->name,
             $version,
-            $this->info()->version,
+            $info->version,
         ]);
     }
 }

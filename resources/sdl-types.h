@@ -205,48 +205,48 @@ enum {
 
 typedef enum {
   SDL_PIXELFORMAT_UNKNOWN,
-  SDL_PIXELFORMAT_INDEX1LSB = ((1 << 28) | ((SDL_PIXELTYPE_INDEX1) << 24) | ((SDL_BITMAPORDER_4321) << 20) | ((0) << 16) | ((1) << 8) | ((0) << 0)),
-  SDL_PIXELFORMAT_INDEX1MSB = ((1 << 28) | ((SDL_PIXELTYPE_INDEX1) << 24) | ((SDL_BITMAPORDER_1234) << 20) | ((0) << 16) | ((1) << 8) | ((0) << 0)),
-  SDL_PIXELFORMAT_INDEX4LSB = ((1 << 28) | ((SDL_PIXELTYPE_INDEX4) << 24) | ((SDL_BITMAPORDER_4321) << 20) | ((0) << 16) | ((4) << 8) | ((0) << 0)),
-  SDL_PIXELFORMAT_INDEX4MSB = ((1 << 28) | ((SDL_PIXELTYPE_INDEX4) << 24) | ((SDL_BITMAPORDER_1234) << 20) | ((0) << 16) | ((4) << 8) | ((0) << 0)),
-  SDL_PIXELFORMAT_INDEX8 = ((1 << 28) | ((SDL_PIXELTYPE_INDEX8) << 24) | ((0) << 20) | ((0) << 16) | ((8) << 8) | ((1) << 0)),
-  SDL_PIXELFORMAT_RGB332 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED8) << 24) | ((SDL_PACKEDORDER_XRGB) << 20) | ((SDL_PACKEDLAYOUT_332) << 16) | ((8) << 8) | ((1) << 0)),
-  SDL_PIXELFORMAT_RGB444 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_XRGB) << 20) | ((SDL_PACKEDLAYOUT_4444) << 16) | ((12) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_RGB555 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_XRGB) << 20) | ((SDL_PACKEDLAYOUT_1555) << 16) | ((15) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_BGR555 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_XBGR) << 20) | ((SDL_PACKEDLAYOUT_1555) << 16) | ((15) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_ARGB4444 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_ARGB) << 20) | ((SDL_PACKEDLAYOUT_4444) << 16) | ((16) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_RGBA4444 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_RGBA) << 20) | ((SDL_PACKEDLAYOUT_4444) << 16) | ((16) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_ABGR4444 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_ABGR) << 20) | ((SDL_PACKEDLAYOUT_4444) << 16) | ((16) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_BGRA4444 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_BGRA) << 20) | ((SDL_PACKEDLAYOUT_4444) << 16) | ((16) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_ARGB1555 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_ARGB) << 20) | ((SDL_PACKEDLAYOUT_1555) << 16) | ((16) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_RGBA5551 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_RGBA) << 20) | ((SDL_PACKEDLAYOUT_5551) << 16) | ((16) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_ABGR1555 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_ABGR) << 20) | ((SDL_PACKEDLAYOUT_1555) << 16) | ((16) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_BGRA5551 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_BGRA) << 20) | ((SDL_PACKEDLAYOUT_5551) << 16) | ((16) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_RGB565 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_XRGB) << 20) | ((SDL_PACKEDLAYOUT_565) << 16) | ((16) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_BGR565 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_XBGR) << 20) | ((SDL_PACKEDLAYOUT_565) << 16) | ((16) << 8) | ((2) << 0)),
-  SDL_PIXELFORMAT_RGB24 = ((1 << 28) | ((SDL_PIXELTYPE_ARRAYU8) << 24) | ((SDL_ARRAYORDER_RGB) << 20) | ((0) << 16) | ((24) << 8) | ((3) << 0)),
-  SDL_PIXELFORMAT_BGR24 = ((1 << 28) | ((SDL_PIXELTYPE_ARRAYU8) << 24) | ((SDL_ARRAYORDER_BGR) << 20) | ((0) << 16) | ((24) << 8) | ((3) << 0)),
-  SDL_PIXELFORMAT_RGB888 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_XRGB) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | ((24) << 8) | ((4) << 0)),
-  SDL_PIXELFORMAT_RGBX8888 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_RGBX) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | ((24) << 8) | ((4) << 0)),
-  SDL_PIXELFORMAT_BGR888 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_XBGR) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | ((24) << 8) | ((4) << 0)),
-  SDL_PIXELFORMAT_BGRX8888 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_BGRX) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | ((24) << 8) | ((4) << 0)),
-  SDL_PIXELFORMAT_ARGB8888 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_ARGB) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | ((32) << 8) | ((4) << 0)),
-  SDL_PIXELFORMAT_RGBA8888 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_RGBA) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | ((32) << 8) | ((4) << 0)),
-  SDL_PIXELFORMAT_ABGR8888 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_ABGR) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | ((32) << 8) | ((4) << 0)),
-  SDL_PIXELFORMAT_BGRA8888 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_BGRA) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | ((32) << 8) | ((4) << 0)),
-  SDL_PIXELFORMAT_ARGB2101010 = ((1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_ARGB) << 20) | ((SDL_PACKEDLAYOUT_2101010) << 16) | ((32) << 8) | ((4) << 0)),
-  SDL_PIXELFORMAT_RGBA32 = SDL_PIXELFORMAT_ABGR8888,
-  SDL_PIXELFORMAT_ARGB32 = SDL_PIXELFORMAT_BGRA8888,
-  SDL_PIXELFORMAT_BGRA32 = SDL_PIXELFORMAT_ARGB8888,
-  SDL_PIXELFORMAT_ABGR32 = SDL_PIXELFORMAT_RGBA8888,
-  SDL_PIXELFORMAT_YV12 = ((((Uint32) (((Uint8) (('Y'))))) << 0) | (((Uint32) (((Uint8) (('V'))))) << 8) | (((Uint32) (((Uint8) (('1'))))) << 16) | (((Uint32) (((Uint8) (('2'))))) << 24)),
-  SDL_PIXELFORMAT_IYUV = ((((Uint32) (((Uint8) (('I'))))) << 0) | (((Uint32) (((Uint8) (('Y'))))) << 8) | (((Uint32) (((Uint8) (('U'))))) << 16) | (((Uint32) (((Uint8) (('V'))))) << 24)),
-  SDL_PIXELFORMAT_YUY2 = ((((Uint32) (((Uint8) (('Y'))))) << 0) | (((Uint32) (((Uint8) (('U'))))) << 8) | (((Uint32) (((Uint8) (('Y'))))) << 16) | (((Uint32) (((Uint8) (('2'))))) << 24)),
-  SDL_PIXELFORMAT_UYVY = ((((Uint32) (((Uint8) (('U'))))) << 0) | (((Uint32) (((Uint8) (('Y'))))) << 8) | (((Uint32) (((Uint8) (('V'))))) << 16) | (((Uint32) (((Uint8) (('Y'))))) << 24)),
-  SDL_PIXELFORMAT_YVYU = ((((Uint32) (((Uint8) (('Y'))))) << 0) | (((Uint32) (((Uint8) (('V'))))) << 8) | (((Uint32) (((Uint8) (('Y'))))) << 16) | (((Uint32) (((Uint8) (('U'))))) << 24)),
-  SDL_PIXELFORMAT_NV12 = ((((Uint32) (((Uint8) (('N'))))) << 0) | (((Uint32) (((Uint8) (('V'))))) << 8) | (((Uint32) (((Uint8) (('1'))))) << 16) | (((Uint32) (((Uint8) (('2'))))) << 24)),
-  SDL_PIXELFORMAT_NV21 = ((((Uint32) (((Uint8) (('N'))))) << 0) | (((Uint32) (((Uint8) (('V'))))) << 8) | (((Uint32) (((Uint8) (('2'))))) << 16) | (((Uint32) (((Uint8) (('1'))))) << 24)),
-  SDL_PIXELFORMAT_EXTERNAL_OES = ((((Uint32) (((Uint8) (('O'))))) << 0) | (((Uint32) (((Uint8) (('E'))))) << 8) | (((Uint32) (((Uint8) (('S'))))) << 16) | (((Uint32) (((Uint8) ((' '))))) << 24))
+  SDL_PIXELFORMAT_INDEX1LSB     = (1 << 28) | ((SDL_PIXELTYPE_INDEX1) << 24) | ((SDL_BITMAPORDER_4321) << 20) | (0 << 16) | (1 << 8) | (0 << 0),
+  SDL_PIXELFORMAT_INDEX1MSB     = (1 << 28) | ((SDL_PIXELTYPE_INDEX1) << 24) | ((SDL_BITMAPORDER_1234) << 20) | (0 << 16) | (1 << 8) | (0 << 0),
+  SDL_PIXELFORMAT_INDEX4LSB     = (1 << 28) | ((SDL_PIXELTYPE_INDEX4) << 24) | ((SDL_BITMAPORDER_4321) << 20) | (0 << 16) | (4 << 8) | (0 << 0),
+  SDL_PIXELFORMAT_INDEX4MSB     = (1 << 28) | ((SDL_PIXELTYPE_INDEX4) << 24) | ((SDL_BITMAPORDER_1234) << 20) | (0 << 16) | (4 << 8) | (0 << 0),
+  SDL_PIXELFORMAT_INDEX8        = (1 << 28) | ((SDL_PIXELTYPE_INDEX8) << 24) | (0 << 20) | (0 << 16) | (8 << 8) | (1 << 0),
+  SDL_PIXELFORMAT_RGB332        = (1 << 28) | ((SDL_PIXELTYPE_PACKED8) << 24) | ((SDL_PACKEDORDER_XRGB) << 20) | ((SDL_PACKEDLAYOUT_332) << 16) | (8 << 8) | (1 << 0),
+  SDL_PIXELFORMAT_RGB444        = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_XRGB) << 20) | ((SDL_PACKEDLAYOUT_4444) << 16) | (12 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_RGB555        = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_XRGB) << 20) | ((SDL_PACKEDLAYOUT_1555) << 16) | (15 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_BGR555        = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_XBGR) << 20) | ((SDL_PACKEDLAYOUT_1555) << 16) | (15 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_ARGB4444      = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_ARGB) << 20) | ((SDL_PACKEDLAYOUT_4444) << 16) | (16 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_RGBA4444      = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_RGBA) << 20) | ((SDL_PACKEDLAYOUT_4444) << 16) | (16 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_ABGR4444      = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_ABGR) << 20) | ((SDL_PACKEDLAYOUT_4444) << 16) | (16 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_BGRA4444      = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_BGRA) << 20) | ((SDL_PACKEDLAYOUT_4444) << 16) | (16 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_ARGB1555      = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_ARGB) << 20) | ((SDL_PACKEDLAYOUT_1555) << 16) | (16 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_RGBA5551      = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_RGBA) << 20) | ((SDL_PACKEDLAYOUT_5551) << 16) | (16 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_ABGR1555      = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_ABGR) << 20) | ((SDL_PACKEDLAYOUT_1555) << 16) | (16 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_BGRA5551      = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_BGRA) << 20) | ((SDL_PACKEDLAYOUT_5551) << 16) | (16 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_RGB565        = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_XRGB) << 20) | ((SDL_PACKEDLAYOUT_565) << 16) | (16 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_BGR565        = (1 << 28) | ((SDL_PIXELTYPE_PACKED16) << 24) | ((SDL_PACKEDORDER_XBGR) << 20) | ((SDL_PACKEDLAYOUT_565) << 16) | (16 << 8) | (2 << 0),
+  SDL_PIXELFORMAT_RGB24         = (1 << 28) | ((SDL_PIXELTYPE_ARRAYU8) << 24) | ((SDL_ARRAYORDER_RGB) << 20) | (0 << 16) | (24 << 8) | (3 << 0),
+  SDL_PIXELFORMAT_BGR24         = (1 << 28) | ((SDL_PIXELTYPE_ARRAYU8) << 24) | ((SDL_ARRAYORDER_BGR) << 20) | (0 << 16) | (24 << 8) | (3 << 0),
+  SDL_PIXELFORMAT_RGB888        = (1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_XRGB) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | (24 << 8) | (4 << 0),
+  SDL_PIXELFORMAT_RGBX8888      = (1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_RGBX) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | (24 << 8) | (4 << 0),
+  SDL_PIXELFORMAT_BGR888        = (1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_XBGR) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | (24 << 8) | (4 << 0),
+  SDL_PIXELFORMAT_BGRX8888      = (1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_BGRX) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | (24 << 8) | (4 << 0),
+  SDL_PIXELFORMAT_ARGB8888      = (1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_ARGB) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | (32 << 8) | (4 << 0),
+  SDL_PIXELFORMAT_RGBA8888      = (1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_RGBA) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | (32 << 8) | (4 << 0),
+  SDL_PIXELFORMAT_ABGR8888      = (1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_ABGR) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | (32 << 8) | (4 << 0),
+  SDL_PIXELFORMAT_BGRA8888      = (1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_BGRA) << 20) | ((SDL_PACKEDLAYOUT_8888) << 16) | (32 << 8) | (4 << 0),
+  SDL_PIXELFORMAT_ARGB2101010   = (1 << 28) | ((SDL_PIXELTYPE_PACKED32) << 24) | ((SDL_PACKEDORDER_ARGB) << 20) | ((SDL_PACKEDLAYOUT_2101010) << 16) | (32 << 8) | (4 << 0),
+  SDL_PIXELFORMAT_RGBA32        = SDL_PIXELFORMAT_ABGR8888,
+  SDL_PIXELFORMAT_ARGB32        = SDL_PIXELFORMAT_BGRA8888,
+  SDL_PIXELFORMAT_BGRA32        = SDL_PIXELFORMAT_ARGB8888,
+  SDL_PIXELFORMAT_ABGR32        = SDL_PIXELFORMAT_RGBA8888,
+  SDL_PIXELFORMAT_YV12          = ((Uint32)((Uint8)'Y') << 0) | ((Uint32)((Uint8)'V') << 8) | ((Uint32)((Uint8)'1') << 16) | ((Uint32)((Uint8)'2') << 24),
+  SDL_PIXELFORMAT_IYUV          = ((Uint32)((Uint8)'I') << 0) | ((Uint32)((Uint8)'Y') << 8) | ((Uint32)((Uint8)'U') << 16) | ((Uint32)((Uint8)'V') << 24),
+  SDL_PIXELFORMAT_YUY2          = ((Uint32)((Uint8)'Y') << 0) | ((Uint32)((Uint8)'U') << 8) | ((Uint32)((Uint8)'Y') << 16) | ((Uint32)((Uint8)'2') << 24),
+  SDL_PIXELFORMAT_UYVY          = ((Uint32)((Uint8)'U') << 0) | ((Uint32)((Uint8)'Y') << 8) | ((Uint32)((Uint8)'V') << 16) | ((Uint32)((Uint8)'Y') << 24),
+  SDL_PIXELFORMAT_YVYU          = ((Uint32)((Uint8)'Y') << 0) | ((Uint32)((Uint8)'V') << 8) | ((Uint32)((Uint8)'Y') << 16) | ((Uint32)((Uint8)'U') << 24),
+  SDL_PIXELFORMAT_NV12          = ((Uint32)((Uint8)'N') << 0) | ((Uint32)((Uint8)'V') << 8) | ((Uint32)((Uint8)'1') << 16) | ((Uint32)((Uint8)'2') << 24),
+  SDL_PIXELFORMAT_NV21          = ((Uint32)((Uint8)'N') << 0) | ((Uint32)((Uint8)'V') << 8) | ((Uint32)((Uint8)'2') << 16) | ((Uint32)((Uint8)'1') << 24),
+  SDL_PIXELFORMAT_EXTERNAL_OES  = ((Uint32)((Uint8)'O') << 0) | ((Uint32)((Uint8)'E') << 8) | ((Uint32)((Uint8)'S') << 16) | ((Uint32)((Uint8)' ') << 24)
 } SDL_PixelFormatEnum;
 
 typedef struct SDL_Color {
@@ -1236,7 +1236,7 @@ typedef struct SDL_TextEditingEvent {
   Uint32 type;
   Uint32 timestamp;
   Uint32 windowID;
-  char text[(32)];
+  char text[32];
   Sint32 start;
   Sint32 length;
 } SDL_TextEditingEvent;
@@ -1245,7 +1245,7 @@ typedef struct SDL_TextInputEvent {
   Uint32 type;
   Uint32 timestamp;
   Uint32 windowID;
-  char text[(32)];
+  char text[32];
 } SDL_TextInputEvent;
 
 typedef struct SDL_MouseMotionEvent {
@@ -1762,7 +1762,7 @@ typedef void (* SDL_HintCallback)(void* userdata, const char* name, const char* 
 //   https://discourse.libsdl.org/t/sdl-2-0-1-released/40
 // =====================================================================================================================
 
-#if version >= 2.0.1
+#if __sdl_version__ >= 2.0.1
     #ifdef __WIN32__
         typedef struct IDirect3DDevice9 IDirect3DDevice9;
     #endif
@@ -1775,7 +1775,7 @@ typedef void (* SDL_HintCallback)(void* userdata, const char* name, const char* 
 //   FIXME Possible errors line "C function not found"
 // =====================================================================================================================
 
-#if version >= 2.0.4
+#if __sdl_version__ >= 2.0.4
     #ifdef __WIN32__
         typedef void (* SDL_WindowsMessageHook)(void* userdata, void* hWnd, unsigned int message, Uint64 wParam, Sint64 lParam);
     #endif
@@ -1787,7 +1787,7 @@ typedef void (* SDL_HintCallback)(void* userdata, const char* name, const char* 
 //   https://discourse.libsdl.org/t/sdl-2-0-6-prerelease/23024
 // =====================================================================================================================
 
-#if version >= 2.0.6
+#if __sdl_version__ >= 2.0.6
     typedef void* VkInstance;
     typedef VkInstance SDL_VulkanInstance;
 
@@ -1801,7 +1801,7 @@ typedef void (* SDL_HintCallback)(void* userdata, const char* name, const char* 
 //   https://discourse.libsdl.org/t/sdl-2-0-7-released/23279
 // =====================================================================================================================
 
-#if version >= 2.0.7
+#if __sdl_version__ >= 2.0.7
     typedef void *(*SDL_MallocFunc)(size_t size);
     typedef void *(*SDL_CallocFunc)(size_t nmemb, size_t size);
     typedef void *(*SDL_ReallocFunc)(void* mem, size_t size);
@@ -1814,7 +1814,7 @@ typedef void (* SDL_HintCallback)(void* userdata, const char* name, const char* 
 //   https://discourse.libsdl.org/t/sdl-2-0-9-released/25228
 // =====================================================================================================================
 
-#if version >= 2.0.9
+#if __sdl_version__ >= 2.0.9
     // New Sensor API: Defines
     typedef Sint32 SDL_SensorID;
     struct _SDL_Sensor;

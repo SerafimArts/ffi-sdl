@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Kernel\MessageBox;
+namespace SDL\Kernel\MessageBox;
 
 /**
  * Interface ColorType

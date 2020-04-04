@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Kernel;
+namespace SDL\Kernel;
 
 /**
  * @see NativeApi::SDL_Init

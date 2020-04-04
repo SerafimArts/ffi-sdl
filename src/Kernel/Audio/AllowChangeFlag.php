@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Kernel\Audio;
+namespace SDL\Kernel\Audio;
 
 /**
  * Allow change flags

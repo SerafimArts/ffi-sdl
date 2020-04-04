@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Kernel\OpenGL;
+namespace SDL\Kernel\OpenGL;
 
 /**
  * @see https://wiki.libsdl.org/SDL_GL_SetAttribute#Remarks

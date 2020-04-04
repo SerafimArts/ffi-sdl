@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Kernel\Log;
+namespace SDL\Kernel\Log;
 
 /**
  * Interface Category

@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL;
+namespace SDL;
 
 use FFI\CData;
 use FFI\CPtr;
 use FFI\CScalar;
 use FFI\CStruct;
-use Serafim\SDL\Kernel\Keyboard\Key;
-use Serafim\SDL\Kernel\Keyboard\KeyMode;
-use Serafim\SDL\Kernel\Keyboard\ScanCode;
+use SDL\Kernel\Keyboard\Key;
+use SDL\Kernel\Keyboard\KeyMode;
+use SDL\Kernel\Keyboard\ScanCode;
 
 /**
  * <code>
@@ -35,8 +35,9 @@ use Serafim\SDL\Kernel\Keyboard\ScanCode;
  *
  * @see NativeApi::ReportAssertion
  * @see NativeApi::GetAssertionReport
+ * @mixin CStruct
  */
-class AssertData extends CStruct
+final class AssertData extends CData
 {
     /**
      * @var int
@@ -88,8 +89,9 @@ class AssertData extends CStruct
  * @see NativeApi::AtomicSet
  * @see NativeApi::AtomicGet
  * @see NativeApi::AtomicAdd
+ * @mixin CStruct
  */
-class AtomicT extends CStruct
+final class AtomicT extends CData
 {
     /**
      * The atomic integer value
@@ -103,8 +105,10 @@ class AtomicT extends CStruct
  * The SDL mutex structure, defined in sysmutex.c
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Mutex extends CData
+final class Mutex extends CData
 {
 }
 
@@ -112,8 +116,10 @@ class Mutex extends CData
  * The SDL semaphore structure, defined in syssem.c
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Semaphore extends CData
+final class Semaphore extends CData
 {
 }
 
@@ -121,8 +127,10 @@ class Semaphore extends CData
  * The SDL condition variable structure, defined in syscond.c
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Cond extends CData
+final class Cond extends CData
 {
 }
 
@@ -130,8 +138,10 @@ class Cond extends CData
  * The SDL thread structure, defined in thread.c
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Thread extends CData
+final class Thread extends CData
 {
 }
 
@@ -139,8 +149,10 @@ class Thread extends CData
  * This is the read/write operation structure -- very basic.
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class RWops extends CData
+final class RWops extends CData
 {
     /**
      * Contains the size of the file in this rwops, or -1 if unknown
@@ -212,8 +224,10 @@ class RWops extends CData
  *  8:  FL FR FC LFE BL BR SL SR    (7.1 surround)
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class AudioSpec extends CData
+final class AudioSpec extends CData
 {
     /**
      * DSP frequency -- samples per second
@@ -273,8 +287,9 @@ class AudioSpec extends CData
  * @see https://wiki.libsdl.org/AudioCVT
  *
  * TODO Finish the description of this structure
+ * @mixin CStruct
  */
-class AudioCVT extends CData
+final class AudioCVT extends CData
 {
     /**
      * Set to 1 if conversion possible
@@ -364,8 +379,10 @@ class AudioCVT extends CData
  *  - You push data as you have it, and pull it when you need it
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class AudioStream extends CData
+final class AudioStream extends CData
 {
 }
 
@@ -373,8 +390,10 @@ class AudioStream extends CData
  * Everything in the pixel format structure is read-only.
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class PixelFormat extends CData
+final class PixelFormat extends CData
 {
     /**
      * Uint32 format;
@@ -514,8 +533,10 @@ class PixelFormat extends CData
  * A structure that contains palette information.
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Palette extends CData
+final class Palette extends CData
 {
     /**
      * int ncolors;
@@ -550,8 +571,10 @@ class Palette extends CData
  * A structure that represents a color.
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Color extends CData
+final class Color extends CData
 {
     /**
      * Uint8 r;
@@ -586,8 +609,10 @@ class Color extends CData
  * A rectangle, with the origin at the upper left (integer).
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Rect extends CData
+final class Rect extends CData
 {
     /**
      * @var int
@@ -614,8 +639,10 @@ class Rect extends CData
  * A structure that defines a two dimensional point.
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Point extends CData
+final class Point extends CData
 {
     /**
      * @var int
@@ -632,8 +659,10 @@ class Point extends CData
  * A structure that contains a collection of pixels used in software blitting.
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Surface extends CData
+final class Surface extends CData
 {
     /**
      * @var int
@@ -700,8 +729,10 @@ class Surface extends CData
  * Info for fast blit mapping to other surfaces
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class BlitMap extends CData
+final class BlitMap extends CData
 {
 }
 
@@ -709,8 +740,10 @@ class BlitMap extends CData
  * Class DisplayMode
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class DisplayMode extends CData
+final class DisplayMode extends CData
 {
     /**
      * Pixel format
@@ -752,15 +785,19 @@ class DisplayMode extends CData
  * The type used to identify a window
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Window extends CData
+final class Window extends CData
 {
 }
 
 /**
  * An opaque handle to an OpenGL context
+ *
+ * @mixin CStruct
  */
-class GLContext extends CData
+final class GLContext extends CData
 {
 }
 
@@ -768,8 +805,10 @@ class GLContext extends CData
  * Implementation dependent
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Cursor extends CData
+final class Cursor extends CData
 {
 }
 
@@ -777,8 +816,10 @@ class Cursor extends CData
  * A structure that encodes the stable unique id for a joystick device
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class JoystickGUID extends CData
+final class JoystickGUID extends CData
 {
     /**
      * @var array|int[]
@@ -790,8 +831,10 @@ class JoystickGUID extends CData
  * The joystick structure used to identify an SDL joystick
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Joystick extends CData
+final class Joystick extends CData
 {
 }
 
@@ -799,8 +842,10 @@ class Joystick extends CData
  * The Game Controller structure used to identify an SDL game controller
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class GameController extends CData
+final class GameController extends CData
 {
 }
 
@@ -808,8 +853,10 @@ class GameController extends CData
  * Class GameControllerButtonBind
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class GameControllerButtonBind extends CData
+final class GameControllerButtonBind extends CData
 {
     /**
      * GameControllerBindType bindType;
@@ -832,8 +879,10 @@ class GameControllerButtonBind extends CData
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class GameControllerButtonBindValue extends CData
+final class GameControllerButtonBindValue extends CData
 {
     /**
      * int button;
@@ -859,8 +908,10 @@ class GameControllerButtonBindValue extends CData
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class GameControllerButtonBindValueHat extends CData
+final class GameControllerButtonBindValueHat extends CData
 {
     /**
      * int hat;
@@ -879,8 +930,10 @@ class GameControllerButtonBindValueHat extends CData
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Finger extends CData
+final class Finger extends CData
 {
     /**
      * FingerID id;
@@ -915,8 +968,10 @@ class Finger extends CData
  * General event structure
  *
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Event extends CData
+final class Event extends CData
 {
     public int                       $type;
 
@@ -980,15 +1035,19 @@ class Event extends CData
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class CommonEvent extends CData
+final class CommonEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class DisplayEvent extends CData
+final class DisplayEvent extends CData
 {
 }
 
@@ -1011,7 +1070,7 @@ class DisplayEvent extends CData
  *
  * @see https://wiki.libsdl.org/SDL_WindowEvent
  */
-class WindowEvent extends CData
+final class WindowEvent extends CData
 {
     /**
      * @var int
@@ -1076,8 +1135,9 @@ class WindowEvent extends CData
  * </code>
  *
  * @see https://wiki.libsdl.org/SDL_KeyboardEvent
+ * @mixin CStruct
  */
-class KeyboardEvent extends CData
+final class KeyboardEvent extends CData
 {
     /**
      * @var int
@@ -1131,8 +1191,9 @@ class KeyboardEvent extends CData
  * </code>
  *
  * @see https://wiki.libsdl.org/SDL_Keysym
+ * @mixin CStruct
  */
-class KeySym extends CData
+final class KeySym extends CData
 {
     /**
      * @var int|ScanCode
@@ -1158,66 +1219,79 @@ class KeySym extends CData
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class TextInputEvent extends CData
+final class TextInputEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class MouseMotionEvent extends CData
+final class MouseMotionEvent extends CData
 {
     /**
      * ::SDL_MOUSEMOTION
+     *
      * @var int
      */
     public int $type;
 
     /**
      * In milliseconds, populated using SDL_GetTicks()
+     *
      * @var int
      */
     public int $timestamp;
 
     /**
      * The window with mouse focus, if any
+     *
      * @var int
      */
     public int $windowID;
 
     /**
      * The mouse instance id, or SDL_TOUCH_MOUSEID
+     *
      * @var int
      */
     public int $which;
 
     /**
      * The current button state
+     *
      * @var int
      */
     public int $state;
 
     /**
      * X coordinate, relative to window
+     *
      * @var int
      */
     public int $x;
 
     /**
      * Y coordinate, relative to window
+     *
      * @var int
      */
     public int $y;
 
     /**
      * The relative motion in the X direction
+     *
      * @var int
      */
     public int $xrel;
 
     /**
      * The relative motion in the Y direction
+     *
      * @var int
      */
     public int $yrel;
@@ -1225,190 +1299,244 @@ class MouseMotionEvent extends CData
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class MouseButtonEvent extends CData
+final class MouseButtonEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class TextEditingEvent extends CData
+final class TextEditingEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class MouseWheelEvent extends CData
+final class MouseWheelEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class JoyAxisEvent extends CData
+final class JoyAxisEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class JoyBallEvent extends CData
+final class JoyBallEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class JoyHatEvent extends CData
+final class JoyHatEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class JoyButtonEvent extends CData
+final class JoyButtonEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class JoyDeviceEvent extends CData
+final class JoyDeviceEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class ControllerAxisEvent extends CData
+final class ControllerAxisEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class ControllerButtonEvent extends CData
+final class ControllerButtonEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class ControllerDeviceEvent extends CData
+final class ControllerDeviceEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class AudioDeviceEvent extends CData
+final class AudioDeviceEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class SensorEvent extends CData
+final class SensorEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class QuitEvent extends CData
+final class QuitEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class UserEvent extends CData
+final class UserEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class SysWMEvent extends CData
+final class SysWMEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class TouchFingerEvent extends CData
+final class TouchFingerEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class MultiGestureEvent extends CData
+final class MultiGestureEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class DollarGestureEvent extends CData
+final class DollarGestureEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class DropEvent extends CData
+final class DropEvent extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class EventAction extends CData
+final class EventAction extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class EventFilter extends CData
+final class EventFilter extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Haptic extends CData
+final class Haptic extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class HapticEffect extends CData
+final class HapticEffect extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class LogPriority extends CData
+final class LogPriority extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class LogOutputFunction extends CData
+final class LogOutputFunction extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class MessageBoxData extends CData
+final class MessageBoxData extends CData
 {
     /**
      * MessageBoxFlags
@@ -1458,8 +1586,10 @@ class MessageBoxData extends CData
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class MessageBoxColorScheme extends CData
+final class MessageBoxColorScheme extends CData
 {
     /**
      * @var array|MessageBoxColor[]
@@ -1469,8 +1599,10 @@ class MessageBoxColorScheme extends CData
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class MessageBoxColor extends CData
+final class MessageBoxColor extends CData
 {
     public int $r;
 
@@ -1481,8 +1613,10 @@ class MessageBoxColor extends CData
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class MessageBoxButtonData extends CData
+final class MessageBoxButtonData extends CData
 {
     /**
      * MessageBoxButtonFlags
@@ -1508,92 +1642,116 @@ class MessageBoxButtonData extends CData
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class RendererInfo extends CData
+final class RendererInfo extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Renderer extends CData
+final class Renderer extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Texture extends CData
+final class Texture extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class FRect extends CData
+final class FRect extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class SensorType extends CData
+final class SensorType extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class SensorID extends CData
+final class SensorID extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Sensor extends CData
+final class Sensor extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class WindowShapeMode extends CData
+final class WindowShapeMode extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class WindowsMessageHook extends CData
+final class WindowsMessageHook extends CData
 {
 }
 
 /**
  * @since 2.0.1
  */
-class IDirect3DDevice9 extends CData
+final class IDirect3DDevice9 extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class TimerCallback extends CData
+final class TimerCallback extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class TimerID extends CData
+final class TimerID extends CData
 {
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * @mixin CStruct
  */
-class Version extends CData
+final class Version extends CData
 {
     /**
      * @var int
@@ -1615,8 +1773,9 @@ class Version extends CData
  * @since 2.0.6
  *
  * TODO Finish the description of this structure
+ * @mixin CStruct
  */
-class VulkanInstance extends CData
+final class VulkanInstance extends CData
 {
 }
 
@@ -1624,8 +1783,9 @@ class VulkanInstance extends CData
  * @since 2.0.6
  *
  * TODO Finish the description of this structure
+ * @mixin CStruct
  */
-class VulkanSurface extends CData
+final class VulkanSurface extends CData
 {
 }
 
@@ -1633,8 +1793,12 @@ class VulkanSurface extends CData
 //  Pointers
 // =============================================================================
 
-/** @mixin CPtr */
-class AssertDataPtr extends AssertData
+/**
+ * @mixin AssertData
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class AssertDataPtr extends CData
 {
     private function __construct()
     {
@@ -1649,8 +1813,12 @@ class AssertDataPtr extends AssertData
     }
 }
 
-/** @mixin CPtr */
-class AtomicTPtr extends AtomicT
+/**
+ * @mixin AtomicT
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class AtomicTPtr extends CData
 {
     private function __construct()
     {
@@ -1665,8 +1833,12 @@ class AtomicTPtr extends AtomicT
     }
 }
 
-/** @mixin CPtr */
-class MutexPtr extends Mutex
+/**
+ * @mixin Mutex
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class MutexPtr extends CData
 {
     private function __construct()
     {
@@ -1681,8 +1853,12 @@ class MutexPtr extends Mutex
     }
 }
 
-/** @mixin CPtr */
-class SemaphorePtr extends Semaphore
+/**
+ * @mixin Semaphore
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class SemaphorePtr extends CData
 {
     private function __construct()
     {
@@ -1697,8 +1873,12 @@ class SemaphorePtr extends Semaphore
     }
 }
 
-/** @mixin CPtr */
-class CondPtr extends Cond
+/**
+ * @mixin Cond
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class CondPtr extends CData
 {
     private function __construct()
     {
@@ -1713,8 +1893,12 @@ class CondPtr extends Cond
     }
 }
 
-/** @mixin CPtr */
-class ThreadPtr extends Thread
+/**
+ * @mixin Thread
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class ThreadPtr extends CData
 {
     private function __construct()
     {
@@ -1729,8 +1913,12 @@ class ThreadPtr extends Thread
     }
 }
 
-/** @mixin CPtr */
-class RWopsPtr extends RWops
+/**
+ * @mixin RWops
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class RWopsPtr extends CData
 {
     private function __construct()
     {
@@ -1745,8 +1933,12 @@ class RWopsPtr extends RWops
     }
 }
 
-/** @mixin CPtr */
-class AudioSpecPtr extends AudioSpec
+/**
+ * @mixin AudioSpec
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class AudioSpecPtr extends CData
 {
     private function __construct()
     {
@@ -1761,8 +1953,12 @@ class AudioSpecPtr extends AudioSpec
     }
 }
 
-/** @mixin CPtr */
-class AudioCVTPtr extends AudioCVT
+/**
+ * @mixin AudioCVT
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class AudioCVTPtr extends CData
 {
     private function __construct()
     {
@@ -1777,8 +1973,12 @@ class AudioCVTPtr extends AudioCVT
     }
 }
 
-/** @mixin CPtr */
-class AudioStreamPtr extends AudioStream
+/**
+ * @mixin AudioStream
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class AudioStreamPtr extends CData
 {
     private function __construct()
     {
@@ -1793,8 +1993,12 @@ class AudioStreamPtr extends AudioStream
     }
 }
 
-/** @mixin CPtr */
-class PixelFormatPtr extends PixelFormat
+/**
+ * @mixin PixelFormat
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class PixelFormatPtr extends CData
 {
     private function __construct()
     {
@@ -1809,8 +2013,12 @@ class PixelFormatPtr extends PixelFormat
     }
 }
 
-/** @mixin CPtr */
-class PalettePtr extends Palette
+/**
+ * @mixin Palette
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class PalettePtr extends CData
 {
     private function __construct()
     {
@@ -1825,8 +2033,12 @@ class PalettePtr extends Palette
     }
 }
 
-/** @mixin CPtr */
-class ColorPtr extends Color
+/**
+ * @mixin Color
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class ColorPtr extends CData
 {
     private function __construct()
     {
@@ -1841,8 +2053,12 @@ class ColorPtr extends Color
     }
 }
 
-/** @mixin CPtr */
-class RectPtr extends Rect
+/**
+ * @mixin Rect
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class RectPtr extends CData
 {
     private function __construct()
     {
@@ -1858,8 +2074,12 @@ class RectPtr extends Rect
 }
 
 
-/** @mixin CPtr */
-class PointPtr extends Point
+/**
+ * @mixin Point
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class PointPtr extends CData
 {
     private function __construct()
     {
@@ -1874,8 +2094,12 @@ class PointPtr extends Point
     }
 }
 
-/** @mixin CPtr */
-class SurfacePtr extends Surface
+/**
+ * @mixin Surface
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class SurfacePtr extends CData
 {
     private function __construct()
     {
@@ -1890,8 +2114,12 @@ class SurfacePtr extends Surface
     }
 }
 
-/** @mixin CPtr */
-class DisplayModePtr extends DisplayMode
+/**
+ * @mixin DisplayMode
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class DisplayModePtr extends CData
 {
     private function __construct()
     {
@@ -1906,8 +2134,12 @@ class DisplayModePtr extends DisplayMode
     }
 }
 
-/** @mixin CPtr */
-class WindowPtr extends Window
+/**
+ * @mixin Window
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class WindowPtr extends CData
 {
     private function __construct()
     {
@@ -1922,8 +2154,12 @@ class WindowPtr extends Window
     }
 }
 
-/** @mixin CPtr */
-class WindowPtrPtr extends WindowPtr
+/**
+ * @mixin WindowPtr
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class WindowPtrPtr extends CData
 {
     private function __construct()
     {
@@ -1938,8 +2174,12 @@ class WindowPtrPtr extends WindowPtr
     }
 }
 
-/** @mixin CPtr */
-class CursorPtr extends Cursor
+/**
+ * @mixin Cursor
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class CursorPtr extends CData
 {
     private function __construct()
     {
@@ -1954,8 +2194,12 @@ class CursorPtr extends Cursor
     }
 }
 
-/** @mixin CPtr */
-class JoystickPtr extends Joystick
+/**
+ * @mixin Joystick
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class JoystickPtr extends CData
 {
     private function __construct()
     {
@@ -1970,8 +2214,12 @@ class JoystickPtr extends Joystick
     }
 }
 
-/** @mixin CPtr */
-class GameControllerPtr extends GameController
+/**
+ * @mixin GameController
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class GameControllerPtr extends CData
 {
     private function __construct()
     {
@@ -1986,8 +2234,12 @@ class GameControllerPtr extends GameController
     }
 }
 
-/** @mixin CPtr */
-class FingerPtr extends Finger
+/**
+ * @mixin Finger
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class FingerPtr extends CData
 {
     private function __construct()
     {
@@ -2002,8 +2254,12 @@ class FingerPtr extends Finger
     }
 }
 
-/** @mixin CPtr */
-class EventPtr extends Event
+/**
+ * @mixin Event
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class EventPtr extends CData
 {
     private function __construct()
     {
@@ -2018,8 +2274,12 @@ class EventPtr extends Event
     }
 }
 
-/** @mixin CPtr */
-class EventFilterPtr extends EventFilter
+/**
+ * @mixin EventFilter
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class EventFilterPtr extends CData
 {
     private function __construct()
     {
@@ -2034,8 +2294,12 @@ class EventFilterPtr extends EventFilter
     }
 }
 
-/** @mixin CPtr */
-class HapticPtr extends Haptic
+/**
+ * @mixin Haptic
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class HapticPtr extends CData
 {
     private function __construct()
     {
@@ -2050,8 +2314,12 @@ class HapticPtr extends Haptic
     }
 }
 
-/** @mixin CPtr */
-class HapticEffectPtr extends HapticEffect
+/**
+ * @mixin HapticEffect
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class HapticEffectPtr extends CData
 {
     private function __construct()
     {
@@ -2066,8 +2334,12 @@ class HapticEffectPtr extends HapticEffect
     }
 }
 
-/** @mixin CPtr */
-class LogOutputFunctionPtr extends LogOutputFunction
+/**
+ * @mixin LogOutputFunction
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class LogOutputFunctionPtr extends CData
 {
     private function __construct()
     {
@@ -2082,8 +2354,12 @@ class LogOutputFunctionPtr extends LogOutputFunction
     }
 }
 
-/** @mixin CPtr */
-class MessageBoxDataPtr extends MessageBoxData
+/**
+ * @mixin MessageBoxData
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class MessageBoxDataPtr extends CData
 {
     private function __construct()
     {
@@ -2098,8 +2374,12 @@ class MessageBoxDataPtr extends MessageBoxData
     }
 }
 
-/** @mixin CPtr */
-class RendererInfoPtr extends RendererInfo
+/**
+ * @mixin RendererInfo
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class RendererInfoPtr extends CData
 {
     private function __construct()
     {
@@ -2114,8 +2394,12 @@ class RendererInfoPtr extends RendererInfo
     }
 }
 
-/** @mixin CPtr */
-class RendererPtr extends Renderer
+/**
+ * @mixin Renderer
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class RendererPtr extends CData
 {
     private function __construct()
     {
@@ -2130,8 +2414,12 @@ class RendererPtr extends Renderer
     }
 }
 
-/** @mixin CPtr */
-class RendererPtrPtr extends RendererPtr
+/**
+ * @mixin RendererPtr
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class RendererPtrPtr extends CData
 {
     private function __construct()
     {
@@ -2146,8 +2434,12 @@ class RendererPtrPtr extends RendererPtr
     }
 }
 
-/** @mixin CPtr */
-class TexturePtr extends Texture
+/**
+ * @mixin Texture
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class TexturePtr extends CData
 {
     private function __construct()
     {
@@ -2162,8 +2454,12 @@ class TexturePtr extends Texture
     }
 }
 
-/** @mixin CPtr */
-class FRectPtr extends FRect
+/**
+ * @mixin FRect
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class FRectPtr extends CData
 {
     private function __construct()
     {
@@ -2178,8 +2474,12 @@ class FRectPtr extends FRect
     }
 }
 
-/** @mixin CPtr */
-class SensorPtr extends Sensor
+/**
+ * @mixin Sensor
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class SensorPtr extends CData
 {
     private function __construct()
     {
@@ -2194,8 +2494,12 @@ class SensorPtr extends Sensor
     }
 }
 
-/** @mixin CPtr */
-class WindowShapeModePtr extends WindowShapeMode
+/**
+ * @mixin WindowShapeMode
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class WindowShapeModePtr extends CData
 {
     private function __construct()
     {
@@ -2210,8 +2514,12 @@ class WindowShapeModePtr extends WindowShapeMode
     }
 }
 
-/** @mixin CPtr */
-class IDirect3DDevice9Ptr extends IDirect3DDevice9
+/**
+ * @mixin IDirect3DDevice9
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class IDirect3DDevice9Ptr extends CData
 {
     private function __construct()
     {
@@ -2226,8 +2534,12 @@ class IDirect3DDevice9Ptr extends IDirect3DDevice9
     }
 }
 
-/** @mixin CPtr */
-class VersionPtr extends Version
+/**
+ * @mixin Version
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class VersionPtr extends CData
 {
     private function __construct()
     {

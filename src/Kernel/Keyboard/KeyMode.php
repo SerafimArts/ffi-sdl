@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\SDL\Kernel\Keyboard;
+namespace SDL\Kernel\Keyboard;
 
 /**
  * Interface KeyModeInterface

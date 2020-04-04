@@ -1,10 +1,6 @@
 * text=auto
-*.pp linguist-language=EBNF
-*.pp2 linguist-language=EBNF
-
 
 /.github export-ignore
-/docs export-ignore
 /tests export-ignore
 
 .editorconfig export-ignore
