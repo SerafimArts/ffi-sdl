@@ -202,14 +202,14 @@ class PreProcessor
     {
         $assertions = [];
 
-        $lexemes = $this->lex($source);
+        $lexemes = $this->lex(\str_replace("\r", '', $source));
 
         foreach ($lexemes as $name => $value) {
             $prefix = \count($assertions) . ':';
 
             switch ($name) {
                 case 'T_INCLUDE':
-                    $file = \stripslashes(\trim($value[1], '"<>'));
+                    $file = \stripslashes(\trim(\trim($value[1]), '"<>'));
 
                     yield $this->file($this->lookup($file, $dir));
                     break;
