@@ -530,7 +530,7 @@ use FFI\CPtrPtr;
  * @method int SDL_SetSurfacePalette(SurfacePtr $surface, PalettePtr $palette)
  * @method int SDL_SetSurfaceRLE(SurfacePtr $surface, int $flag)
  * @method void SDL_SetTextInputRect(RectPtr $rect)
- * @method int SDL_SetTextureAlphaMod(TexturePtr $texture, int $alpha)
+ * @method int SDL_SetTextureAlphaMod(TexturePtr $texture, float $alpha)
  * @method int SDL_SetTextureBlendMode(TexturePtr $texture, int|CIntPtr $blendMode)
  * @method int SDL_SetTextureColorMod(TexturePtr $texture, int $r, int $g, int $b)
  * @method int SDL_SetThreadPriority(int $priority)
