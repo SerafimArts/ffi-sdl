@@ -58,6 +58,7 @@ trait ProxyTrait
     public function new(string $type, bool $owned = true, bool $persistent = false): CData
     {
         try {
+            /** @noinspection StaticInvocationViaThisInspection */
             return $this->info->ffi->new($this->nameToInternal($type), $owned, $persistent);
         } catch (ParserException $e) {
             $error = \sprintf('Structure "%s" not found. %s', $type, \ucfirst($e->getMessage()));
