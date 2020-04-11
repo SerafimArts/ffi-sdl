@@ -20,7 +20,6 @@ use FFI\ParserException;
 use Serafim\FFILoader\LibraryInformation;
 use Serafim\FFILoader\LibraryInterface;
 use Serafim\FFILoader\Loader;
-use Serafim\FFILoader\Preprocessor;
 use Serafim\SDL\Exception\SDLException;
 use Serafim\SDL\Kernel\Enums;
 use Serafim\SDL\Support\SingletonTrait;

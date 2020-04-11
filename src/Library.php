@@ -133,12 +133,4 @@ class Library extends BaseLibrary
 
         return null;
     }
-
-    /**
-     * @return string
-     */
-    final public function getOutputDirectory(): string
-    {
-        return __DIR__ . '/../out';
-    }
 }
