@@ -43,6 +43,7 @@ $ composer require serafim/ffi-sdl
 ## Extensions
 
 - [SDL Image](https://github.com/SerafimArts/ffi-sdl-image)
+- [SDL TTF](https://github.com/SerafimArts/ffi-sdl-ttf)
 
 ## Documentation
 
