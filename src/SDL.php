@@ -40,11 +40,6 @@ final class SDL implements Enums
     public LibraryInformation $info;
 
     /**
-     * @var \FFI|SDLNativeApiAutocomplete
-     */
-    private \FFI $ffi;
-
-    /**
      * @var Loader
      */
     private Loader $loader;
@@ -60,7 +55,6 @@ final class SDL implements Enums
         $this->loader = $this->loader();
 
         $this->info = $this->loadLibrary(new Library());
-        $this->ffi = $this->info->ffi;
 
         self::setInstance($this);
     }
@@ -179,7 +173,7 @@ final class SDL implements Enums
 
         try {
             /** @noinspection StaticInvocationViaThisInspection */
-            return $this->ffi->type($type);
+            return $this->info->ffi->type($type);
         } catch (ParserException $e) {
             $error = \sprintf('Structure "%s" not found. %s', $type, \ucfirst($e->getMessage()));
 
@@ -201,7 +195,7 @@ final class SDL implements Enums
      */
     public function __get(string $name)
     {
-        return $this->ffi->$name;
+        return $this->info->ffi->$name;
     }
 
     /**
@@ -212,6 +206,6 @@ final class SDL implements Enums
      */
     public function __set(string $name, $value): void
     {
-        $this->ffi->$name = $value;
+        $this->info->ffi->$name = $value;
     }
 }
