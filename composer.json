@@ -26,7 +26,7 @@
     "require": {
         "php": ">=7.4",
         "ext-ffi": "*",
-        "serafim/ffi-loader": "^1.0"
+        "serafim/ffi-loader": "~1.0.3"
     },
     "autoload": {
         "psr-4": {
