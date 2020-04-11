@@ -312,6 +312,7 @@ typedef enum {
   SDL_BLENDMODE_BLEND = 0x00000001,
   SDL_BLENDMODE_ADD = 0x00000002,
   SDL_BLENDMODE_MOD = 0x00000004,
+  SDL_BLENDMODE_MUL = 0x00000008,
   SDL_BLENDMODE_INVALID = 0x7FFFFFFF
 } SDL_BlendMode;
 
@@ -1381,6 +1382,9 @@ typedef struct SDL_TouchFingerEvent {
   float dx;
   float dy;
   float pressure;
+  #if __sdl_version__ >= 2.0.12
+      Uint32 windowID;
+  #endif
 } SDL_TouchFingerEvent;
 
 typedef struct SDL_MultiGestureEvent {
@@ -1763,7 +1767,7 @@ typedef void (* SDL_HintCallback)(void* userdata, const char* name, const char* 
 // =====================================================================================================================
 
 #if __sdl_version__ >= 2.0.1
-    #ifdef __WIN32__
+    #ifdef __windows__
         typedef struct IDirect3DDevice9 IDirect3DDevice9;
     #endif
 #endif
@@ -1776,7 +1780,7 @@ typedef void (* SDL_HintCallback)(void* userdata, const char* name, const char* 
 // =====================================================================================================================
 
 #if __sdl_version__ >= 2.0.4
-    #ifdef __WIN32__
+    #ifdef __windows__
         typedef void (* SDL_WindowsMessageHook)(void* userdata, void* hWnd, unsigned int message, Uint64 wParam, Sint64 lParam);
     #endif
 #endif
@@ -1825,4 +1829,31 @@ typedef void (* SDL_HintCallback)(void* userdata, const char* name, const char* 
       SDL_SENSOR_ACCEL,
       SDL_SENSOR_GYRO
     } SDL_SensorType;
+#endif
+
+// =====================================================================================================================
+//   SDL >= 2.0.12
+//
+//   https://discourse.libsdl.org/t/sdl-2-0-12-released/27318
+// =====================================================================================================================
+
+#if __sdl_version__ >= 2.0.12
+    typedef enum {
+        SDL_ScaleModeNearest,
+        SDL_ScaleModeLinear,
+        SDL_ScaleModeBest
+    } SDL_ScaleMode;
+
+    typedef enum {
+        SDL_CONTROLLER_TYPE_UNKNOWN = 0,
+        SDL_CONTROLLER_TYPE_XBOX360,
+        SDL_CONTROLLER_TYPE_XBOXONE,
+        SDL_CONTROLLER_TYPE_PS3,
+        SDL_CONTROLLER_TYPE_PS4,
+        SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_PRO
+    } SDL_GameControllerType;
+
+    #ifdef __osx__
+        typedef void *SDL_MetalView;
+    #endif
 #endif

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Joystick;
+namespace Serafim\SDL\Kernel\Joystick;
 
 /**
  * Interface Type

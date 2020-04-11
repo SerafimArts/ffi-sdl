@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Support;
+namespace Serafim\SDL\Support;
 
 /**
  * Trait SingletonTrait

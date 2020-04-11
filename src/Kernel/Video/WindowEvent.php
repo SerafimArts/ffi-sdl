@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Video;
+namespace Serafim\SDL\Kernel\Video;
 
 /**
  * Interface WindowEventIdInterface
@@ -32,12 +32,12 @@ interface WindowEvent
     public const SDL_WINDOWEVENT_FOCUS_LOST   = 13;
     public const SDL_WINDOWEVENT_CLOSE        = 14;
     /**
-     * @since 2.0.5
+     * @since SDL 2.0.5
      */
     public const SDL_WINDOWEVENT_TAKE_FOCUS   = 15;
 
     /**
-     * @since 2.0.5
+     * @since SDL 2.0.5
      */
     public const SDL_WINDOWEVENT_HIT_TEST     = 16;
 }

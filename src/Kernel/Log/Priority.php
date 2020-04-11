@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Log;
+namespace Serafim\SDL\Kernel\Log;
 
 /**
  * Interface LogPriorityInterface

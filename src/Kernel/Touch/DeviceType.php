@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Touch;
+namespace Serafim\SDL\Kernel\Touch;
 
 /**
  * Interface DeviceType

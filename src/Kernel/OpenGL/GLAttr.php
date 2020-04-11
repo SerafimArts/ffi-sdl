@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\OpenGL;
+namespace Serafim\SDL\Kernel\OpenGL;
 
 /**
  * @see https://wiki.libsdl.org/SDL_GL_SetAttribute#Remarks
@@ -40,11 +40,11 @@ interface GLAttr
     public const SDL_GL_CONTEXT_PROFILE_MASK       = 21;
 
     /**
-     * @since 2.0.2
+     * @since SDL 2.0.2
      */
     public const SDL_GL_SHARE_WITH_CURRENT_CONTEXT = 22;
     /**
-     * @since 2.0.1
+     * @since SDL 2.0.1
      */
     public const SDL_GL_FRAMEBUFFER_SRGB_CAPABLE   = 23;
     public const SDL_GL_CONTEXT_RELEASE_BEHAVIOR   = 24;

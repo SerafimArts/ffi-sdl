@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Sensor;
+namespace Serafim\SDL\Kernel\Sensor;
 
 /**
  * Interface SensorTypeInterface

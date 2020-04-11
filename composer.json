@@ -25,11 +25,12 @@
     ],
     "require": {
         "php": ">=7.4",
-        "ext-ffi": "*"
+        "ext-ffi": "*",
+        "serafim/ffi-loader": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "SDL\\": "src"
+            "Serafim\\SDL\\": "src"
         }
     },
     "require-dev": {
@@ -39,7 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SDL\\Tests\\": "tests"
+            "Serafim\\SDL\\Tests\\": "tests"
         }
     },
     "config": {

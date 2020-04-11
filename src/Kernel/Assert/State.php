@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Assert;
+namespace Serafim\SDL\Kernel\Assert;
 
-use SDL\NativeApi;
+use Serafim\SDL\NativeApi;
 
 /**
  * An enumeration of assertion handling states.

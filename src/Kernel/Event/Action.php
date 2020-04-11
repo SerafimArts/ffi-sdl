@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Event;
+namespace Serafim\SDL\Kernel\Event;
 
 /**
  * Interface Action

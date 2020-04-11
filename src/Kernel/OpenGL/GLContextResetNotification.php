@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\OpenGL;
+namespace Serafim\SDL\Kernel\OpenGL;
 
 /**
  * Interface GLContextResetNotificationInterface

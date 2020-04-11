@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel;
+namespace Serafim\SDL\Kernel;
 
 /**
  * @see NativeApi::SDL_Init
@@ -72,7 +72,7 @@ interface InitFlags
     /**
      * Sensor subsystem.
      *
-     * @since 2.0.9
+     * @since SDL 2.0.9
      * @var int
      */
     public const SDL_INIT_SENSOR = 0x00008000;

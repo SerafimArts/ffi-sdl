@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\RWops;
+namespace Serafim\SDL\Kernel\RWops;
 
 /**
  * @see https://wiki.libsdl.org/SDL_RWseek#whence
- * @since 2.0.10
+ * @since SDL 2.0.10
  */
 interface SeekWhence
 {

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\GameController;
+namespace Serafim\SDL\Kernel\GameController;
 
 /**
  * Interface GameControllerButtonInterface

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Video;
+namespace Serafim\SDL\Kernel\Video;
 
 /**
  * Interface PixelFormat

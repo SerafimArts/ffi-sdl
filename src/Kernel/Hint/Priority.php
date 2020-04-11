@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Hint;
+namespace Serafim\SDL\Kernel\Hint;
 
 /**
  * Interface Priority

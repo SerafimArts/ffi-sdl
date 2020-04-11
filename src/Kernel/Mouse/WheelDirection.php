@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Mouse;
+namespace Serafim\SDL\Kernel\Mouse;
 
 /**
  * Interface WheelDirection

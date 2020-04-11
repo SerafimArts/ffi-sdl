@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace SDL;
+namespace Serafim\SDL;
 
 use FFI\CCharPtr;
 use FFI\CData;
@@ -20,6 +20,7 @@ use FFI\CIntPtr;
 use FFI\CIntPtrPtr;
 use FFI\CPtr;
 use FFI\CPtrPtr;
+use Serafim\SDL\Kernel\Video\ScaleMode;
 
 /**
  * @formatter:off
@@ -134,36 +135,40 @@ use FFI\CPtrPtr;
  * @method void SDL_GL_UnloadLibrary()
  * @method int SDL_GameControllerAddMapping(string $mappingString)
  * @method int SDL_GameControllerAddMappingsFromRW(RWopsPtr $rw, int $freerw)
- * @method void SDL_GameControllerClose(GameControllerPtr $gamecontroller)
+ * @method void SDL_GameControllerClose(GameControllerPtr $gameController)
  * @method int SDL_GameControllerEventState(int $state)
  * @method GameControllerPtr SDL_GameControllerFromInstanceID(int|CIntPtr $joyid)
- * @method int SDL_GameControllerGetAttached(GameControllerPtr $gamecontroller)
- * @method int SDL_GameControllerGetAxis(GameControllerPtr $gamecontroller, int|CIntPtr $axis)
+ * @method GameControllerPtr SDL_GameControllerFromPlayerIndex(int $playerIndex)
+ * @method void SDL_GameControllerSetPlayerIndex(GameControllerPtr $gameController, int $playerIndex)
+ * @method int SDL_GameControllerGetAttached(GameControllerPtr $gameController)
+ * @method int SDL_GameControllerGetAxis(GameControllerPtr $gameController, int|CIntPtr $axis)
  * @method int|CIntPtr SDL_GameControllerGetAxisFromString(string $pchString)
- * @method GameControllerButtonBind SDL_GameControllerGetBindForAxis(GameControllerPtr $gamecontroller, int|CIntPtr $axis)
- * @method GameControllerButtonBind SDL_GameControllerGetBindForButton(GameControllerPtr $gamecontroller, int|CIntPtr $button)
- * @method int SDL_GameControllerGetButton(GameControllerPtr $gamecontroller, int|CIntPtr $button)
+ * @method GameControllerButtonBind SDL_GameControllerGetBindForAxis(GameControllerPtr $gameController, int|CIntPtr $axis)
+ * @method GameControllerButtonBind SDL_GameControllerGetBindForButton(GameControllerPtr $gameController, int|CIntPtr $button)
+ * @method int SDL_GameControllerGetButton(GameControllerPtr $gameController, int|CIntPtr $button)
  * @method int|CIntPtr SDL_GameControllerGetButtonFromString(string $pchString)
- * @method JoystickPtr SDL_GameControllerGetJoystick(GameControllerPtr $gamecontroller)
- * @method int SDL_GameControllerGetPlayerIndex(GameControllerPtr $gamecontroller)
- * @method int SDL_GameControllerGetProduct(GameControllerPtr $gamecontroller)
- * @method int SDL_GameControllerGetProductVersion(GameControllerPtr $gamecontroller)
+ * @method JoystickPtr SDL_GameControllerGetJoystick(GameControllerPtr $gameController)
+ * @method int SDL_GameControllerGetPlayerIndex(GameControllerPtr $gameController)
+ * @method int SDL_GameControllerGetProduct(GameControllerPtr $gameController)
+ * @method int SDL_GameControllerGetProductVersion(GameControllerPtr $gameController)
  * @method string SDL_GameControllerGetStringForAxis(int|CIntPtr $axis)
  * @method string SDL_GameControllerGetStringForButton(int|CIntPtr $button)
- * @method int SDL_GameControllerGetVendor(GameControllerPtr $gamecontroller)
- * @method string SDL_GameControllerMapping(GameControllerPtr $gamecontroller)
+ * @method int SDL_GameControllerGetVendor(GameControllerPtr $gameController)
+ * @method string SDL_GameControllerMapping(GameControllerPtr $gameController)
  * @method string SDL_GameControllerMappingForDeviceIndex(int $joystick_index)
  * @method string SDL_GameControllerMappingForGUID(JoystickGUID $guid)
  * @method string SDL_GameControllerMappingForIndex(int $mapping_index)
- * @method string SDL_GameControllerName(GameControllerPtr $gamecontroller)
+ * @method string SDL_GameControllerName(GameControllerPtr $gameController)
  * @method string SDL_GameControllerNameForIndex(int $joystick_index)
  * @method int SDL_GameControllerNumMappings()
- * @method GameControllerPtr SDL_GameControllerOpen(int $joystick_index)
- * @method int SDL_GameControllerRumble(GameControllerPtr $gamecontroller, int $low_frequency_rumble, int $high_frequency_rumble, int $duration_ms)
+ * @method GameControllerPtr SDL_GameControllerOpen(int $joystickIndex)
+ * @method int SDL_GameControllerRumble(GameControllerPtr $gameController, int $lowFrequencyRumble, int $highFrequencyRumble, int $duration)
  * @method void SDL_GameControllerUpdate()
- * @method CData SDL_GetAssertionHandler(CPtrPtr $puserdata)
+ * @method int SDL_GameControllerTypeForIndex(int $joystickIndex)
+ * @method int SDL_GameControllerGetType(GameControllerPtr $gameController)
+ * @method CData SDL_GetAssertionHandler(CPtrPtr $userData)
  * @method AssertDataPtr SDL_GetAssertionReport()
- * @method string SDL_GetAudioDeviceName(int $index, int $iscapture)
+ * @method string SDL_GetAudioDeviceName(int $index, int $isCapture)
  * @method int|CIntPtr SDL_GetAudioDeviceStatus(int|CIntPtr $dev)
  * @method string SDL_GetAudioDriver(int $index)
  * @method int|CIntPtr SDL_GetAudioStatus()
@@ -241,6 +246,7 @@ use FFI\CPtrPtr;
  * @method int SDL_GetTextureAlphaMod(TexturePtr $texture, int $alpha)
  * @method int SDL_GetTextureBlendMode(TexturePtr $texture, int|CIntPtr $blendMode)
  * @method int SDL_GetTextureColorMod(TexturePtr $texture, int $r, int $g, int $b)
+ * @method int SDL_GetTextureScaleMode(TexturePtr $texture, CIntPtr $scaleMode)
  * @method int SDL_GetThreadID(ThreadPtr $thread)
  * @method string|CCharPtr SDL_GetThreadName(ThreadPtr $thread)
  * @method int SDL_GetTicks()
@@ -297,6 +303,7 @@ use FFI\CPtrPtr;
  * @method int SDL_HapticUnpause(HapticPtr $haptic)
  * @method int SDL_HapticUpdateEffect(HapticPtr $haptic, int $effect, HapticEffectPtr $data)
  * @method int SDL_Has3DNow()
+ * @method int SDL_HasARMSIMD()
  * @method int SDL_HasAVX()
  * @method int SDL_HasAVX2()
  * @method int SDL_HasAVX512F()
@@ -329,7 +336,9 @@ use FFI\CPtrPtr;
  * @method void SDL_JoystickClose(JoystickPtr $joystick)
  * @method int|CIntPtr SDL_JoystickCurrentPowerLevel(JoystickPtr $joystick)
  * @method int SDL_JoystickEventState(int $state)
- * @method JoystickPtr SDL_JoystickFromInstanceID(int|CIntPtr $joyid)
+ * @method JoystickPtr SDL_JoystickFromInstanceID(int $joyId)
+ * @method JoystickPtr SDL_JoystickFromPlayerIndex(int $playerIndex)
+ * @method void SDL_JoystickSetPlayerIndex(JoystickPtr $joy, int $playerIndex)
  * @method int SDL_JoystickGetAttached(JoystickPtr $joystick)
  * @method int SDL_JoystickGetAxis(JoystickPtr $joystick, int $axis)
  * @method int SDL_JoystickGetAxisInitialState(JoystickPtr $joystick, int $axis, int $state)
@@ -375,6 +384,7 @@ use FFI\CPtrPtr;
  * @method int SDL_LockMutex(mutexPtr $mutex)
  * @method int SDL_LockSurface(SurfacePtr $surface)
  * @method int SDL_LockTexture(TexturePtr $texture, RectPtr $rect, CPtrPtr $pixels, int $pitch)
+ * @method int SDL_LockTextureToSurface(TexturePtr $texture, RectPtr $rect, SurfacePtrPtr $surface)
  * @method void SDL_Log(string $fmt)
  * @method void SDL_LogCritical(int $category, string $fmt)
  * @method void SDL_LogDebug(int $category, string $fmt)
@@ -533,6 +543,7 @@ use FFI\CPtrPtr;
  * @method int SDL_SetTextureAlphaMod(TexturePtr $texture, float $alpha)
  * @method int SDL_SetTextureBlendMode(TexturePtr $texture, int|CIntPtr $blendMode)
  * @method int SDL_SetTextureColorMod(TexturePtr $texture, int $r, int $g, int $b)
+ * @method int SDL_SetTextureScaleMode(TexturePtr $texture, int $scaleMode)
  * @method int SDL_SetThreadPriority(int $priority)
  * @method void SDL_SetWindowBordered(WindowPtr $window, int $bordered)
  * @method int SDL_SetWindowBrightness(WindowPtr $window, float $brightness)
@@ -597,6 +608,9 @@ use FFI\CPtrPtr;
  * @method int SDL_WriteLE32(RWopsPtr $dst, int $value)
  * @method int SDL_WriteLE64(RWopsPtr $dst, int $value)
  * @method int SDL_WriteU8(RWopsPtr $dst, int $value)
+ * @method MetalView SDL_Metal_CreateView(WindowPtr $window)
+ * @method void SDL_Metal_DestroyView(MetalView $view)
+ * @method int SDL_GetAndroidSDKVersion()
  * @formatter:on
  */
 interface SDLNativeApiAutocomplete

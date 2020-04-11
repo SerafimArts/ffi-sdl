@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Audio;
+namespace Serafim\SDL\Kernel\Audio;
 
 /**
  * Interface AudioStatusInterface

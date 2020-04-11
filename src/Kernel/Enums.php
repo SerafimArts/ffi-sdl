@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel;
+namespace Serafim\SDL\Kernel;
 
 /**
  * Interface EnumsInterface
@@ -31,6 +31,7 @@ interface Enums extends
     GameController\Axis,
     GameController\BindType,
     GameController\Button,
+    GameController\Type,
     // Hint
     Hint\Name,
     Hint\Priority,
@@ -85,6 +86,7 @@ interface Enums extends
     Video\TextureAccess,
     Video\TextureModulate,
     Video\RendererFlip,
+    Video\ScaleMode,
     Video\WindowShapeMode
 {
 

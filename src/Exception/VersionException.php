@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Exception;
+namespace Serafim\SDL\Exception;
 
 /**
  * Class VersionException

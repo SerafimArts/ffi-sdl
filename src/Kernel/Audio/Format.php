@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Audio;
+namespace Serafim\SDL\Kernel\Audio;
 
 /**
  * Audio format flags.
@@ -50,7 +50,7 @@ interface Format
     /**
      * Unsigned 16-bit samples
      *
-     * @since 2.0.5
+     * @since SDL 2.0.5
      * @var int
      */
     public const AUDIO_U16LSB = 0x0010;
@@ -65,7 +65,7 @@ interface Format
     /**
      * As above, but big-endian byte order
      *
-     * @since 2.0.5
+     * @since SDL 2.0.5
      * @var int
      */
     public const AUDIO_U16MSB = 0x1010;

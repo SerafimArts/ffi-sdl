@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Event;
+namespace Serafim\SDL\Kernel\Event;
 
 /**
  * Interface Type
@@ -25,7 +25,7 @@ interface Type
     public const SDL_APP_WILLENTERFOREGROUND  = self::SDL_QUIT + 5;
     public const SDL_APP_DIDENTERFOREGROUND   = self::SDL_QUIT + 6;
     /**
-     * @since 2.0.9
+     * @since SDL 2.0.9
      */
     public const SDL_DISPLAYEVENT             = 0x150;
     public const SDL_WINDOWEVENT              = 0x200;
@@ -67,11 +67,11 @@ interface Type
     public const SDL_AUDIODEVICEREMOVED       = self::SDL_AUDIODEVICEADDED + 1;
 
     /**
-     * @since 2.0.9
+     * @since SDL 2.0.9
      */
     public const SDL_SENSORUPDATE             = 0x1200;
     /**
-     * @since 2.0.2
+     * @since SDL 2.0.2
      */
     public const SDL_RENDER_TARGETS_RESET     = 0x2000;
     public const SDL_RENDER_DEVICE_RESET      = self::SDL_RENDER_TARGETS_RESET + 1;

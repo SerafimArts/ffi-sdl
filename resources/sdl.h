@@ -462,7 +462,7 @@ extern void SDL_Quit(void);
     extern int SDL_GetSystemRAM(void);
     extern void SDL_GL_GetDrawableSize(SDL_Window* window, int* w, int* h);
 
-    #ifdef __WIN32__
+    #ifdef __windows__
         extern int SDL_Direct3D9GetAdapterIndex(int displayIndex);
         extern IDirect3DDevice9* SDL_RenderGetD3D9Device(SDL_Renderer* renderer);
     #endif
@@ -491,7 +491,7 @@ extern void SDL_Quit(void);
     extern void* SDL_AtomicSetPtr(void **a, void* v);
     extern void* SDL_AtomicGetPtr(void **a);
 
-    #ifdef __WIN32__
+    #ifdef __windows__
         extern int SDL_RegisterApp(char* name, Uint32 style, void* hInst);
         extern void SDL_UnregisterApp(void);
 
@@ -522,7 +522,7 @@ extern void SDL_Quit(void);
     extern SDL_GameController* SDL_GameControllerFromInstanceID(SDL_JoystickID joyid);
     extern int SDL_RenderIsClipEnabled(SDL_Renderer* renderer);
 
-    #ifdef __WIN32__
+    #ifdef __windows__
         extern void SDL_SetWindowsMessageHook(SDL_WindowsMessageHook callback, void* userdata);
     #endif
 #endif
@@ -728,4 +728,37 @@ extern void SDL_Quit(void);
     extern size_t SDL_RWwrite(SDL_RWops* context, const void* ptr, size_t size, size_t num);
     extern int SDL_RWclose(SDL_RWops* context);
     extern void* SDL_LoadFile(const char* file, size_t* datasize);
+#endif
+
+
+// =====================================================================================================================
+//   SDL >= 2.0.12
+//
+//   https://discourse.libsdl.org/t/sdl-2-0-12-released/27318
+// =====================================================================================================================
+
+#if __sdl_version__ >= 2.0.12
+    extern int SDL_GetTextureScaleMode(SDL_Texture* texture, SDL_ScaleMode* scaleMode);
+    extern int SDL_SetTextureScaleMode(SDL_Texture* texture, SDL_ScaleMode scaleMode);
+    extern int SDL_LockTextureToSurface(SDL_Texture* texture, const SDL_Rect* rect, SDL_Surface** surface);
+
+    extern SDL_GameControllerType SDL_GameControllerTypeForIndex(int joystick_index);
+    extern SDL_GameControllerType SDL_GameControllerGetType(SDL_GameController *gamecontroller);
+
+    extern SDL_GameController* SDL_GameControllerFromPlayerIndex(int player_index);
+    extern void SDL_GameControllerSetPlayerIndex(SDL_GameController *gamecontroller, int player_index);
+
+    extern SDL_Joystick* SDL_JoystickFromPlayerIndex(int player_index);
+    extern void SDL_JoystickSetPlayerIndex(SDL_Joystick* joystick, int player_index);
+
+    extern int SDL_HasARMSIMD(void);
+
+    #ifdef __osx__
+        extern SDL_MetalView SDL_Metal_CreateView(SDL_Window* window);
+        extern void SDL_Metal_DestroyView(SDL_MetalView view);
+    #endif
+
+    #ifdef __android__
+        extern int SDL_GetAndroidSDKVersion(void);
+    #endif
 #endif

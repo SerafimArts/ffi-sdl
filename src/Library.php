@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace SDL;
+namespace Serafim\SDL;
 
-use SDL\Loader\BitDepth;
-use SDL\Loader\LibraryInterface;
-use SDL\Loader\OperatingSystem;
+use Serafim\FFILoader\BitDepth;
+use Serafim\FFILoader\Library as BaseLibrary;
+use Serafim\FFILoader\OperatingSystem;
 
 /**
  * Class Library
  */
-class Library implements LibraryInterface
+class Library extends BaseLibrary
 {
     /**
      * @var string
@@ -73,14 +73,6 @@ class Library implements LibraryInterface
     public function getHeaders(): string
     {
         return __DIR__ . '/../resources/sdl.h';
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeHeaders(): string
-    {
-        return __DIR__ . '/../resources/sdl-types.h';
     }
 
     /**
@@ -140,5 +132,13 @@ class Library implements LibraryInterface
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    final public function getOutputDirectory(): string
+    {
+        return __DIR__ . '/../out';
     }
 }

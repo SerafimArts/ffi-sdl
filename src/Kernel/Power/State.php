@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Power;
+namespace Serafim\SDL\Kernel\Power;
 
 /**
  * Interface State

@@ -50,22 +50,6 @@ The library API completely supports and repeats the analogue in the C language.
 
 - [SDL2 official documentation](https://wiki.libsdl.org/FrontPage)
 
-To support autocomplete, please add a link to `\SDL\NativeApiAutocomplete`:
-
-```php
-/** @var \SDL\SDLNativeApiAutocomplete $sdl */
-$sdl = new \SDL\SDL();
-```
-
-In addition, the library contains functionality adapted for PHP.
-- All methods are converted to the PSR style 
-    - For example `$sdl->init(...)` instead of `$sdl->SDL_Init(...)`.
-- In case of errors, methods throw exceptions.
-- Removed passing arguments by reference during initialization
-    - For example `$sdl->getVersion()` instead of `$sdl->SDL_GetVersion($versionPointer)`.
-- All arguments that accept a boolean in c-format (short int) are replaced by a boolean.
-- Added default arguments in some methods
-
 #### Notes
 
 - API not yet fully documented and may not work in places.
@@ -74,11 +58,10 @@ In addition, the library contains functionality adapted for PHP.
 ## Example
 
 ```php
-use SDL\SDL;
-use SDL\Event;
-use SDL\Kernel\Event\Type;
+use Serafim\SDL\SDL;
+use Serafim\SDL\Event;
+use Serafim\SDL\Kernel\Event\Type;
 
-/** @var SDL|\SDL\SDLNativeApiAutocomplete $sdl */
 $sdl = new SDL();
 
 $sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
@@ -97,10 +80,12 @@ if ($window === null) {
 }
 
 $event = $sdl->new(Event::class);
+$running = true;
 
-while($sdl->SDL_PollEvent(SDL::addr($event))) {
+while ($running) {
+    $sdl->SDL_PollEvent(SDL::addr($event));
     if ($event->type === Type::SDL_QUIT) {
-        break;
+        $running = false;
     }
 }
 

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel\Hint;
+namespace Serafim\SDL\Kernel\Hint;
 
 /**
  * Interface Name
@@ -150,7 +150,7 @@ interface Name
      *
      * By default SDL will disable the screensaver.
      *
-     * @since 2.0.2
+     * @since SDL 2.0.2
      * @var string
      */
     public const SDL_HINT_VIDEO_ALLOW_SCREENSAVER = 'SDL_VIDEO_ALLOW_SCREENSAVER';
@@ -219,7 +219,7 @@ interface Name
      *
      * By default SDL will use _NET_WM_BYPASS_COMPOSITOR
      *
-     * @since 2.0.8
+     * @since SDL 2.0.8
      * @var string
      */
     public const SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR = 'SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR';
@@ -280,7 +280,7 @@ interface Name
     /**
      * A variable setting the double click time, in milliseconds.
      *
-     * @since 2.0.9
+     * @since SDL 2.0.9
      * @var string
      */
     public const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME = 'SDL_MOUSE_DOUBLE_CLICK_TIME';
@@ -288,7 +288,7 @@ interface Name
     /**
      * A variable setting the double click radius, in pixels.
      *
-     * @since 2.0.9
+     * @since SDL 2.0.9
      * @var string
      */
     public const SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS = 'SDL_MOUSE_DOUBLE_CLICK_RADIUS';
@@ -317,7 +317,7 @@ interface Name
      *
      * By default SDL will use raw input for relative mouse mode
      *
-     * @since 2.0.2
+     * @since SDL 2.0.2
      * @var string
      */
     public const SDL_HINT_MOUSE_RELATIVE_MODE_WARP = 'SDL_MOUSE_RELATIVE_MODE_WARP';
@@ -331,7 +331,7 @@ interface Name
      *
      * By default SDL will ignore mouse clicks that activate a window
      *
-     * @since 2.0.5
+     * @since SDL 2.0.5
      * @var string
      */
     public const SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH = 'SDL_MOUSE_FOCUS_CLICKTHROUGH';
@@ -356,7 +356,7 @@ interface Name
      *    "0"       - Mouse events will not generate touch events (default for desktop platforms)
      *    "1"       - Mouse events will generate touch events (default for mobile platforms, such as Android and iOS)
      *
-     * @since 2.0.10
+     * @since SDL 2.0.10
      * @var string
      */
     public const SDL_HINT_MOUSE_TOUCH_EVENTS = 'SDL_MOUSE_TOUCH_EVENTS';
@@ -436,7 +436,7 @@ interface Name
      *    "0"       - Remote orientation does not affect joystick axes (the default).
      *    "1"       - Joystick axes are based on the orientation of the remote.
      *
-     * @since 2.0.5
+     * @since SDL 2.0.5
      * @var string
      */
     public const SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION = 'SDL_APPLE_TV_REMOTE_ALLOW_ROTATION';
@@ -452,7 +452,7 @@ interface Name
      *    "2"       - The indicator bar is dim and the first swipe makes it visible and the second swipe performs the
      * "home" action (default for fullscreen applications)
      *
-     * @since 2.0.8
+     * @since SDL 2.0.8
      * @var string
      */
     public const SDL_HINT_IOS_HIDE_HOME_INDICATOR = 'SDL_IOS_HIDE_HOME_INDICATOR';
@@ -465,7 +465,7 @@ interface Name
      *    "0"       - The accelerometer is not listed as a joystick
      *    "1"       - The accelerometer is available as a 3 axis joystick (the default).
      *
-     * @since 2.0.2
+     * @since SDL 2.0.2
      * @var string
      */
     public const SDL_HINT_ACCELEROMETER_AS_JOYSTICK = 'SDL_ACCELEROMETER_AS_JOYSTICK';
@@ -478,7 +478,7 @@ interface Name
      *    "0"       - Remotes send enter/escape/arrow key events
      *    "1"       - Remotes are available as 2 axis, 2 button joysticks (the default).
      *
-     * @since 2.0.8
+     * @since SDL 2.0.8
      * @var string
      */
     public const SDL_HINT_TV_REMOTE_AS_JOYSTICK = 'SDL_TV_REMOTE_AS_JOYSTICK';
@@ -527,7 +527,7 @@ interface Name
      * You can update mappings after the system is initialized with SDL_GameControllerMappingForGUID() and
      * SDL_GameControllerAddMapping()
      *
-     * @since 2.0.10
+     * @since SDL 2.0.10
      * @var string
      */
     public const SDL_HINT_GAMECONTROLLERCONFIG_FILE = 'SDL_GAMECONTROLLERCONFIG_FILE';
@@ -614,7 +614,7 @@ interface Name
      *    "1"       - extended reports
      *
      * Extended input reports allow rumble on Bluetooth PS4 controllers, but
-     * break DirectInput handling for applications that don't use SDL.
+     * break DirectInput handling for applications that don't use Serafim\SDL.
      *
      * Once extended reports are enabled, they can not be disabled without
      * power cycling the controller.
@@ -750,7 +750,7 @@ interface Name
      * SDL_CreateThreadWithStackSize(). This hint only works with the classic
      * SDL_CreateThread().
      *
-     * @since 2.0.5
+     * @since SDL 2.0.5
      * @var string
      */
     public const SDL_HINT_THREAD_STACK_SIZE = 'SDL_THREAD_STACK_SIZE';
@@ -768,7 +768,7 @@ interface Name
      * If present, holding ctrl while left clicking will generate a right click
      * event when on Mac.
      *
-     * @since 2.0.2
+     * @since SDL 2.0.2
      * @var string
      */
     public const SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK = 'SDL_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK';
@@ -787,7 +787,7 @@ interface Name
      *    "none" - do not load any library, useful if you compiled ANGLE from source and included the compiler in your
      * binaries.
      *
-     * @since 2.0.2
+     * @since SDL 2.0.2
      * @var string
      */
     public const SDL_HINT_VIDEO_WIN_D3DCOMPILER = 'SDL_VIDEO_WIN_D3DCOMPILER';
@@ -809,7 +809,7 @@ interface Name
      *    The address (as a string "%p") of the SDL_Window* that new windows created with SDL_CreateWindowFrom() should
      *    share a pixel format with.
      *
-     * @since 2.0.2
+     * @since SDL 2.0.2
      * @var string
      */
     public const SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT = 'SDL_VIDEO_WINDOW_SHARE_PIXEL_FORMAT';
@@ -875,7 +875,7 @@ interface Name
      * terminate the app (and attempt to switch to the previous app, or to the
      * device's home screen).
      *
-     * Setting the SDL_HINT_WINRT_HANDLE_BACK_BUTTON hint to "1" will cause SDL
+     * Setting the SDL_HINT_WINRT_HANDLE_BACK_BUTTON hint to "1" will cause Serafim\SDL
      * to mark back-button-press events as Handled, if and when one is sent to
      * the app.
      *
@@ -1008,7 +1008,7 @@ interface Name
      *
      * The value of this hint is used at runtime, so it can be changed at any time.
      *
-     * @since 2.0.9
+     * @since SDL 2.0.9
      * @var string
      */
     public const SDL_HINT_ANDROID_TRAP_BACK_BUTTON = 'SDL_ANDROID_TRAP_BACK_BUTTON';
@@ -1022,7 +1022,7 @@ interface Name
      *
      * The value should be set before SDL is initialized.
      *
-     * @since 2.0.10
+     * @since SDL 2.0.10
      * @var string
      */
     public const SDL_HINT_ANDROID_BLOCK_ON_PAUSE = 'SDL_ANDROID_BLOCK_ON_PAUSE';
@@ -1037,7 +1037,7 @@ interface Name
      *
      * The value of this hint is used at runtime, so it can be changed at any time.
      *
-     * @since 2.0.8
+     * @since SDL 2.0.8
      * @var string
      */
     public const SDL_HINT_RETURN_KEY_HIDES_IME = 'SDL_RETURN_KEY_HIDES_IME';
@@ -1100,7 +1100,7 @@ interface Name
      *
      * The default value is "0".
      *
-     * @since 2.0.5
+     * @since SDL 2.0.5
      * @var string
      */
     public const SDL_HINT_BMP_SAVE_LEGACY_FORMAT = 'SDL_BMP_SAVE_LEGACY_FORMAT';
@@ -1119,7 +1119,7 @@ interface Name
      *   "1"       - SDL will not raise this exception, and threads will be unnamed. (default)
      *               This is necessary with .NET languages or debuggers that aren't Visual Studio.
      *
-     * @since 2.0.5
+     * @since SDL 2.0.5
      * @var string
      */
     public const SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING = 'SDL_WINDOWS_DISABLE_THREAD_NAMING';
@@ -1150,7 +1150,7 @@ interface Name
      * - KMSDRM (kmsdrm)
      * - Raspberry Pi (raspberrypi)
      *
-     * @since 2.0.8
+     * @since SDL 2.0.8
      * @var string
      */
     public const SDL_HINT_VIDEO_DOUBLE_BUFFER = 'SDL_VIDEO_DOUBLE_BUFFER';
@@ -1207,7 +1207,7 @@ interface Name
      *
      * This variable can be set to the following values:
      *
-     *    "0" or "default" - Use SDL's internal resampling (Default when not set - low quality, fast)
+     *    "0" or "default" - use Serafim\SDL's internal resampling (Default when not set - low quality, fast)
      *    "1" or "fast"    - Use fast, slightly higher quality resampling, if available
      *    "2" or "medium"  - Use medium quality resampling, if available
      *    "3" or "best"    - Use high quality resampling, if available
@@ -1254,7 +1254,7 @@ interface Name
      * batch goes to the GPU before your work begins. Not following this contract
      * will result in undefined behavior.
      *
-     * @since 2.0.10
+     * @since SDL 2.0.10
      * @var string
      */
     public const SDL_HINT_RENDER_BATCHING = 'SDL_RENDER_BATCHING';
@@ -1278,7 +1278,7 @@ interface Name
      * This hint can be toggled on and off at runtime, if you only need to log
      * events for a small subset of program execution.
      *
-     * @since 2.0.10
+     * @since SDL 2.0.10
      * @var string
      */
     public const SDL_HINT_EVENT_LOGGING = 'SDL_EVENT_LOGGING';
@@ -1352,4 +1352,110 @@ interface Name
      * @var string
      */
     public const SDL_HINT_WAVE_FACT_CHUNK = 'SDL_WAVE_FACT_CHUNK';
+
+    /**
+     * Override for SDL_GetDisplayUsableBounds()
+     *
+     * If set, this hint will override the expected results for
+     * SDL_GetDisplayUsableBounds() for display index 0. Generally you don't want
+     * to do this, but this allows an embedded system to request that some of the
+     * screen be reserved for other uses when paired with a well-behaved
+     * application.
+     *
+     * The contents of this hint must be 4 comma-separated integers, the first
+     * is the bounds x, then y, width and height, in that order.
+     *
+     * @since SDL 2.0.12
+     * @var string
+     */
+    public const SDL_HINT_DISPLAY_USABLE_BOUNDS = 'SDL_DISPLAY_USABLE_BOUNDS';
+
+    /**
+     * A variable that overrides the automatic controller type detection
+     *
+     * The variable should be comma separated entries, in the form: VID/PID=type
+     *
+     * The VID and PID should be hexadecimal with exactly 4 digits, e.g. 0x00fd
+     *
+     * The type should be one of:
+     *    - Xbox360
+     *    - XboxOne
+     *    - PS3
+     *    - PS4
+     *    - SwitchPro
+     *
+     * This hint affects what driver is used, and must be set before
+     * calling SDL_Init(SDL_INIT_GAMECONTROLLER)
+     *
+     * @since SDL 2.0.12
+     * @var string
+     */
+    public const SDL_HINT_GAMECONTROLLERTYPE = 'SDL_GAMECONTROLLERTYPE';
+
+    /**
+     * If set, game controller face buttons report their values according to
+     * their labels instead of their positional layout.
+     *
+     * For example, on Nintendo Switch controllers, normally you'd get:
+     *
+     *      (Y)
+     *  (X)     (B)
+     *      (A)
+     *
+     * but if this hint is set, you'll get:
+     *
+     *      (X)
+     *  (Y)     (A)
+     *      (B)
+     *
+     * The variable can be set to the following values:
+     *  - "0": Report the face buttons by position, as though they were
+     *          on an Xbox controller.
+     *  - "1": Report the face buttons by label instead of position.
+     *
+     * The default value is "1".
+     * This hint may be set at any time.
+     *
+     * @since SDL 2.0.12
+     * @var string
+     */
+    public const SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS = 'SDL_GAMECONTROLLER_USE_BUTTON_LABELS';
+
+
+    /**
+     * A variable controlling whether the HIDAPI driver for Nintendo GameCube
+     * controllers should be used.
+     *
+     * This variable can be set to the following values:
+     *  - "0": HIDAPI driver is not used
+     *  - "1": HIDAPI driver is used
+     *
+     *  The default is the value of SDL_HINT_JOYSTICK_HIDAPI
+     *
+     * @since SDL 2.0.12
+     * @var string
+     */
+    public const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE = 'SDL_JOYSTICK_HIDAPI_GAMECUBE';
+
+    /**
+     * A variable forcing the visual ID chosen for new X11 windows
+     *
+     * @since SDL 2.0.12
+     * @var string
+     */
+    public const SDL_HINT_VIDEO_X11_WINDOW_VISUALID = 'SDL_VIDEO_X11_WINDOW_VISUALID';
+
+    /**
+     * A variable controlling whether X11 should use GLX or EGL by default
+     *
+     * This variable can be set to the following values:
+     *  - "0": Use GLX
+     *  - "1": Use EGL
+     *
+     * By default SDL will use GLX when both are present.
+     *
+     * @since SDL 2.0.12
+     * @var string
+     */
+    public const SDL_HINT_VIDEO_X11_FORCE_EGL = 'SDL_VIDEO_X11_FORCE_EGL';
 }

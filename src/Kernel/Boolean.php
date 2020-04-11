@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace SDL\Kernel;
+namespace Serafim\SDL\Kernel;
 
 /**
  * Basic bool data type

@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace SDL;
+namespace Serafim\SDL;
 
 use FFI\CData;
 use FFI\CPtr;
 use FFI\CScalar;
 use FFI\CStruct;
-use SDL\Kernel\Keyboard\Key;
-use SDL\Kernel\Keyboard\KeyMode;
-use SDL\Kernel\Keyboard\ScanCode;
+use Serafim\SDL\Kernel\Keyboard\Key;
+use Serafim\SDL\Kernel\Keyboard\KeyMode;
+use Serafim\SDL\Kernel\Keyboard\ScanCode;
 
 /**
  * <code>
@@ -1722,7 +1722,7 @@ final class WindowsMessageHook extends CData
 }
 
 /**
- * @since 2.0.1
+ * @since SDL 2.0.1
  */
 final class IDirect3DDevice9 extends CData
 {
@@ -1770,9 +1770,9 @@ final class Version extends CData
 }
 
 /**
- * @since 2.0.6
- *
  * TODO Finish the description of this structure
+ *
+ * @since SDL 2.0.6
  * @mixin CStruct
  */
 final class VulkanInstance extends CData
@@ -1780,12 +1780,21 @@ final class VulkanInstance extends CData
 }
 
 /**
- * @since 2.0.6
- *
  * TODO Finish the description of this structure
+ *
+ * @since SDL 2.0.6
  * @mixin CStruct
  */
 final class VulkanSurface extends CData
+{
+}
+
+/**
+ * TODO Finish the description of this structure
+ * @since SDL 2.0.12
+ * @mixin CStruct
+ */
+final class MetalView extends CData
 {
 }
 
@@ -2110,6 +2119,26 @@ final class SurfacePtr extends CData
     }
 
     private function offsetSet(int $i, Surface $d): void
+    {
+    }
+}
+
+/**
+ * @mixin SurfacePtr
+ * @mixin CPtr
+ * @mixin CStruct
+ */
+final class SurfacePtrPtr extends CData
+{
+    private function __construct()
+    {
+    }
+
+    private function offsetGet(int $i): SurfacePtr
+    {
+    }
+
+    private function offsetSet(int $i, SurfacePtr $d): void
     {
     }
 }
