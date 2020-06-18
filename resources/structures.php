@@ -11,10 +11,12 @@ declare(strict_types=1);
 
 namespace Serafim\SDL;
 
+use FFI\CCharPtr;
 use FFI\CData;
 use FFI\CPtr;
 use FFI\CScalar;
 use FFI\CStruct;
+use FFI\CStructPtr;
 use Serafim\SDL\Kernel\Keyboard\Key;
 use Serafim\SDL\Kernel\Keyboard\KeyMode;
 use Serafim\SDL\Kernel\Keyboard\ScanCode;
@@ -1036,19 +1038,87 @@ final class Event extends CData
 /**
  * TODO Finish the description of this structure
  *
+ * <code>
+ *  typedef struct SDL_CommonEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *  } SDL_CommonEvent;
+ * </code>
+ *
  * @mixin CStruct
  */
 final class CommonEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
 }
 
 /**
  * TODO Finish the description of this structure
  *
+ * <code>
+ *  typedef struct SDL_DisplayEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Uint32 display;
+ *      Uint8 event;
+ *      Uint8 padding1;
+ *      Uint8 padding2;
+ *      Uint8 padding3;
+ *      Sint32 data1;
+ *  } SDL_DisplayEvent;
+ * </code>
+ *
  * @mixin CStruct
  */
 final class DisplayEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $display;
+
+    /**
+     * @var int
+     */
+    public int $event;
+
+    /**
+     * @var int
+     */
+    public int $padding1;
+
+    /**
+     * @var int
+     */
+    public int $padding2;
+
+    /**
+     * @var int
+     */
+    public int $padding3;
+
+    /**
+     * @var int
+     */
+    public int $data1;
 }
 
 /**
@@ -1220,10 +1290,38 @@ final class KeySym extends CData
 /**
  * TODO Finish the description of this structure
  *
+ * <code>
+ *  typedef struct SDL_TextInputEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Uint32 windowID;
+ *      char text[32];
+ *  } SDL_TextInputEvent;
+ * </code>
+ *
  * @mixin CStruct
  */
 final class TextInputEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $windowID;
+
+    /**
+     * @var string
+     */
+    public string $text;
 }
 
 /**
@@ -1300,127 +1398,723 @@ final class MouseMotionEvent extends CData
 /**
  * TODO Finish the description of this structure
  *
+ * <code>
+ *  typedef struct SDL_MouseButtonEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Uint32 windowID;
+ *      Uint32 which;
+ *      Uint8 button;
+ *      Uint8 state;
+ *      Uint8 clicks;
+ *      Uint8 padding1;
+ *      Sint32 x;
+ *      Sint32 y;
+ *  } SDL_MouseButtonEvent;
+ * </code>
+ *
  * @mixin CStruct
  */
 final class MouseButtonEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $windowID;
+
+    /**
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * @var int
+     */
+    public int $button;
+
+    /**
+     * @var int
+     */
+    public int $state;
+
+    /**
+     * @var int
+     */
+    public int $clicks;
+
+    /**
+     * @var int
+     */
+    public int $padding1;
+
+    /**
+     * @var int
+     */
+    public int $x;
+
+    /**
+     * @var int
+     */
+    public int $y;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_TextEditingEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Uint32 windowID;
+ *      char text[32];
+ *      Sint32 start;
+ *      Sint32 length;
+ *  } SDL_TextEditingEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class TextEditingEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $windowID;
+
+    /**
+     * @var string
+     */
+    public string $text;
+
+    /**
+     * @var int
+     */
+    public int $start;
+
+    /**
+     * @var int
+     */
+    public int $length;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_MouseWheelEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Uint32 windowID;
+ *      Uint32 which;
+ *      Sint32 x;
+ *      Sint32 y;
+ *      Uint32 direction;
+ *  } SDL_MouseWheelEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class MouseWheelEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $windowID;
+
+    /**
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * @var int
+     */
+    public int $x;
+
+    /**
+     * @var int
+     */
+    public int $y;
+
+    /**
+     * @var int
+     */
+    public int $direction;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_JoyAxisEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      SDL_JoystickID which;
+ *      Uint8 axis;
+ *      Uint8 padding1;
+ *      Uint8 padding2;
+ *      Uint8 padding3;
+ *      Sint16 value;
+ *      Uint16 padding4;
+ *  } SDL_JoyAxisEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class JoyAxisEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * @var int
+     */
+    public int $axis;
+
+    /**
+     * @var int
+     */
+    public int $padding1;
+
+    /**
+     * @var int
+     */
+    public int $padding2;
+
+    /**
+     * @var int
+     */
+    public int $padding3;
+
+    /**
+     * @var int
+     */
+    public int $value;
+
+    /**
+     * @var int
+     */
+    public int $padding4;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_JoyBallEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      SDL_JoystickID which;
+ *      Uint8 ball;
+ *      Uint8 padding1;
+ *      Uint8 padding2;
+ *      Uint8 padding3;
+ *      Sint16 xrel;
+ *      Sint16 yrel;
+ *  } SDL_JoyBallEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class JoyBallEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * @var int
+     */
+    public int $ball;
+
+    /**
+     * @var int
+     */
+    public int $padding1;
+
+    /**
+     * @var int
+     */
+    public int $padding2;
+
+    /**
+     * @var int
+     */
+    public int $padding3;
+
+    /**
+     * @var int
+     */
+    public int $xrel;
+
+    /**
+     * @var int
+     */
+    public int $yrel;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_JoyHatEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      SDL_JoystickID which;
+ *      Uint8 hat;
+ *      Uint8 value;
+ *      Uint8 padding1;
+ *      Uint8 padding2;
+ *  } SDL_JoyHatEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class JoyHatEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * @var int
+     */
+    public int $hat;
+
+    /**
+     * @var int
+     */
+    public int $value;
+
+    /**
+     * @var int
+     */
+    public int $padding1;
+
+    /**
+     * @var int
+     */
+    public int $padding2;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_JoyButtonEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      SDL_JoystickID which;
+ *      Uint8 button;
+ *      Uint8 state;
+ *      Uint8 padding1;
+ *      Uint8 padding2;
+ *  } SDL_JoyButtonEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class JoyButtonEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * @var int
+     */
+    public int $button;
+
+    /**
+     * @var int
+     */
+    public int $state;
+
+    /**
+     * @var int
+     */
+    public int $padding1;
+
+    /**
+     * @var int
+     */
+    public int $padding2;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_JoyDeviceEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Sint32 which;
+ *  } SDL_JoyDeviceEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class JoyDeviceEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $which;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_ControllerAxisEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      SDL_JoystickID which;
+ *      Uint8 axis;
+ *      Uint8 padding1;
+ *      Uint8 padding2;
+ *      Uint8 padding3;
+ *      Sint16 value;
+ *      Uint16 padding4;
+ *  } SDL_ControllerAxisEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class ControllerAxisEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * @var int
+     */
+    public int $axis;
+
+    /**
+     * @var int
+     */
+    public int $padding1;
+
+    /**
+     * @var int
+     */
+    public int $padding2;
+
+    /**
+     * @var int
+     */
+    public int $padding3;
+
+    /**
+     * @var int
+     */
+    public int $value;
+
+    /**
+     * @var int
+     */
+    public int $padding4;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_ControllerButtonEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      SDL_JoystickID which;
+ *      Uint8 button;
+ *      Uint8 state;
+ *      Uint8 padding1;
+ *      Uint8 padding2;
+ *  } SDL_ControllerButtonEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class ControllerButtonEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * @var int
+     */
+    public int $button;
+
+    /**
+     * @var int
+     */
+    public int $state;
+
+    /**
+     * @var int
+     */
+    public int $padding1;
+
+    /**
+     * @var int
+     */
+    public int $padding2;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_ControllerDeviceEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Sint32 which;
+ *  } SDL_ControllerDeviceEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class ControllerDeviceEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $which;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_AudioDeviceEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Uint32 which;
+ *      Uint8 iscapture;
+ *      Uint8 padding1;
+ *      Uint8 padding2;
+ *      Uint8 padding3;
+ *  } SDL_AudioDeviceEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class AudioDeviceEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * @var int
+     */
+    public int $iscapture;
+
+    /**
+     * @var int
+     */
+    public int $padding1;
+
+    /**
+     * @var int
+     */
+    public int $padding2;
+
+    /**
+     * @var int
+     */
+    public int $padding3;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_SensorEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      Sint32 which;
+ *      float data[6];
+ *  } SDL_SensorEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class SensorEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $which;
+
+    /**
+     * @var array|float[]
+     */
+    public array $data;
 }
 
 /**
  * TODO Finish the description of this structure
  *
+ * <code>
+ *  typedef struct SDL_QuitEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *  } SDL_QuitEvent;
+ * </code>
+ *
  * @mixin CStruct
  */
 final class QuitEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
 }
 
 /**
@@ -1430,42 +2124,229 @@ final class QuitEvent extends CData
  */
 final class UserEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $windowID;
+
+    /**
+     * @var int
+     */
+    public int $code;
+
+    /**
+     * @var CData
+     */
+    public CData $data1;
+
+    /**
+     * @var CData
+     */
+    public CData $data2;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_SysWMEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      SDL_SysWMmsg* msg;
+ *  } SDL_SysWMEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class SysWMEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var CData|CStructPtr
+     */
+    public CData $msg;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_TouchFingerEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      SDL_TouchID touchId;
+ *      SDL_FingerID fingerId;
+ *      float x;
+ *      float y;
+ *      float dx;
+ *      float dy;
+ *      float pressure;
+ *      #if __sdl_version__ >= 2.0.12
+ *          Uint32 windowID;
+ *      #endif
+ *  } SDL_TouchFingerEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class TouchFingerEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $touchId;
+
+    /**
+     * @var int
+     */
+    public int $fingerId;
+
+    /**
+     * @var float
+     */
+    public float $x;
+
+    /**
+     * @var float
+     */
+    public float $y;
+
+    /**
+     * @var float
+     */
+    public float $dx;
+
+    /**
+     * @var float
+     */
+    public float $dy;
+
+    /**
+     * @var float
+     */
+    public float $pressure;
 }
 
 /**
  * TODO Finish the description of this structure
+ *
+ * <code>
+ *  typedef struct SDL_MultiGestureEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      SDL_TouchID touchId;
+ *      float dTheta;
+ *      float dDist;
+ *      float x;
+ *      float y;
+ *      Uint16 numFingers;
+ *      Uint16 padding;
+ *  } SDL_MultiGestureEvent;
+ * </code>
  *
  * @mixin CStruct
  */
 final class MultiGestureEvent extends CData
 {
+    public int $type;
+    public int $timestamp;
+    public int $touchId;
+    public float $dTheta;
+    public float $dDist;
+    public float $x;
+    public float $y;
+    public int $numFingers;
+    public int $padding;
 }
 
 /**
  * TODO Finish the description of this structure
  *
+ * <code>
+ *  typedef struct SDL_DollarGestureEvent {
+ *      Uint32 type;
+ *      Uint32 timestamp;
+ *      SDL_TouchID touchId;
+ *      SDL_GestureID gestureId;
+ *      Uint32 numFingers;
+ *      float error;
+ *      float x;
+ *      float y;
+ *  } SDL_DollarGestureEvent;
+ * </code>
+ *
  * @mixin CStruct
  */
 final class DollarGestureEvent extends CData
 {
+    /**
+     * @var int
+     */
+    public int $type;
+
+    /**
+     * @var int
+     */
+    public int $timestamp;
+
+    /**
+     * @var int
+     */
+    public int $touchId;
+
+    /**
+     * @var int
+     */
+    public int $gestureId;
+
+    /**
+     * @var int
+     */
+    public int $numFingers;
+
+    /**
+     * @var float
+     */
+    public float $error;
+
+    /**
+     * @var float
+     */
+    public float $x;
+
+    /**
+     * @var float
+     */
+    public float $y;
 }
 
 /**
@@ -1475,24 +2356,25 @@ final class DollarGestureEvent extends CData
  */
 final class DropEvent extends CData
 {
-}
+    /**
+     * @var int
+     */
+    public int $type;
 
-/**
- * TODO Finish the description of this structure
- *
- * @mixin CStruct
- */
-final class EventAction extends CData
-{
-}
+    /**
+     * @var int
+     */
+    public int $timestamp;
 
-/**
- * TODO Finish the description of this structure
- *
- * @mixin CStruct
- */
-final class EventFilter extends CData
-{
+    /**
+     * @var CData|CCharPtr|string
+     */
+    public CData $file;
+
+    /**
+     * @var int
+     */
+    public int $windowID;
 }
 
 /**
