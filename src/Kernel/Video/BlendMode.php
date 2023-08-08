@@ -1,12 +1,5 @@
 <?php
 
-/**
- * This file is part of SDL package.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Video;
@@ -22,7 +15,6 @@ interface BlendMode
      * <code>
      *  dstRGBA = srcRGBA
      * </code>
-     * @var int
      */
     public const SDL_BLENDMODE_NONE    = 0x00000000;
 
@@ -32,7 +24,6 @@ interface BlendMode
      *  dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA))
      *  dstA = srcA + (dstA * (1-srcA))
      * </code>
-     * @var int
      */
     public const SDL_BLENDMODE_BLEND   = 0x00000001;
 
@@ -42,7 +33,6 @@ interface BlendMode
      *  dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA))
      *  dstA = srcA + (dstA * (1-srcA))
      * </code>
-     * @var int
      */
     public const SDL_BLENDMODE_ADD     = 0x00000002;
 
@@ -52,8 +42,6 @@ interface BlendMode
      *  dstRGB = srcRGB * dstRGB
      *  dstA = dstA
      * </code>
-     *
-     * @var int
      */
     public const SDL_BLENDMODE_MOD     = 0x00000004;
 
@@ -64,12 +52,8 @@ interface BlendMode
      *  dstA = (srcA * dstA) + (dstA * (1-srcA))
      * </code>
      * @since SDL 2.0.12
-     * @var int
      */
     public const SDL_BLENDMODE_MUL     = 0x00000008;
 
-    /**
-     * @var int
-     */
     public const SDL_BLENDMODE_INVALID = 0x7FFFFFFF;
 }

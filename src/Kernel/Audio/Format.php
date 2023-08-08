@@ -1,12 +1,5 @@
 <?php
 
-/**
- * This file is part of SDL package.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Audio;
@@ -35,15 +28,11 @@ interface Format
 {
     /**
      * Unsigned 8-bit samples
-     *
-     * @var int
      */
     public const AUDIO_U8 = 0x0008;
 
     /**
      * Signed 8-bit samples
-     *
-     * @var int
      */
     public const AUDIO_S8 = 0x8008;
 
@@ -51,14 +40,11 @@ interface Format
      * Unsigned 16-bit samples
      *
      * @since SDL 2.0.5
-     * @var int
      */
     public const AUDIO_U16LSB = 0x0010;
 
     /**
      * Signed 16-bit samples
-     *
-     * @var int
      */
     public const AUDIO_S16LSB = 0x8010;
 
@@ -66,70 +52,51 @@ interface Format
      * As above, but big-endian byte order
      *
      * @since SDL 2.0.5
-     * @var int
      */
     public const AUDIO_U16MSB = 0x1010;
 
     /**
      * As above, but big-endian byte order
-     *
-     * @var int
      */
     public const AUDIO_S16MSB = 0x9010;
 
     /**
      * Unsigned 16-bit samples (alias)
-     *
-     * @var int
      */
     public const AUDIO_U16 = self::AUDIO_U16LSB;
 
     /**
      * Signed 16-bit samples (alias)
-     *
-     * @var int
      */
     public const AUDIO_S16 = self::AUDIO_S16LSB;
 
     /**
      * 32-bit integer samples
-     *
-     * @var int
      */
     public const AUDIO_S32LSB = 0x8020;
 
     /**
      * As above, but big-endian byte order
-     *
-     * @var int
      */
     public const AUDIO_S32MSB = 0x9020;
 
     /**
      * 32-bit floating point samples
-     *
-     * @var int
      */
     public const AUDIO_F32LSB = 0x8120;
 
     /**
      * 32-bit integer samples (alias)
-     *
-     * @var int
      */
     public const AUDIO_S32 = self::AUDIO_S32LSB;
 
     /**
      * As above, but big-endian byte order
-     *
-     * @var int
      */
     public const AUDIO_F32MSB = 0x9120;
 
     /**
      * 32-bit floating point samples (alias)
-     *
-     * @var int
      */
     public const AUDIO_F32 = self::AUDIO_F32LSB;
 }
