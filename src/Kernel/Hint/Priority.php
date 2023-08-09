@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Hint;
 
-/**
- * Interface Priority
- */
 interface Priority
 {
     public const SDL_HINT_DEFAULT  = 0;

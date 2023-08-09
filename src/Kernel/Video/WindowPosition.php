@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Video;
 
-/**
- * Interface WindowPosition
- */
 interface WindowPosition
 {
-
     public const SDL_WINDOWPOS_UNDEFINED_MASK = 0x1FFF0000;
 
     public const SDL_WINDOWPOS_UNDEFINED = self::SDL_WINDOWPOS_UNDEFINED_MASK | 0;

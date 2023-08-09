@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Mouse;
 
-/**
- * Interface Button
- */
 interface Button
 {
-
     public const SDL_BUTTON_LEFT = 1;
 
     public const SDL_BUTTON_MIDDLE = 2;

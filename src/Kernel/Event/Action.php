@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Event;
 
-/**
- * Interface Action
- */
 interface Action
 {
     public const SDL_ADDEVENT  = 0;

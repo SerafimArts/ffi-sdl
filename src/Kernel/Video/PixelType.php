@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Video;
 
-/**
- * Interface PixelType
- */
 interface PixelType
 {
     public const SDL_PIXELTYPE_UNKNOWN = 0;

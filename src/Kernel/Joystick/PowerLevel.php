@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Joystick;
 
-/**
- * Interface PowerLevel
- */
 interface PowerLevel
 {
     public const SDL_JOYSTICK_POWER_UNKNOWN = -1;

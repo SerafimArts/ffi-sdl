@@ -8,6 +8,7 @@ use FFI\Contracts\Headers\HeaderInterface;
 use FFI\Contracts\Headers\VersionInterface;
 use FFI\Contracts\Preprocessor\PreprocessorInterface;
 use Psr\SimpleCache\CacheInterface;
+use Serafim\SDL\Header;
 use Serafim\SDL\Platform;
 
 /**

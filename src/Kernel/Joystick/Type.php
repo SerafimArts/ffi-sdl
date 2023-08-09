@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Joystick;
 
-/**
- * Interface Type
- */
 interface Type
 {
     public const SDL_JOYSTICK_TYPE_UNKNOWN        = 0;

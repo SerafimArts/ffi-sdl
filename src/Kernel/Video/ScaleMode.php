@@ -17,17 +17,17 @@ namespace Serafim\SDL\Kernel\Video;
 interface ScaleMode
 {
     /**
-     * @deprecated Please use SDL_SCALE_MODE_NEAREST instead
+     * @deprecated Please use {@see ScaleMode::SDL_SCALE_MODE_NEAREST} instead
      */
     public const SDL_ScaleModeNearest = 0;
 
     /**
-     * @deprecated Please use SDL_SCALE_MODE_LINEAR instead
+     * @deprecated Please use {@see ScaleMode::SDL_SCALE_MODE_LINEAR} instead
      */
     public const SDL_ScaleModeLinear = 1;
 
     /**
-     * @deprecated Please use SDL_SCALE_MODE_BEST instead
+     * @deprecated Please use {@see ScaleMode::SDL_SCALE_MODE_BEST} instead
      */
     public const SDL_ScaleModeBest = 2;
 

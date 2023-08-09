@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Joystick;
 
-/**
- * Interface Hat
- */
 interface Hat
 {
-
     public const SDL_HAT_CENTERED = 0x00;
 
     public const SDL_HAT_UP = 0x01;

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Audio;
 
-/**
- * Interface AudioStatusInterface
- */
 interface Status
 {
     public const SDL_AUDIO_STOPPED = 0;

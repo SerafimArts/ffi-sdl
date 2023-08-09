@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel;
 
-/**
- * Interface ThreadPriorityInterface
- */
 interface ThreadPriority
 {
     public const SDL_THREAD_PRIORITY_LOW = 0;

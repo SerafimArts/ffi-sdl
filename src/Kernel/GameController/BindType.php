@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\GameController;
 
-/**
- * Interface GameControllerBindTypeInterface
- */
 interface BindType
 {
     public const SDL_CONTROLLER_BINDTYPE_NONE   = 0;

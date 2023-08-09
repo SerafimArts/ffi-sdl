@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Video;
 
-/**
- * Interface BitMapOrderInterface
- */
 interface BitMapOrder
 {
     public const SDL_BITMAPORDER_NONE = 0;

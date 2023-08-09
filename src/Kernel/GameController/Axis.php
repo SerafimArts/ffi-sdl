@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\GameController;
 
-/**
- * Interface Axis
- */
 interface Axis
 {
     public const SDL_CONTROLLER_AXIS_INVALID      = -1;

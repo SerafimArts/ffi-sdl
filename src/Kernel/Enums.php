@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel;
 
-/**
- * Interface EnumsInterface
- */
 interface Enums extends
     Boolean,
     InitFlags,
     ThreadPriority,
+    SysWMType,
     // Assert
     Assert\State,
     // Audio
@@ -74,6 +72,7 @@ interface Enums extends
     Video\WindowEvent,
     Video\DisplayEvent,
     Video\DisplayOrientation,
+    Video\FlashOperation,
     Video\HitTestResult,
     Video\RendererFlags,
     Video\TextureAccess,

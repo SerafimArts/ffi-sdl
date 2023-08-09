@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Video;
 
-/**
- * Interface PackedOrderInterface
- */
 interface PackedOrder
 {
     public const SDL_PACKEDORDER_NONE = 0;

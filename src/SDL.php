@@ -15,6 +15,9 @@ use Psr\SimpleCache\CacheInterface;
 use Serafim\SDL\Internal\CacheAwareHeader;
 use Serafim\SDL\Kernel\Enums;
 
+/**
+ * @mixin \FFI
+ */
 final class SDL extends Proxy implements Enums
 {
     /**

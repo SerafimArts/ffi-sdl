@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Kernel\Video;
 
-/**
- * Interface HitTestResult
- */
 interface HitTestResult
 {
     public const SDL_HITTEST_NORMAL             = 0;
