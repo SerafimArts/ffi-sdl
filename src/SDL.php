@@ -103,8 +103,6 @@ final class SDL extends Proxy implements Enums
         }
 
         return \realpath($library) ?: Locator::resolve($library) ?? $library;
-
-
     }
 
     private function detectVersion(): VersionInterface
