@@ -143,4 +143,4 @@ jobs:
               if: runner.os == 'macOS'
               run: brew install sdl2
             - name: Execute Tests
-              run: vendor/bin/phpunit --testdox --verbose
+              run: vendor/bin/phpunit --testdox
