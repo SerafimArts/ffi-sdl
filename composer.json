@@ -1,6 +1,6 @@
 {
     "name": "serafim/ffi-sdl",
-    "description": "PHP FFI to SDL2 bindings",
+    "description": "SDL2 FFI bindings for the PHP language",
     "type": "library",
     "license": "MIT",
     "support": {

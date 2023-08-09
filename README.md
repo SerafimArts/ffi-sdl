@@ -9,6 +9,7 @@ This is a SDL bindings for PHP
     - [Windows](#windows)
 - [Extensions](#extensions)
 - [Documentation](#documentation)
+- [Initialization](#initialization)
 - [Example](#example)
 
 ## Requirements
@@ -47,7 +48,69 @@ The library API completely supports and repeats the analogue in the C language.
 #### Notes
 
 - API not yet fully documented and may not work in places.
-- Low level and inline functions (such as `SDL_malloc` or `SDL_memcpy`) have been removed.
+- Low level and inline functions (such as `SDL_malloc` or `SDL_memcpy`) have
+  been removed.
+
+## Initialization
+
+To specify a library pathname explicitly, you can add the `library` argument to
+the `Serafim\SDL\SDL` constructor.
+
+> By default, the library will try to resolve the binary's pathname automatically.
+
+```php
+// Load library from pathname (it may be relative or part of system-dependent path)
+$sdl = new Serafim\SDL\SDL(library: __DIR__ . '/path/to/library.so');
+
+// Try to automatically resolve library's pathname
+$sdl = new Serafim\SDL\SDL(library: null);
+```
+
+You can explicitly specify the platform (OS) that will be used as the basis
+for compiling headers. 
+
+> By default, the library will try to resolve the platform automatically.
+
+```php
+// Use Linux as compile-aware platform
+$sdl = new Serafim\SDL\SDL(platform: Serafim\SDL\Platform::LINUX);
+
+// Detect platform automatically
+$sdl = new Serafim\SDL\SDL(platform: null);
+```
+
+You can also specify the library version explicitly. Depending on this version,
+the corresponding functions of the SDL will be available.
+
+> By default, the library will try to resolve SDL version automatically.
+
+```php
+// Use v2.28.2 from string
+$sdl = new Serafim\SDL\SDL(version: '2.28.2');
+
+// Use v2.24.1 from predefined versions constant
+$sdl = new Serafim\SDL\SDL(version: \Serafim\SDL\Version::V2_24_1);
+
+// Use latest supported version
+$sdl = new Serafim\SDL\SDL(version: \Serafim\SDL\Version::LATEST);
+```
+
+To speed up the header compiler, you can use any PSR-16 compatible cache driver.
+
+```php
+$sdl = new Serafim\SDL\SDL(cache: new Psr16Cache(...));
+```
+
+In addition, you can control other preprocessor directives explicitly:
+
+```php
+$pre = new \FFI\Preprocessor\Preprocessor();
+$pre->setLogger(new ExampleLogger());
+$pre->define('__ANDROID__', '1');
+
+$sdl = new Serafim\SDL\SDL(pre: $pre);
+$jni = $sdl->SDL_AndroidGetJNIEnv();
+```
 
 ## Example
 
