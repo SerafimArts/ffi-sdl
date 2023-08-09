@@ -4,9 +4,6 @@ This is a SDL bindings for PHP
 
 - [System Requirements](#requirements)
 - [Installation](#installation)
-    - [Linux](#linux)
-    - [MacOS](#macos)
-    - [Windows](#windows)
 - [Extensions](#extensions)
 - [Documentation](#documentation)
 - [Initialization](#initialization)
@@ -44,8 +41,6 @@ Additional dependencies:
 The library API completely supports and repeats the analogue in the C language.
 
 - [SDL2 official documentation](https://wiki.libsdl.org/FrontPage)
-
-#### Notes
 
 - API not yet fully documented and may not work in places.
 - Low level and inline functions (such as `SDL_malloc` or `SDL_memcpy`) have
