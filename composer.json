@@ -43,7 +43,7 @@
         "symfony/dom-crawler": "^5.4|^6.0",
         "symfony/css-selector": "^5.4|^6.0",
         "ffi/var-dumper": "^1.0",
-        "phpunit/phpunit": "^9.0",
+        "phpunit/phpunit": "^10.3",
         "symfony/cache": "^5.4|^6.0"
     },
     "autoload-dev": {
