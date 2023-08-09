@@ -81,34 +81,34 @@ final class SDL extends Proxy implements Enums
      */
     private function detectLibraryPathname(?string $library): string
     {
-        if ($library === null) {
-            return match ($this->platform) {
-                Platform::WINDOWS => Locator::resolve('SDL2.dll')
-                    ?? throw new \RuntimeException(<<<'error'
-                        Could not load [SDL2.dll].
-
-                        Please make sure the SDL2 library is installed or specify
-                        the path to the binary explicitly.
-                        error),
-                Platform::FREEBSD,
-                Platform::LINUX => Locator::resolve('libSDL2-2.0.so', 'libSDL2-2.0.so.0')
-                    ?? throw new \RuntimeException(<<<'error'
-                        Could not load [libSDL2-2.0.so.0].
-
-                        Please make sure the SDL2 library is installed or specify
-                        the path to the binary explicitly.
-                        error),
-                Platform::DARWIN => Locator::resolve('libSDL2-2.0.0.dylib')
-                    ?? throw new \RuntimeException(<<<'error'
-                        Could not load [libSDL2-2.0.0.dylib].
-
-                        Please make sure the SDL2 library is installed or specify
-                        the path to the binary explicitly.
-                        error),
-            };
+        if ($library !== null) {
+            return \realpath($library) ?: Locator::resolve($library) ?? $library;
         }
 
-        return \realpath($library) ?: Locator::resolve($library) ?? $library;
+        return match ($this->platform) {
+            Platform::WINDOWS => Locator::resolve('SDL2.dll')
+                ?? throw new \RuntimeException(<<<'error'
+                    Could not load [SDL2.dll].
+
+                    Please make sure the SDL2 library is installed or specify
+                    the path to the binary explicitly.
+                    error),
+            Platform::FREEBSD,
+            Platform::LINUX => Locator::resolve('libSDL2-2.0.so', 'libSDL2-2.0.so.0')
+                ?? throw new \RuntimeException(<<<'error'
+                    Could not load [libSDL2-2.0.so.0].
+
+                    Please make sure the SDL2 library is installed or specify
+                    the path to the binary explicitly.
+                    error),
+            Platform::DARWIN => Locator::resolve('libSDL2-2.0.0.dylib')
+                ?? throw new \RuntimeException(<<<'error'
+                    Could not load [libSDL2-2.0.0.dylib].
+
+                    Please make sure the SDL2 library is installed or specify
+                    the path to the binary explicitly.
+                    error),
+        };
     }
 
     /**
@@ -127,7 +127,7 @@ final class SDL extends Proxy implements Enums
               Uint8 patch;
             } SDL_Version;
             extern void SDL_GetVersion(SDL_Version* ver);
-        CLANG, $this->library);
+            CLANG, $this->library);
 
         /**
          * @var \FFI\CData&object{
