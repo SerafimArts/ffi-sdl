@@ -1,22 +1,20 @@
-name: build
+name: security
 
 on:
   push:
   pull_request:
-
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
-  unit-tests:
-    name: Build (${{matrix.php}}, ${{ matrix.os }}, ${{ matrix.stability }})
+  security:
+    name: Security
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        php: [ '8.1', '8.2' ]
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
-        stability: [ prefer-lowest, prefer-stable ]
+        php: [ '8.2' ]
+        os: [ ubuntu-latest ]
     steps:
       - name: Set Git To Use LF
         run: |
@@ -28,13 +26,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: pcov
-          tools: pecl
-          ini-values: ffi.enable=1
-          extensions: ffi
-      - name: Update Composer
-        run: composer self-update
-      - name: Validate Composer Config
+      - name: Validate Composer
         run: composer validate
       - name: Get Composer Cache Directory
         id: composer-cache
@@ -50,12 +42,8 @@ jobs:
         with:
           timeout_minutes: 5
           max_attempts: 5
-          command: composer update --${{ matrix.stability }} --ignore-platform-reqs --prefer-dist --no-interaction --no-progress
-      - name: Install Linux SDL2
-        if: runner.os == 'Linux'
-        run: sudo apt-get install -y libsdl2-2.0-0
-      - name: Install MacOS SDL2
-        if: runner.os == 'macOS'
-        run: brew install sdl2
-      - name: Execute Tests
-        run: vendor/bin/phpunit --testdox
+          command: composer update --prefer-dist --no-interaction --no-progress
+      - name: Composer Audit
+        run: composer audit
+      - name: Security Advisories
+        run: composer require --dev roave/security-advisories:dev-latest
