@@ -13,10 +13,10 @@ This is a SDL bindings for PHP
 
 ## Requirements
 
-- PHP >= 7.4
+- PHP ^8.1
 - ext-ffi
-- Windows, Linux or MacOS 
-    - Android, iOS, BSD or something else are not supported yet
+- Windows, Linux, BSD or MacOS 
+    - Android, iOS or something else are not supported yet
 - SDL >= 2.0
 
 ## Installation
@@ -28,17 +28,10 @@ installed using the following command in a root of your project.
 $ composer require serafim/ffi-sdl
 ```
 
-#### Linux
-
-- `sudo apt install libsdl2-2.0-0 -y`
-
-#### MacOS
-
-- `brew install sdl2`
-
-#### Windows
-
-- SDL (2.0.12) binaries are already bundled
+Additional dependencies:
+  - Debian-based Linux: `sudo apt install libsdl2-2.0-0 -y`
+  - MacOS: `brew install sdl2`
+  - Window: Can be [downloaded from here](https://github.com/libsdl-org/SDL/releases)
 
 ## Extensions
 
@@ -54,7 +47,7 @@ The library API completely supports and repeats the analogue in the C language.
 #### Notes
 
 - API not yet fully documented and may not work in places.
-- Low level system functions (such as `SDL_malloc` or `SDL_memcpy`) have been removed.
+- Low level and inline functions (such as `SDL_malloc` or `SDL_memcpy`) have been removed.
 
 ## Example
 
@@ -67,10 +60,10 @@ $sdl = new SDL();
 
 $sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
 
-$window = $sdl->SDL_CreateWindow( 
+$window = $sdl->SDL_CreateWindow(
     'An SDL2 window',
     SDL::SDL_WINDOWPOS_UNDEFINED,
-    SDL::SDL_WINDOWPOS_UNDEFINED, 
+    SDL::SDL_WINDOWPOS_UNDEFINED,
     640,
     480,
     SDL::SDL_WINDOW_OPENGL
@@ -80,11 +73,11 @@ if ($window === null) {
     throw new \Exception(sprintf('Could not create window: %s', $sdl->SDL_GetError()));
 }
 
-$event = $sdl->new(Event::class);
+$event = $sdl->new('SDL_Event');
 $running = true;
 
 while ($running) {
-    $sdl->SDL_PollEvent(SDL::addr($event));
+    $sdl->SDL_PollEvent(FFI::addr($event));
     if ($event->type === Type::SDL_QUIT) {
         $running = false;
     }
