@@ -73,6 +73,12 @@ final class SDL extends Proxy implements Enums
         return Header::create($this->platform, $this->version, $pre);
     }
 
+    /**
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
+     *
+     * @return non-empty-string
+     */
     private function detectLibraryPathname(?string $library): string
     {
         if ($library === null) {
@@ -105,6 +111,9 @@ final class SDL extends Proxy implements Enums
         return \realpath($library) ?: Locator::resolve($library) ?? $library;
     }
 
+    /**
+     * @psalm-suppress all
+     */
     private function detectVersion(): VersionInterface
     {
         /**

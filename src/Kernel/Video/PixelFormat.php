@@ -37,11 +37,25 @@ interface PixelFormat
     public const SDL_PIXELFORMAT_ABGR8888 = (1 << 28) | (PixelType::SDL_PIXELTYPE_PACKED32 << 24) | (PackedOrder::SDL_PACKEDORDER_ABGR << 20) | (PackedLayout::SDL_PACKEDLAYOUT_8888 << 16) | (32 << 8) | (4 << 0);
     public const SDL_PIXELFORMAT_BGRA8888 = (1 << 28) | (PixelType::SDL_PIXELTYPE_PACKED32 << 24) | (PackedOrder::SDL_PACKEDORDER_BGRA << 20) | (PackedLayout::SDL_PACKEDLAYOUT_8888 << 16) | (32 << 8) | (4 << 0);
     public const SDL_PIXELFORMAT_ARGB2101010 = (1 << 28) | (PixelType::SDL_PIXELTYPE_PACKED32 << 24) | (PackedOrder::SDL_PACKEDORDER_ARGB << 20) | (PackedLayout::SDL_PACKEDLAYOUT_2101010 << 16) | (32 << 8) | (4 << 0);
+    /**
+     * @psalm-suppress UndefinedConstant
+     */
     public const SDL_PIXELFORMAT_RGBA32 = self::SDL_PIXELFORMAT_ABGR8888;
+
+    /**
+     * @psalm-suppress UndefinedConstant
+     */
     public const SDL_PIXELFORMAT_ARGB32 = self::SDL_PIXELFORMAT_BGRA8888;
+
+    /**
+     * @psalm-suppress UndefinedConstant
+     */
     public const SDL_PIXELFORMAT_BGRA32 = self::SDL_PIXELFORMAT_ARGB8888;
+
+    /**
+     * @psalm-suppress UndefinedConstant
+     */
     public const SDL_PIXELFORMAT_ABGR32 = self::SDL_PIXELFORMAT_RGBA8888;
-    //
     public const SDL_PIXELFORMAT_YV12 = 842094169;
     public const SDL_PIXELFORMAT_IYUV = 1448433993;
     public const SDL_PIXELFORMAT_YUY2 = 844715353;

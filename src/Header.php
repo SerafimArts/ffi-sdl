@@ -62,7 +62,8 @@ final class Header implements HeaderInterface
 
     public function __construct(
         private readonly PreprocessorInterface $pre,
-    ) {}
+    ) {
+    }
 
     /**
      * @return non-empty-string
@@ -86,7 +87,9 @@ final class Header implements HeaderInterface
         $pre->define('WINAPI_FAMILY_PARTITION', static fn (string $type) => 0);
         $pre->define('DECLSPEC', '');
         $pre->define('_SDL_HAS_BUILTIN', static fn (string $arg) => 0);
-        $pre->define('_SDL_VERSION_GTE', fn (string $expected): bool =>
+        $pre->define(
+            '_SDL_VERSION_GTE',
+            fn (string $expected): bool =>
             \version_compare($version->toString(), $expected, '>=')
         );
 
@@ -121,8 +124,6 @@ final class Header implements HeaderInterface
     }
 
     /**
-     * @return non-empty-string
-     *
      * @throws PreprocessorExceptionInterface
      */
     public function __toString(): string

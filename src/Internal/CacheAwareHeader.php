@@ -24,7 +24,8 @@ final class CacheAwareHeader implements HeaderInterface
         private readonly VersionInterface $version,
         private readonly PreprocessorInterface $pre,
         private readonly CacheInterface $cache,
-    ) {}
+    ) {
+    }
 
     private function getKey(): string
     {
@@ -37,6 +38,7 @@ final class CacheAwareHeader implements HeaderInterface
 
     public function __toString(): string
     {
+        /** @var string|null $result */
         $result = $this->cache->get($this->getKey());
 
         if ($result === null) {

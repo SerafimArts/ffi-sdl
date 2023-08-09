@@ -9,7 +9,6 @@ namespace Serafim\SDL\Kernel\GameController;
  */
 interface Type
 {
-
     public const SDL_CONTROLLER_TYPE_UNKNOWN = 0;
 
     public const SDL_CONTROLLER_TYPE_XBOX360 = 1;

@@ -10,7 +10,6 @@ namespace Serafim\SDL\Kernel\OpenGL;
  */
 interface GLSwapInterval
 {
-
     public const SDL_GL_SWAP_IMMEDIATE = 0;
 
     public const SDL_GL_SWAP_VERTICAL_SYNC = 1;

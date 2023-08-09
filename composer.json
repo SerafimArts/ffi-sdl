@@ -26,11 +26,11 @@
     "require": {
         "php": "^8.1",
         "ext-ffi": "*",
-        "ffi/env": "^1.0",
-        "ffi/proxy": "^1.0",
-        "ffi/location": "^1.0",
         "ffi-headers/contracts": "^1.0",
+        "ffi/env": "^1.0",
+        "ffi/location": "^1.0",
         "ffi/preprocessor": "^0.2",
+        "ffi/proxy": "^1.0",
         "psr/simple-cache": "^1.0|^2.0|^3.0"
     },
     "autoload": {
@@ -39,17 +39,28 @@
         }
     },
     "require-dev": {
-        "serafim/castxml": "^1.0",
-        "symfony/dom-crawler": "^5.4|^6.0",
-        "symfony/css-selector": "^5.4|^6.0",
-        "ffi/var-dumper": "^1.0",
+        "friendsofphp/php-cs-fixer": "^3.22",
         "phpunit/phpunit": "^10.3",
-        "symfony/cache": "^5.4|^6.0"
+        "serafim/castxml": "^1.0",
+        "symfony/cache": "^5.4|^6.0",
+        "symfony/css-selector": "^5.4|^6.0",
+        "symfony/dom-crawler": "^5.4|^6.0",
+        "vimeo/psalm": "^5.14"
     },
     "autoload-dev": {
         "psr-4": {
             "Serafim\\SDL\\Tests\\": "tests"
         }
+    },
+    "scripts": {
+        "psalm": "@psalm:check",
+        "psalm:check": "psalm --no-cache",
+        "psalm:fix": "psalm --no-cache --alter",
+        "phpcs": "@phpcs:check",
+        "phpcs:check": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes --dry-run",
+        "phpcs:fix": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes",
+        "test": "@test:unit",
+        "test:unit": "phpunit --testdox"
     },
     "config": {
         "sort-packages": true
