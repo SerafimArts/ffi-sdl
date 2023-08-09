@@ -2,7 +2,7 @@
 
 namespace PHPSTORM_META {
 
-    registerArgumentsSet('sdl_types', 
+    registerArgumentsSet('sdl_types',
         'void *',
         'bool',
         'float',
@@ -3819,9 +3819,9 @@ namespace PHPSTORM_META {
 
 }
 
-namespace SDL\Serafim {
+namespace Serafim\SDL {
 
-    
+
     interface SDL
     {
         /**

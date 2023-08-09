@@ -320,7 +320,7 @@ $exportStructures
 
 }
 
-namespace SDL\Serafim {
+namespace Serafim\SDL {
 
     $exportAutocompletion
 
