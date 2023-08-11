@@ -84,14 +84,16 @@ final class Header implements HeaderInterface
             $version = Version::create($version->toString());
         }
 
+        //
+        // Custom directive
+        //
+        $pre->define('_SDL_VERSION_GTE', static fn (string $expected): bool =>
+            \version_compare($version->toString(), $expected, '>=')
+        );
+
         $pre->define('WINAPI_FAMILY_PARTITION', static fn (string $type) => 0);
         $pre->define('DECLSPEC', '');
         $pre->define('_SDL_HAS_BUILTIN', static fn (string $arg) => 0);
-        $pre->define(
-            '_SDL_VERSION_GTE',
-            fn (string $expected): bool =>
-            \version_compare($version->toString(), $expected, '>=')
-        );
 
         // Remove stdinc and platform headers
         $pre->add('SDL_stdinc.h', self::SDLINC_H);

@@ -39,12 +39,10 @@
         }
     },
     "require-dev": {
+        "ffi/ide-helper-generator": "^0.1|^1.0",
         "friendsofphp/php-cs-fixer": "^3.22",
         "phpunit/phpunit": "^10.3",
-        "serafim/castxml": "^1.0",
         "symfony/cache": "^5.4|^6.0",
-        "symfony/css-selector": "^5.4|^6.0",
-        "symfony/dom-crawler": "^5.4|^6.0",
         "vimeo/psalm": "^5.14"
     },
     "autoload-dev": {

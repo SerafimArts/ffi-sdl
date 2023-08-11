@@ -111,7 +111,7 @@ $jni = $sdl->SDL_AndroidGetJNIEnv();
 
 ```php
 use Serafim\SDL\SDL;
-use Serafim\SDL\Kernel\Event\Type;
+use Serafim\SDL\Event\Type;
 
 $sdl = new SDL();
 

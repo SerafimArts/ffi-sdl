@@ -12,13 +12,90 @@ use FFI\Location\Locator;
 use FFI\Preprocessor\Preprocessor;
 use FFI\Proxy\Proxy;
 use Psr\SimpleCache\CacheInterface;
-use Serafim\SDL\Internal\CacheAwareHeader;
-use Serafim\SDL\Kernel\Enums;
 
 /**
  * @mixin \FFI
  */
-final class SDL extends Proxy implements Enums
+final class SDL extends Proxy implements
+    Boolean,
+    ErrorCode,
+    InitFlags,
+    ThreadPriority,
+    SysWMType,
+    // Assert
+    Assert\State,
+    // Audio
+    Audio\AllowChangeFlag,
+    Audio\Format,
+    Audio\Status,
+    // Event
+    Event\Action,
+    Event\Type,
+    // GameController
+    GameController\Axis,
+    GameController\BindType,
+    GameController\Button,
+    GameController\Type,
+    // Hint
+    Hint\Name,
+    Hint\Priority,
+    // Joystick
+    Joystick\Hat,
+    Joystick\PowerLevel,
+    Joystick\Type,
+    // Keyboard
+    Keyboard\EventState,
+    Keyboard\Key,
+    Keyboard\KeyMode,
+    Keyboard\ScanCode,
+    // Log
+    Log\Category,
+    Log\Priority,
+    // MessageBox
+    MessageBox\Flags,
+    MessageBox\ButtonFlags,
+    MessageBox\ColorType,
+    // Mouse
+    Mouse\Button,
+    Mouse\SystemCursor,
+    Mouse\WheelDirection,
+    // OpenGL
+    OpenGL\GLAttr,
+    OpenGL\GLProfile,
+    OpenGL\GLContextFlag,
+    OpenGL\GLSwapInterval,
+    OpenGL\GLContextReleaseFlag,
+    OpenGL\GLContextResetNotification,
+    // Power
+    Power\State,
+    // RWops
+    RWops\SeekWhence,
+    // Sensor
+    Sensor\Type,
+    // Touch
+    Touch\DeviceType,
+    // Video + Pixel + Texture + Surface + Renderer + BlendMode
+    Video\WindowPosition,
+    Video\PixelFormat,
+    Video\BlendMode,
+    Video\BlendOperation,
+    Video\BlendFactor,
+    Video\YuvConversionMode,
+    Video\WindowFlags,
+    Video\WindowEvent,
+    Video\DisplayEvent,
+    Video\DisplayOrientation,
+    Video\FlashOperation,
+    Video\HitTestResult,
+    Video\RendererFlags,
+    Video\TextureAccess,
+    Video\TextureModulate,
+    Video\RendererFlip,
+    Video\ScaleMode,
+    Video\WindowShapeMode,
+    // WinRT
+    WinRT\DeviceFamily,
+    WinRT\Path
 {
     /**
      * Contains pathname to the binary library.
