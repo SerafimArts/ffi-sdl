@@ -10,7 +10,7 @@ use FFI\Generator\SimpleNamingStrategy;
 require __DIR__ . '/../vendor/autoload.php';
 
 const INPUT_HEADERS = __DIR__ . '/../resources/headers/SDL.h';
-const OUTPUT_METADATA = __DIR__ . '/../resources/generated/metadata.xml';
+const OUTPUT_METADATA = __DIR__ . '/metadata.xml';
 const OUTPUT_FILE = __DIR__ . '/../resources/generated/.phpstorm.meta.php';
 
 fwrite(STDOUT, " - [1/4] Generating metadata files\n");
