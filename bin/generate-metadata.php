@@ -6,71 +6,29 @@ use FFI\Generator\Metadata\CastXMLGenerator;
 use FFI\Generator\Metadata\CastXMLParser;
 use FFI\Generator\PhpStormMetadataGenerator;
 use FFI\Generator\SimpleNamingStrategy;
-use FFI\Preprocessor\Preprocessor;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-const INPUT_PRE_HEADERS = __DIR__ . '/../resources/headers/SDL.h';
-const INPUT_HEADERS = __DIR__ . '/../resources/generated/entrypoint.h';
+const INPUT_HEADERS = __DIR__ . '/../resources/headers/SDL.h';
 const OUTPUT_METADATA = __DIR__ . '/../resources/generated/metadata.xml';
 const OUTPUT_FILE = __DIR__ . '/../resources/generated/.phpstorm.meta.php';
 
-fwrite(STDOUT, " - [1/5] Compile generic header files\n");
+fwrite(STDOUT, " - [1/4] Generating metadata files\n");
 
-$pre = new Preprocessor();
-
-$pre->define('_SDL_VERSION_GTE', static fn (string $expected): bool => true);
-$pre->define('WINAPI_FAMILY_PARTITION', static fn (string $type) => 0);
-$pre->define('DECLSPEC', '');
-$pre->define('_SDL_HAS_BUILTIN', static fn (string $arg) => 0);
-
-$pre->add('stddef.h', '');
-$pre->add('stdarg.h', '');
-$pre->add('stdint.h', '');
-
-// Win API
-$pre->define('__WIN32__', '1');
-$pre->define('__stdcall');
-$pre->define('__cdecl');
-$pre->add('process.h', '');
-
-// MacOS API
-$pre->define('__APPLE__', '1');
-$pre->add('AvailabilityMacros.h', '');
-$pre->add('TargetConditionals.h', '');
-$pre->add('signal.h', '');
-$pre->add('libkern/OSAtomic.h', '');
-
-// BSD
-$pre->define('__FREEBSD__', '1');
-
-// Linux
-$pre->define('__LINUX__', '1');
-
-$processed = $pre->process(new \SplFileInfo(INPUT_PRE_HEADERS));
-
-\file_put_contents(INPUT_HEADERS, <<<HEADER
-    #include <stddef.h>
-    #include <stdarg.h>
-    #include <stdint.h>
-
-    HEADER . $processed);
-
-
-fwrite(STDOUT, " - [2/5] Generating metadata files\n");
-
-//if (!is_file(OUTPUT_METADATA)) {
+if (!is_file(OUTPUT_METADATA)) {
     (new CastXMLGenerator())
         ->generate(INPUT_HEADERS)
         ->save(OUTPUT_METADATA)
     ;
-//}
+}
 
-fwrite(STDOUT, " - [3/5] Building AST\n");
+fwrite(STDOUT, " - [2/4] Building AST\n");
 
-$ast = (new CastXMLParser())->parse(OUTPUT_METADATA);
+$ast = (new CastXMLParser())
+    ->parse(OUTPUT_METADATA)
+;
 
-fwrite(STDOUT, " - [4/5] Generating IDE helper\n");
+fwrite(STDOUT, " - [3/4] Generating IDE helper\n");
 
 $result = (new PhpStormMetadataGenerator(
         argumentSetPrefix: 'ffi_sdl_',
@@ -150,7 +108,7 @@ $result = (new PhpStormMetadataGenerator(
         ->generate($ast)
     ;
 
-fwrite(STDOUT, " - [5/5] Saving result\n");
+fwrite(STDOUT, " - [4/4] Saving result\n");
 
 file_put_contents(OUTPUT_FILE, (string)$result);
 

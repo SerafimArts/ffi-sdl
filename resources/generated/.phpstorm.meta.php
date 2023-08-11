@@ -1212,6 +1212,9 @@ namespace PHPSTORM_META {
         \Serafim\SDL\Video\WindowShapeMode::SHAPE_MODE_COLOR_KEY
     );
     expectedArguments(\Serafim\SDL\SDL::SDL_Error(), 0, argumentsSet('ffi_sdl_sdl_errorcode'));
+    expectedArguments(\Serafim\SDL\SDL::_set_app_type(), 0, argumentsSet('ffi_sdl__crt_app_type'));
+    expectedArguments(\Serafim\SDL\SDL::_configure_narrow_argv(), 0, argumentsSet('ffi_sdl__crt_argv_mode'));
+    expectedArguments(\Serafim\SDL\SDL::_configure_wide_argv(), 0, argumentsSet('ffi_sdl__crt_argv_mode'));
     expectedArguments(\Serafim\SDL\SDL::SDL_SetThreadPriority(), 0, argumentsSet('ffi_sdl_sdl_threadpriority'));
     expectedArguments(\Serafim\SDL\SDL::SDL_RWFromFP(), 1, argumentsSet('ffi_sdl_sdl_bool'));
     expectedArguments(\Serafim\SDL\SDL::SDL_ComposeCustomBlendMode(), 0, argumentsSet('ffi_sdl_sdl_blendfactor'));
@@ -1271,6 +1274,8 @@ namespace PHPSTORM_META {
     expectedReturnValues(\Serafim\SDL\SDL::SDL_AtomicTryLock(), argumentsSet('ffi_sdl_sdl_bool'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_AtomicCAS(), argumentsSet('ffi_sdl_sdl_bool'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_AtomicCASPtr(), argumentsSet('ffi_sdl_sdl_bool'));
+    expectedReturnValues(\Serafim\SDL\SDL::_get_startup_argv_mode(), argumentsSet('ffi_sdl__crt_argv_mode'));
+    expectedReturnValues(\Serafim\SDL\SDL::_query_app_type(), argumentsSet('ffi_sdl__crt_app_type'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_GetAudioStatus(), argumentsSet('ffi_sdl_sdl_audiostatus'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_GetAudioDeviceStatus(), argumentsSet('ffi_sdl_sdl_audiostatus'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_HasClipboardText(), argumentsSet('ffi_sdl_sdl_bool'));
@@ -1515,13 +1520,30 @@ namespace PHPSTORM_META {
         // structures autocompletion
         '' => '\PHPSTORM_META\@',
         '__NSConstantString' => '\PHPSTORM_META\NSConstantString',
-        'max_align_t' => '\PHPSTORM_META\MaxAlignT',
-        '__fsid_t' => '\PHPSTORM_META\FsidT',
         'SDL_AssertData' => '\PHPSTORM_META\SDLAssertData',
         'SDL_atomic_t' => '\PHPSTORM_META\SDLAtomicT',
+        '__crt_locale_data_public' => '\PHPSTORM_META\CrtLocaleDataPublic',
+        '__crt_locale_pointers' => '\PHPSTORM_META\CrtLocalePointers',
+        '_Mbstatet' => '\PHPSTORM_META\Mbstatet',
+        'div_t' => '\PHPSTORM_META\DivT',
+        'ldiv_t' => '\PHPSTORM_META\LdivT',
+        'lldiv_t' => '\PHPSTORM_META\LldivT',
+        '_LDOUBLE' => '\PHPSTORM_META\LDOUBLE',
+        '_CRT_DOUBLE' => '\PHPSTORM_META\CRTDOUBLE',
+        '_CRT_FLOAT' => '\PHPSTORM_META\CRTFLOAT',
+        '_LONGDOUBLE' => '\PHPSTORM_META\LONGDOUBLE',
+        '_LDBL12' => '\PHPSTORM_META\LDBL12',
+        '_HEAPINFO' => '\PHPSTORM_META\HEAPINFO',
+        'SETJMP_FLOAT128' => '\PHPSTORM_META\SETJMPFLOAT128',
+        '_JUMP_BUFFER' => '\PHPSTORM_META\JUMPBUFFER',
         'SDL_mutex' => '\PHPSTORM_META\SDLMutex',
         'SDL_sem' => '\PHPSTORM_META\SDLSem',
         'SDL_cond' => '\PHPSTORM_META\SDLCond',
+        '_double_val' => '\PHPSTORM_META\DoubleVal',
+        '_float_val' => '\PHPSTORM_META\FloatVal',
+        '_ldouble_val' => '\PHPSTORM_META\LdoubleVal',
+        '_float_const' => '\PHPSTORM_META\FloatConst',
+        '_onexit_table_t' => '\PHPSTORM_META\OnexitTableT',
         'SDL_Thread' => '\PHPSTORM_META\SDLThread',
         'SDL_RWops' => '\PHPSTORM_META\SDLRWops',
         'SDL_AudioSpec' => '\PHPSTORM_META\SDLAudioSpec',
@@ -1625,50 +1647,11 @@ namespace PHPSTORM_META {
         public int $flags;
         public string|\FFI\CData $str;
         /**
-         * @var int<min, max>
+         * @var int<-2147483648, 2147483647>
          */
         public int $length;
         /**
          * @internal Please use {@see \Serafim\SDL\SDL::new()} with '__NSConstantString' argument instead.
-         */
-        private function __construct()
-        {
-        }
-    }
-    /**
-     * Generated "max_align_t" structure layout.
-     *
-     * @ignore
-     * @internal Internal interface to ensure precise type inference.
-     */
-    final class MaxAlignT extends \FFI\CData
-    {
-        /**
-         * @var int<min, max>
-         */
-        public int $__clang_max_align_nonce1;
-        public float $__clang_max_align_nonce2;
-        /**
-         * @internal Please use {@see \Serafim\SDL\SDL::new()} with 'max_align_t' argument instead.
-         */
-        private function __construct()
-        {
-        }
-    }
-    /**
-     * Generated "__fsid_t" structure layout.
-     *
-     * @ignore
-     * @internal Internal interface to ensure precise type inference.
-     */
-    final class FsidT extends \FFI\CData
-    {
-        /**
-         * @var list<int<-2147483648, 2147483647>>
-         */
-        public array $__val;
-        /**
-         * @internal Please use {@see \Serafim\SDL\SDL::new()} with '__fsid_t' argument instead.
          */
         private function __construct()
         {
@@ -4371,7 +4354,7 @@ namespace PHPSTORM_META {
          */
         public int $product_id;
         /**
-         * @var null|\FFI\CData<int<-2147483648, 2147483647>>
+         * @var null|\FFI\CData<int<0, 65536>>
          */
         public ?\FFI\CData $serial_number;
         /**
@@ -4379,11 +4362,11 @@ namespace PHPSTORM_META {
          */
         public int $release_number;
         /**
-         * @var null|\FFI\CData<int<-2147483648, 2147483647>>
+         * @var null|\FFI\CData<int<0, 65536>>
          */
         public ?\FFI\CData $manufacturer_string;
         /**
-         * @var null|\FFI\CData<int<-2147483648, 2147483647>>
+         * @var null|\FFI\CData<int<0, 65536>>
          */
         public ?\FFI\CData $product_string;
         /**
@@ -4927,57 +4910,57 @@ namespace Serafim\SDL {
          */
         public function SDL_memcmp(?\FFI\CData $s1, ?\FFI\CData $s2, int $len): int;
         /**
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $wstr
+         * @param null|\FFI\CData<int<0, 65536>> $wstr
          * @return int<0, max>
          */
         public function SDL_wcslen(?\FFI\CData $wstr): int;
         /**
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $dst
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $src
+         * @param null|\FFI\CData<int<0, 65536>> $dst
+         * @param null|\FFI\CData<int<0, 65536>> $src
          * @param int<0, max> $maxlen
          * @return int<0, max>
          */
         public function SDL_wcslcpy(?\FFI\CData $dst, ?\FFI\CData $src, int $maxlen): int;
         /**
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $dst
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $src
+         * @param null|\FFI\CData<int<0, 65536>> $dst
+         * @param null|\FFI\CData<int<0, 65536>> $src
          * @param int<0, max> $maxlen
          * @return int<0, max>
          */
         public function SDL_wcslcat(?\FFI\CData $dst, ?\FFI\CData $src, int $maxlen): int;
         /**
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $wstr
-         * @return null|\FFI\CData<int<-2147483648, 2147483647>>
+         * @param null|\FFI\CData<int<0, 65536>> $wstr
+         * @return null|\FFI\CData<int<0, 65536>>
          */
         public function SDL_wcsdup(?\FFI\CData $wstr): ?\FFI\CData;
         /**
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $haystack
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $needle
-         * @return null|\FFI\CData<int<-2147483648, 2147483647>>
+         * @param null|\FFI\CData<int<0, 65536>> $haystack
+         * @param null|\FFI\CData<int<0, 65536>> $needle
+         * @return null|\FFI\CData<int<0, 65536>>
          */
         public function SDL_wcsstr(?\FFI\CData $haystack, ?\FFI\CData $needle): ?\FFI\CData;
         /**
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $str1
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $str2
+         * @param null|\FFI\CData<int<0, 65536>> $str1
+         * @param null|\FFI\CData<int<0, 65536>> $str2
          * @return int<-2147483648, 2147483647>
          */
         public function SDL_wcscmp(?\FFI\CData $str1, ?\FFI\CData $str2): int;
         /**
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $str1
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $str2
+         * @param null|\FFI\CData<int<0, 65536>> $str1
+         * @param null|\FFI\CData<int<0, 65536>> $str2
          * @param int<0, max> $maxlen
          * @return int<-2147483648, 2147483647>
          */
         public function SDL_wcsncmp(?\FFI\CData $str1, ?\FFI\CData $str2, int $maxlen): int;
         /**
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $str1
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $str2
+         * @param null|\FFI\CData<int<0, 65536>> $str1
+         * @param null|\FFI\CData<int<0, 65536>> $str2
          * @return int<-2147483648, 2147483647>
          */
         public function SDL_wcscasecmp(?\FFI\CData $str1, ?\FFI\CData $str2): int;
         /**
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $str1
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $str2
+         * @param null|\FFI\CData<int<0, 65536>> $str1
+         * @param null|\FFI\CData<int<0, 65536>> $str2
          * @param int<0, max> $len
          * @return int<-2147483648, 2147483647>
          */
@@ -5036,12 +5019,12 @@ namespace Serafim\SDL {
          */
         public function SDL_uitoa(int $value, string|\FFI\CData $str, int $radix): string|\FFI\CData;
         /**
-         * @param int<min, max> $value
+         * @param int<-2147483648, 2147483647> $value
          * @param int<-2147483648, 2147483647> $radix
          */
         public function SDL_ltoa(int $value, string|\FFI\CData $str, int $radix): string|\FFI\CData;
         /**
-         * @param int<0, max> $value
+         * @param int<0, 4294967296> $value
          * @param int<-2147483648, 2147483647> $radix
          */
         public function SDL_ultoa(int $value, string|\FFI\CData $str, int $radix): string|\FFI\CData;
@@ -5062,12 +5045,12 @@ namespace Serafim\SDL {
         public function SDL_atof(string|\FFI\CData $str): float;
         /**
          * @param int<-2147483648, 2147483647> $base
-         * @return int<min, max>
+         * @return int<-2147483648, 2147483647>
          */
         public function SDL_strtol(string|\FFI\CData $str, ?\FFI\CData $endp, int $base): int;
         /**
          * @param int<-2147483648, 2147483647> $base
-         * @return int<0, max>
+         * @return int<0, 4294967296>
          */
         public function SDL_strtoul(string|\FFI\CData $str, ?\FFI\CData $endp, int $base): int;
         /**
@@ -5104,10 +5087,9 @@ namespace Serafim\SDL {
          */
         public function SDL_sscanf(string|\FFI\CData $text, string|\FFI\CData ...$fmt): int;
         /**
-         * @param list<mixed> $ap
          * @return int<-2147483648, 2147483647>
          */
-        public function SDL_vsscanf(string|\FFI\CData $text, string|\FFI\CData $fmt, array $ap): int;
+        public function SDL_vsscanf(string|\FFI\CData $text, string|\FFI\CData $fmt, string|\FFI\CData $ap): int;
         /**
          * @param int<0, max> $maxlen
          * @return int<-2147483648, 2147483647>
@@ -5115,19 +5097,17 @@ namespace Serafim\SDL {
         public function SDL_snprintf(string|\FFI\CData $text, int $maxlen, string|\FFI\CData ...$fmt): int;
         /**
          * @param int<0, max> $maxlen
-         * @param list<mixed> $ap
          * @return int<-2147483648, 2147483647>
          */
-        public function SDL_vsnprintf(string|\FFI\CData $text, int $maxlen, string|\FFI\CData $fmt, array $ap): int;
+        public function SDL_vsnprintf(string|\FFI\CData $text, int $maxlen, string|\FFI\CData $fmt, string|\FFI\CData $ap): int;
         /**
          * @return int<-2147483648, 2147483647>
          */
         public function SDL_asprintf(?\FFI\CData $strp, string|\FFI\CData ...$fmt): int;
         /**
-         * @param list<mixed> $ap
          * @return int<-2147483648, 2147483647>
          */
-        public function SDL_vasprintf(?\FFI\CData $strp, string|\FFI\CData $fmt, array $ap): int;
+        public function SDL_vasprintf(?\FFI\CData $strp, string|\FFI\CData $fmt, string|\FFI\CData $ap): int;
         public function SDL_acos(float $x): float;
         public function SDL_acosf(float $x): float;
         public function SDL_asin(float $x): float;
@@ -5161,11 +5141,11 @@ namespace Serafim\SDL {
         public function SDL_round(float $x): float;
         public function SDL_roundf(float $x): float;
         /**
-         * @return int<min, max>
+         * @return int<-2147483648, 2147483647>
          */
         public function SDL_lround(float $x): int;
         /**
-         * @return int<min, max>
+         * @return int<-2147483648, 2147483647>
          */
         public function SDL_lroundf(float $x): int;
         /**
@@ -5214,7 +5194,29 @@ namespace Serafim\SDL {
          * @param null|\FFI\CData<int<0, max>> $ret
          * @return int<-2147483648, 2147483647>
          */
+        public function _SDL_size_mul_overflow_builtin(int $a, int $b, ?\FFI\CData $ret): int;
+        /**
+         * @return int<-128, 127>
+         */
+        public function __builtin_mul_overflow(): int;
+        /**
+         * @param int<0, max> $a
+         * @param int<0, max> $b
+         * @param null|\FFI\CData<int<0, max>> $ret
+         * @return int<-2147483648, 2147483647>
+         */
         public function SDL_size_add_overflow(int $a, int $b, ?\FFI\CData $ret): int;
+        /**
+         * @param int<0, max> $a
+         * @param int<0, max> $b
+         * @param null|\FFI\CData<int<0, max>> $ret
+         * @return int<-2147483648, 2147483647>
+         */
+        public function _SDL_size_add_overflow_builtin(int $a, int $b, ?\FFI\CData $ret): int;
+        /**
+         * @return int<-128, 127>
+         */
+        public function __builtin_add_overflow(): int;
         /**
          * @param int<-2147483648, 2147483647> $argc
          * @param list<mixed> $argv
@@ -5228,6 +5230,7 @@ namespace Serafim\SDL {
          */
         public function SDL_RegisterApp(string|\FFI\CData $name, int $style, ?\FFI\CData $hInst): int;
         public function SDL_UnregisterApp(): void;
+        public function __debugbreak(): void;
         /**
          * @param null|\FFI\CData<\PHPSTORM_META\SDLAssertData> $_0
          * @param int<-2147483648, 2147483647> $_3
@@ -5315,21 +5318,8 @@ namespace Serafim\SDL {
          * @return int<-2147483648, 2147483647>
          */
         public function SDL_Error(#[\JetBrains\PhpStorm\ExpectedValues(flags: [\Serafim\SDL\ErrorCode::SDL_ENOMEM, \Serafim\SDL\ErrorCode::SDL_EFREAD, \Serafim\SDL\ErrorCode::SDL_EFWRITE, \Serafim\SDL\ErrorCode::SDL_EFSEEK, \Serafim\SDL\ErrorCode::SDL_UNSUPPORTED, \Serafim\SDL\ErrorCode::SDL_LASTERROR])] int $code): int;
-        /**
-         * @param int<0, 65536> $x
-         * @return int<0, 65536>
-         */
-        public function SDL_Swap16(int $x): int;
-        /**
-         * @param int<0, 4294967296> $x
-         * @return int<0, 4294967296>
-         */
-        public function SDL_Swap32(int $x): int;
-        /**
-         * @param int<0, max> $x
-         * @return int<0, max>
-         */
-        public function SDL_Swap64(int $x): int;
+        public function _m_prefetch(?\FFI\CData $__P): void;
+        public function __builtin_prefetch(?\FFI\CData ...$_0): void;
         public function SDL_SwapFloat(float $x): float;
         /**
          * @return null|\FFI\CData<\PHPSTORM_META\SDLMutex>
@@ -5440,12 +5430,12 @@ namespace Serafim\SDL {
          */
         public function SDL_GetThreadName(?\FFI\CData $thread): string|\FFI\CData;
         /**
-         * @return int<0, max>
+         * @return int<0, 4294967296>
          */
         public function SDL_ThreadID(): int;
         /**
          * @param null|\FFI\CData<\PHPSTORM_META\SDLThread> $thread
-         * @return int<0, max>
+         * @return int<0, 4294967296>
          */
         public function SDL_GetThreadID(?\FFI\CData $thread): int;
         /**
@@ -8107,7 +8097,7 @@ namespace Serafim\SDL {
         /**
          * @param int<0, 65536> $vendor_id
          * @param int<0, 65536> $product_id
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $serial_number
+         * @param null|\FFI\CData<int<0, 65536>> $serial_number
          * @return null|\FFI\CData<\PHPSTORM_META\SDLHidDevice>
          */
         public function SDL_hid_open(int $vendor_id, int $product_id, ?\FFI\CData $serial_number): ?\FFI\CData;
@@ -8164,21 +8154,21 @@ namespace Serafim\SDL {
         public function SDL_hid_close(?\FFI\CData $dev): void;
         /**
          * @param null|\FFI\CData<\PHPSTORM_META\SDLHidDevice> $dev
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $string
+         * @param null|\FFI\CData<int<0, 65536>> $string
          * @param int<0, max> $maxlen
          * @return int<-2147483648, 2147483647>
          */
         public function SDL_hid_get_manufacturer_string(?\FFI\CData $dev, ?\FFI\CData $string, int $maxlen): int;
         /**
          * @param null|\FFI\CData<\PHPSTORM_META\SDLHidDevice> $dev
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $string
+         * @param null|\FFI\CData<int<0, 65536>> $string
          * @param int<0, max> $maxlen
          * @return int<-2147483648, 2147483647>
          */
         public function SDL_hid_get_product_string(?\FFI\CData $dev, ?\FFI\CData $string, int $maxlen): int;
         /**
          * @param null|\FFI\CData<\PHPSTORM_META\SDLHidDevice> $dev
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $string
+         * @param null|\FFI\CData<int<0, 65536>> $string
          * @param int<0, max> $maxlen
          * @return int<-2147483648, 2147483647>
          */
@@ -8186,7 +8176,7 @@ namespace Serafim\SDL {
         /**
          * @param null|\FFI\CData<\PHPSTORM_META\SDLHidDevice> $dev
          * @param int<-2147483648, 2147483647> $string_index
-         * @param null|\FFI\CData<int<-2147483648, 2147483647>> $string
+         * @param null|\FFI\CData<int<0, 65536>> $string
          * @param int<0, max> $maxlen
          * @return int<-2147483648, 2147483647>
          */
@@ -8280,9 +8270,8 @@ namespace Serafim\SDL {
         /**
          * @param int<-2147483648, 2147483647> $category
          * @param int<-2147483648, 2147483647>|\Serafim\SDL\Log\Priority::* $priority
-         * @param list<mixed> $ap
          */
-        public function SDL_LogMessageV(int $category, #[\JetBrains\PhpStorm\ExpectedValues(flags: [\Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_VERBOSE, \Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_DEBUG, \Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_INFO, \Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_WARN, \Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_ERROR, \Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_CRITICAL, \Serafim\SDL\Log\Priority::SDL_NUM_LOG_PRIORITIES])] int $priority, string|\FFI\CData $fmt, array $ap): void;
+        public function SDL_LogMessageV(int $category, #[\JetBrains\PhpStorm\ExpectedValues(flags: [\Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_VERBOSE, \Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_DEBUG, \Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_INFO, \Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_WARN, \Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_ERROR, \Serafim\SDL\Log\Priority::SDL_LOG_PRIORITY_CRITICAL, \Serafim\SDL\Log\Priority::SDL_NUM_LOG_PRIORITIES])] int $priority, string|\FFI\CData $fmt, string|\FFI\CData $ap): void;
         /**
          * @param null|\FFI\CData<null|\FFI\CData<callable(mixed, int<-2147483648, 2147483647>, int<-2147483648, 2147483647>|\Serafim\SDL\Log\Priority::*, mixed):(mixed)>> $callback
          */
@@ -8908,19 +8897,6 @@ namespace Serafim\SDL {
          */
         #[\JetBrains\PhpStorm\ExpectedValues(flags: [\Serafim\SDL\Boolean::SDL_FALSE, \Serafim\SDL\Boolean::SDL_TRUE])]
         public function SDL_DXGIGetOutputInfo(int $displayIndex, ?\FFI\CData $adapterIndex, ?\FFI\CData $outputIndex): int;
-        /**
-         * @param int<min, max> $threadID
-         * @param int<-2147483648, 2147483647> $priority
-         * @return int<-2147483648, 2147483647>
-         */
-        public function SDL_LinuxSetThreadPriority(int $threadID, int $priority): int;
-        /**
-         * @param int<min, max> $threadID
-         * @param int<-2147483648, 2147483647> $sdlPriority
-         * @param int<-2147483648, 2147483647> $schedPolicy
-         * @return int<-2147483648, 2147483647>
-         */
-        public function SDL_LinuxSetThreadPriorityAndPolicy(int $threadID, int $sdlPriority, int $schedPolicy): int;
         /**
          * @return int<-2147483648, 2147483647>|\Serafim\SDL\Boolean::*
          */
