@@ -1212,9 +1212,6 @@ namespace PHPSTORM_META {
         \Serafim\SDL\Video\WindowShapeMode::SHAPE_MODE_COLOR_KEY
     );
     expectedArguments(\Serafim\SDL\SDL::SDL_Error(), 0, argumentsSet('ffi_sdl_sdl_errorcode'));
-    expectedArguments(\Serafim\SDL\SDL::_set_app_type(), 0, argumentsSet('ffi_sdl__crt_app_type'));
-    expectedArguments(\Serafim\SDL\SDL::_configure_narrow_argv(), 0, argumentsSet('ffi_sdl__crt_argv_mode'));
-    expectedArguments(\Serafim\SDL\SDL::_configure_wide_argv(), 0, argumentsSet('ffi_sdl__crt_argv_mode'));
     expectedArguments(\Serafim\SDL\SDL::SDL_SetThreadPriority(), 0, argumentsSet('ffi_sdl_sdl_threadpriority'));
     expectedArguments(\Serafim\SDL\SDL::SDL_RWFromFP(), 1, argumentsSet('ffi_sdl_sdl_bool'));
     expectedArguments(\Serafim\SDL\SDL::SDL_ComposeCustomBlendMode(), 0, argumentsSet('ffi_sdl_sdl_blendfactor'));
@@ -1274,8 +1271,6 @@ namespace PHPSTORM_META {
     expectedReturnValues(\Serafim\SDL\SDL::SDL_AtomicTryLock(), argumentsSet('ffi_sdl_sdl_bool'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_AtomicCAS(), argumentsSet('ffi_sdl_sdl_bool'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_AtomicCASPtr(), argumentsSet('ffi_sdl_sdl_bool'));
-    expectedReturnValues(\Serafim\SDL\SDL::_get_startup_argv_mode(), argumentsSet('ffi_sdl__crt_argv_mode'));
-    expectedReturnValues(\Serafim\SDL\SDL::_query_app_type(), argumentsSet('ffi_sdl__crt_app_type'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_GetAudioStatus(), argumentsSet('ffi_sdl_sdl_audiostatus'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_GetAudioDeviceStatus(), argumentsSet('ffi_sdl_sdl_audiostatus'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_HasClipboardText(), argumentsSet('ffi_sdl_sdl_bool'));
@@ -1522,28 +1517,9 @@ namespace PHPSTORM_META {
         '__NSConstantString' => '\PHPSTORM_META\NSConstantString',
         'SDL_AssertData' => '\PHPSTORM_META\SDLAssertData',
         'SDL_atomic_t' => '\PHPSTORM_META\SDLAtomicT',
-        '__crt_locale_data_public' => '\PHPSTORM_META\CrtLocaleDataPublic',
-        '__crt_locale_pointers' => '\PHPSTORM_META\CrtLocalePointers',
-        '_Mbstatet' => '\PHPSTORM_META\Mbstatet',
-        'div_t' => '\PHPSTORM_META\DivT',
-        'ldiv_t' => '\PHPSTORM_META\LdivT',
-        'lldiv_t' => '\PHPSTORM_META\LldivT',
-        '_LDOUBLE' => '\PHPSTORM_META\LDOUBLE',
-        '_CRT_DOUBLE' => '\PHPSTORM_META\CRTDOUBLE',
-        '_CRT_FLOAT' => '\PHPSTORM_META\CRTFLOAT',
-        '_LONGDOUBLE' => '\PHPSTORM_META\LONGDOUBLE',
-        '_LDBL12' => '\PHPSTORM_META\LDBL12',
-        '_HEAPINFO' => '\PHPSTORM_META\HEAPINFO',
-        'SETJMP_FLOAT128' => '\PHPSTORM_META\SETJMPFLOAT128',
-        '_JUMP_BUFFER' => '\PHPSTORM_META\JUMPBUFFER',
         'SDL_mutex' => '\PHPSTORM_META\SDLMutex',
         'SDL_sem' => '\PHPSTORM_META\SDLSem',
         'SDL_cond' => '\PHPSTORM_META\SDLCond',
-        '_double_val' => '\PHPSTORM_META\DoubleVal',
-        '_float_val' => '\PHPSTORM_META\FloatVal',
-        '_ldouble_val' => '\PHPSTORM_META\LdoubleVal',
-        '_float_const' => '\PHPSTORM_META\FloatConst',
-        '_onexit_table_t' => '\PHPSTORM_META\OnexitTableT',
         'SDL_Thread' => '\PHPSTORM_META\SDLThread',
         'SDL_RWops' => '\PHPSTORM_META\SDLRWops',
         'SDL_AudioSpec' => '\PHPSTORM_META\SDLAudioSpec',
