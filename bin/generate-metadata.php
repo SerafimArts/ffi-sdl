@@ -47,10 +47,6 @@ $pre->define('__FREEBSD__', '1');
 // Linux
 $pre->define('__LINUX__', '1');
 
-// Other
-$pre->define('__WINRT__', '1');
-$pre->define('__WINGDK__', '1');
-
 $processed = $pre->process(new \SplFileInfo(INPUT_PRE_HEADERS));
 
 \file_put_contents(INPUT_HEADERS, <<<HEADER

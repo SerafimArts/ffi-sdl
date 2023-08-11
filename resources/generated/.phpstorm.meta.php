@@ -1211,22 +1211,6 @@ namespace PHPSTORM_META {
         \Serafim\SDL\Video\WindowShapeMode::SHAPE_MODE_REVERSE_BINARIZE_ALPHA,
         \Serafim\SDL\Video\WindowShapeMode::SHAPE_MODE_COLOR_KEY
     );
-    registerArgumentsSet(
-        // List of "SDL_WinRT_Path" enum cases
-        'ffi_sdl_sdl_winrt_path',
-        \Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_INSTALLED_LOCATION,
-        \Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_LOCAL_FOLDER,
-        \Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_ROAMING_FOLDER,
-        \Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_TEMP_FOLDER
-    );
-    registerArgumentsSet(
-        // List of "SDL_WinRT_DeviceFamily" enum cases
-        'ffi_sdl_sdl_winrt_devicefamily',
-        \Serafim\SDL\WinRT\DeviceFamily::SDL_WINRT_DEVICEFAMILY_UNKNOWN,
-        \Serafim\SDL\WinRT\DeviceFamily::SDL_WINRT_DEVICEFAMILY_DESKTOP,
-        \Serafim\SDL\WinRT\DeviceFamily::SDL_WINRT_DEVICEFAMILY_MOBILE,
-        \Serafim\SDL\WinRT\DeviceFamily::SDL_WINRT_DEVICEFAMILY_XBOX
-    );
     expectedArguments(\Serafim\SDL\SDL::SDL_Error(), 0, argumentsSet('ffi_sdl_sdl_errorcode'));
     expectedArguments(\Serafim\SDL\SDL::SDL_SetThreadPriority(), 0, argumentsSet('ffi_sdl_sdl_threadpriority'));
     expectedArguments(\Serafim\SDL\SDL::SDL_RWFromFP(), 1, argumentsSet('ffi_sdl_sdl_bool'));
@@ -1283,8 +1267,6 @@ namespace PHPSTORM_META {
     expectedArguments(\Serafim\SDL\SDL::SDL_SetTextureScaleMode(), 1, argumentsSet('ffi_sdl_sdl_scalemode'));
     expectedArguments(\Serafim\SDL\SDL::SDL_RenderSetIntegerScale(), 1, argumentsSet('ffi_sdl_sdl_bool'));
     expectedArguments(\Serafim\SDL\SDL::SDL_SetRenderDrawBlendMode(), 1, argumentsSet('ffi_sdl_sdl_blendmode'));
-    expectedArguments(\Serafim\SDL\SDL::SDL_WinRTGetFSPathUNICODE(), 0, argumentsSet('ffi_sdl_sdl_winrt_path'));
-    expectedArguments(\Serafim\SDL\SDL::SDL_WinRTGetFSPathUTF8(), 0, argumentsSet('ffi_sdl_sdl_winrt_path'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_ReportAssertion(), argumentsSet('ffi_sdl_sdl_assertstate'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_AtomicTryLock(), argumentsSet('ffi_sdl_sdl_bool'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_AtomicCAS(), argumentsSet('ffi_sdl_sdl_bool'));
@@ -1385,7 +1367,6 @@ namespace PHPSTORM_META {
     expectedReturnValues(\Serafim\SDL\SDL::SDL_RenderIsClipEnabled(), argumentsSet('ffi_sdl_sdl_bool'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_IsShapedWindow(), argumentsSet('ffi_sdl_sdl_bool'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_DXGIGetOutputInfo(), argumentsSet('ffi_sdl_sdl_bool'));
-    expectedReturnValues(\Serafim\SDL\SDL::SDL_WinRTGetDeviceFamily(), argumentsSet('ffi_sdl_sdl_winrt_devicefamily'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_IsTablet(), argumentsSet('ffi_sdl_sdl_bool'));
     expectedReturnValues(\Serafim\SDL\SDL::SDL_RemoveTimer(), argumentsSet('ffi_sdl_sdl_bool'));
     registerArgumentsSet(
@@ -5248,17 +5229,6 @@ namespace Serafim\SDL {
         public function SDL_RegisterApp(string|\FFI\CData $name, int $style, ?\FFI\CData $hInst): int;
         public function SDL_UnregisterApp(): void;
         /**
-         * @param null|\FFI\CData<callable(int<-2147483648, 2147483647>, mixed):(int<-2147483648, 2147483647>)> $mainFunction
-         * @return int<-2147483648, 2147483647>
-         */
-        public function SDL_WinRTRunApp(?\FFI\CData $mainFunction, ?\FFI\CData $reserved): int;
-        /**
-         * @param null|\FFI\CData<callable(int<-2147483648, 2147483647>, mixed):(int<-2147483648, 2147483647>)> $mainFunction
-         * @return int<-2147483648, 2147483647>
-         */
-        public function SDL_GDKRunApp(?\FFI\CData $mainFunction, ?\FFI\CData $reserved): int;
-        public function SDL_GDKSuspendComplete(): void;
-        /**
          * @param null|\FFI\CData<\PHPSTORM_META\SDLAssertData> $_0
          * @param int<-2147483648, 2147483647> $_3
          * @return int<-2147483648, 2147483647>|\Serafim\SDL\Assert\State::*
@@ -5452,15 +5422,19 @@ namespace Serafim\SDL {
         public function SDL_CondWaitTimeout(?\FFI\CData $cond, ?\FFI\CData $mutex, int $ms): int;
         /**
          * @param null|\FFI\CData<callable(mixed):(int<-2147483648, 2147483647>)> $fn
+         * @param null|\FFI\CData<callable(mixed, int<0, 4294967296>, null|\FFI\CData<callable(mixed):(int<0, 4294967296>)>, mixed, int<0, 4294967296>, null|\FFI\CData<int<0, 4294967296>>):(int<0, max>)> $pfnBeginThread
+         * @param null|\FFI\CData<callable(int<0, 4294967296>):(mixed)> $pfnEndThread
          * @return null|\FFI\CData<\PHPSTORM_META\SDLThread>
          */
-        public function SDL_CreateThread(?\FFI\CData $fn, string|\FFI\CData $name, ?\FFI\CData $data): ?\FFI\CData;
+        public function SDL_CreateThread(?\FFI\CData $fn, string|\FFI\CData $name, ?\FFI\CData $data, ?\FFI\CData $pfnBeginThread, ?\FFI\CData $pfnEndThread): ?\FFI\CData;
         /**
          * @param null|\FFI\CData<callable(mixed):(int<-2147483648, 2147483647>)> $fn
          * @param int<0, max> $stacksize
+         * @param null|\FFI\CData<callable(mixed, int<0, 4294967296>, null|\FFI\CData<callable(mixed):(int<0, 4294967296>)>, mixed, int<0, 4294967296>, null|\FFI\CData<int<0, 4294967296>>):(int<0, max>)> $pfnBeginThread
+         * @param null|\FFI\CData<callable(int<0, 4294967296>):(mixed)> $pfnEndThread
          * @return null|\FFI\CData<\PHPSTORM_META\SDLThread>
          */
-        public function SDL_CreateThreadWithStackSize(?\FFI\CData $fn, string|\FFI\CData $name, int $stacksize, ?\FFI\CData $data): ?\FFI\CData;
+        public function SDL_CreateThreadWithStackSize(?\FFI\CData $fn, string|\FFI\CData $name, int $stacksize, ?\FFI\CData $data, ?\FFI\CData $pfnBeginThread, ?\FFI\CData $pfnEndThread): ?\FFI\CData;
         /**
          * @param null|\FFI\CData<\PHPSTORM_META\SDLThread> $thread
          */
@@ -8948,20 +8922,6 @@ namespace Serafim\SDL {
          */
         public function SDL_LinuxSetThreadPriorityAndPolicy(int $threadID, int $sdlPriority, int $schedPolicy): int;
         /**
-         * @param int<-2147483648, 2147483647>|\Serafim\SDL\WinRT\Path::* $pathType
-         * @return null|\FFI\CData<int<-2147483648, 2147483647>>
-         */
-        public function SDL_WinRTGetFSPathUNICODE(#[\JetBrains\PhpStorm\ExpectedValues(flags: [\Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_INSTALLED_LOCATION, \Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_LOCAL_FOLDER, \Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_ROAMING_FOLDER, \Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_TEMP_FOLDER])] int $pathType): ?\FFI\CData;
-        /**
-         * @param int<-2147483648, 2147483647>|\Serafim\SDL\WinRT\Path::* $pathType
-         */
-        public function SDL_WinRTGetFSPathUTF8(#[\JetBrains\PhpStorm\ExpectedValues(flags: [\Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_INSTALLED_LOCATION, \Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_LOCAL_FOLDER, \Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_ROAMING_FOLDER, \Serafim\SDL\WinRT\Path::SDL_WINRT_PATH_TEMP_FOLDER])] int $pathType): string|\FFI\CData;
-        /**
-         * @return int<-2147483648, 2147483647>|\Serafim\SDL\WinRT\DeviceFamily::*
-         */
-        #[\JetBrains\PhpStorm\ExpectedValues(flags: [\Serafim\SDL\WinRT\DeviceFamily::SDL_WINRT_DEVICEFAMILY_UNKNOWN, \Serafim\SDL\WinRT\DeviceFamily::SDL_WINRT_DEVICEFAMILY_DESKTOP, \Serafim\SDL\WinRT\DeviceFamily::SDL_WINRT_DEVICEFAMILY_MOBILE, \Serafim\SDL\WinRT\DeviceFamily::SDL_WINRT_DEVICEFAMILY_XBOX])]
-        public function SDL_WinRTGetDeviceFamily(): int;
-        /**
          * @return int<-2147483648, 2147483647>|\Serafim\SDL\Boolean::*
          */
         #[\JetBrains\PhpStorm\ExpectedValues(flags: [\Serafim\SDL\Boolean::SDL_FALSE, \Serafim\SDL\Boolean::SDL_TRUE])]
@@ -8972,10 +8932,6 @@ namespace Serafim\SDL {
         public function SDL_OnApplicationDidEnterBackground(): void;
         public function SDL_OnApplicationWillEnterForeground(): void;
         public function SDL_OnApplicationDidBecomeActive(): void;
-        /**
-         * @return int<-2147483648, 2147483647>
-         */
-        public function SDL_GDKGetTaskQueue(?\FFI\CData $outTaskQueue): int;
         /**
          * @return int<0, 4294967296>
          */

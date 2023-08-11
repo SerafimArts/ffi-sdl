@@ -219,9 +219,6 @@ extern  int SDL_main(int argc, char *argv[]);
 extern  void  SDL_SetMainReady(void);
 extern  int  SDL_RegisterApp(const char *name, Uint32 style, void *hInst);
 extern  void  SDL_UnregisterApp(void);
-extern  int  SDL_WinRTRunApp(SDL_main_func mainFunction, void * reserved);
-extern  int  SDL_GDKRunApp(SDL_main_func mainFunction, void *reserved);
-extern  void  SDL_GDKSuspendComplete(void);
 typedef enum
 {
     SDL_ASSERTION_RETRY,
@@ -354,10 +351,19 @@ typedef enum {
     SDL_THREAD_PRIORITY_TIME_CRITICAL
 } SDL_ThreadPriority;
 typedef int ( * SDL_ThreadFunction) (void *data);
+typedef uintptr_t ( * pfnSDL_CurrentBeginThread)
+                   (void *, unsigned, unsigned ( *func)(void *),
+                    void *, unsigned, unsigned *);
+typedef void ( * pfnSDL_CurrentEndThread) (unsigned code);
 extern  SDL_Thread *
-SDL_CreateThread(SDL_ThreadFunction fn, const char *name, void *data);
+SDL_CreateThread(SDL_ThreadFunction fn, const char *name, void *data,
+                 pfnSDL_CurrentBeginThread pfnBeginThread,
+                 pfnSDL_CurrentEndThread pfnEndThread);
 extern  SDL_Thread *
-SDL_CreateThreadWithStackSize(SDL_ThreadFunction fn, const char *name, const size_t stacksize, void *data);
+SDL_CreateThreadWithStackSize(SDL_ThreadFunction fn,
+                 const char *name, const size_t stacksize, void *data,
+                 pfnSDL_CurrentBeginThread pfnBeginThread,
+                 pfnSDL_CurrentEndThread pfnEndThread);
 extern  const char * SDL_GetThreadName(SDL_Thread *thread);
 extern  SDL_threadID  SDL_ThreadID(void);
 extern  SDL_threadID  SDL_GetThreadID(SDL_Thread * thread);
@@ -3369,23 +3375,6 @@ extern  ID3D12Device*  SDL_RenderGetD3D12Device(SDL_Renderer* renderer);
 extern  SDL_bool  SDL_DXGIGetOutputInfo( int displayIndex, int *adapterIndex, int *outputIndex );
 extern  int  SDL_LinuxSetThreadPriority(Sint64 threadID, int priority);
 extern  int  SDL_LinuxSetThreadPriorityAndPolicy(Sint64 threadID, int sdlPriority, int schedPolicy);
-typedef enum
-{
-    SDL_WINRT_PATH_INSTALLED_LOCATION,
-    SDL_WINRT_PATH_LOCAL_FOLDER,
-    SDL_WINRT_PATH_ROAMING_FOLDER,
-    SDL_WINRT_PATH_TEMP_FOLDER
-} SDL_WinRT_Path;
-typedef enum
-{
-    SDL_WINRT_DEVICEFAMILY_UNKNOWN,
-    SDL_WINRT_DEVICEFAMILY_DESKTOP,
-    SDL_WINRT_DEVICEFAMILY_MOBILE,
-    SDL_WINRT_DEVICEFAMILY_XBOX,
-} SDL_WinRT_DeviceFamily;
-extern  const wchar_t *  SDL_WinRTGetFSPathUNICODE(SDL_WinRT_Path pathType);
-extern  const char *  SDL_WinRTGetFSPathUTF8(SDL_WinRT_Path pathType);
-extern  SDL_WinRT_DeviceFamily  SDL_WinRTGetDeviceFamily();
 extern  SDL_bool  SDL_IsTablet(void);
 extern  void  SDL_OnApplicationWillTerminate(void);
 extern  void  SDL_OnApplicationDidReceiveMemoryWarning(void);
@@ -3393,8 +3382,6 @@ extern  void  SDL_OnApplicationWillResignActive(void);
 extern  void  SDL_OnApplicationDidEnterBackground(void);
 extern  void  SDL_OnApplicationWillEnterForeground(void);
 extern  void  SDL_OnApplicationDidBecomeActive(void);
-typedef struct XTaskQueueObject * XTaskQueueHandle;
-extern  int  SDL_GDKGetTaskQueue(XTaskQueueHandle * outTaskQueue);
 extern  Uint32  SDL_GetTicks(void);
 extern  Uint64  SDL_GetTicks64(void);
 extern  Uint64  SDL_GetPerformanceCounter(void);
