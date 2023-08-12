@@ -16,7 +16,7 @@ const OUTPUT_FILE = __DIR__ . '/../resources/generated/.phpstorm.meta.php';
 fwrite(STDOUT, " - [1/4] Generating metadata files\n");
 
 if (!is_file(OUTPUT_METADATA)) {
-    (new CastXMLGenerator())
+    (new CastXMLGenerator($_SERVER['FFI_GENERATOR_CASTXML_BINARY'] ?? 'castxml'))
         ->generate(INPUT_HEADERS)
         ->save(OUTPUT_METADATA)
     ;
@@ -32,7 +32,7 @@ fwrite(STDOUT, " - [3/4] Generating IDE helper\n");
 
 $result = (new PhpStormMetadataGenerator(
         argumentSetPrefix: 'ffi_sdl_',
-        ignoreDirectories: ['/usr'],
+        ignoreDirectories: ['/usr', ...explode(',', $_SERVER['FFI_GENERATOR_IGNORE_PATHS'] ?? '')],
         naming: new class(
             entrypoint: Serafim\SDL\SDL::class,
             externalNamespace: 'Serafim\SDL',
