@@ -47,6 +47,7 @@ Additional dependencies:
 
 - [SDL Image](https://github.com/SerafimArts/ffi-sdl-image)
 - [SDL TTF](https://github.com/SerafimArts/ffi-sdl-ttf)
+- [SDL Mixer](https://github.com/SerafimArts/ffi-sdl-mixer)
 
 ## Documentation
 
