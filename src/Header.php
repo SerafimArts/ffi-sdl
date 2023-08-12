@@ -84,14 +84,10 @@ final class Header implements HeaderInterface
             $version = Version::create($version->toString());
         }
 
-        // phpcs:disable
-        $pre->define('_SDL_VERSION_GTE', static fn (string $expected): bool =>
-            \version_compare($version->toString(), $expected, '>=')
-        );
-        $pre->define('SDL_VERSION_ATLEAST', static fn (string $a, string $b, string $c): bool =>
-            \version_compare($version->toString(), \sprintf('%d.%d.%d', $a, $b, $c), '>=')
-        );
-        // phpcs:enable
+        $pre->define('_SDL_VERSION_GTE', static fn (string $expected): bool
+            => \version_compare($version->toString(), $expected, '>='));
+        $pre->define('SDL_VERSION_ATLEAST', static fn (string $a, string $b, string $c): bool
+            => \version_compare($version->toString(), \sprintf('%d.%d.%d', $a, $b, $c), '>='));
 
         $pre->define('WINAPI_FAMILY_PARTITION', static fn (string $type) => 0);
         $pre->define('DECLSPEC', '');
