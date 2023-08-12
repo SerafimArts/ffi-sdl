@@ -2,14 +2,14 @@
 
 <p align="center">
     <a href="https://packagist.org/packages/serafim/ffi-sdl"><img src="https://poser.pugx.org/serafim/ffi-sdl/require/php?style=for-the-badge" alt="PHP 8.1+"></a>
-    <a href="https://github.com/libsdl-org/SDL"><img src="https://img.shields.io/badge/SDL-2.28.2-004953.svg?style=flat-square" alt="SDL"></a>
+    <a href="https://github.com/libsdl-org/SDL"><img src="https://img.shields.io/badge/SDL-2.28.2-132B48.svg?style=for-the-badge&logo=c%2b%2b" alt="SDL"></a>
     <a href="https://packagist.org/packages/serafim/ffi-sdl"><img src="https://poser.pugx.org/serafim/ffi-sdl/version?style=for-the-badge" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/serafim/ffi-sdl"><img src="https://poser.pugx.org/serafim/ffi-sdl/v/unstable?style=for-the-badge" alt="Latest Unstable Version"></a>
     <a href="https://packagist.org/packages/serafim/ffi-sdl"><img src="https://poser.pugx.org/serafim/ffi-sdl/downloads?style=for-the-badge" alt="Total Downloads"></a>
-    <a href="https://raw.githubusercontent.com/php-serafim/ffi-sdl/master/LICENSE.md"><img src="https://poser.pugx.org/serafim/ffi-sdl/license?style=for-the-badge" alt="License MIT"></a>
+    <a href="https://raw.githubusercontent.com/serafim/ffi-sdl/master/LICENSE.md"><img src="https://poser.pugx.org/serafim/ffi-sdl/license?style=for-the-badge" alt="License MIT"></a>
 </p>
 <p align="center">
-    <a href="https://github.com/php-serafim/ffi-sdl/actions"><img src="https://github.com/php-serafim/ffi-sdl/workflows/build/badge.svg"></a>
+    <a href="https://github.com/SerafimArts/ffi-sdl/actions"><img src="https://github.com/SerafimArts/ffi-sdl/workflows/build/badge.svg"></a>
 </p>
 
 A SDL FFI bindings for the PHP language.
