@@ -7,7 +7,29 @@ use FFI\Generator\Metadata\CastXMLParser;
 use FFI\Generator\PhpStormMetadataGenerator;
 use FFI\Generator\SimpleNamingStrategy;
 
-require __DIR__ . '/../vendor/autoload.php';
+
+if (!isset($_composer_autoload_path)) {
+    $current = __DIR__;
+    do {
+        if (is_file($current . '/autoload.php')) {
+            $_composer_autoload_path = $current . '/autoload.php';
+            break;
+        } elseif (is_file($current . '/vendor/autoload.php')) {
+            $_composer_autoload_path = $current . '/vendor/autoload.php';
+            break;
+        }
+    } while (
+        $current !== \dirname($current)
+        && ($current = \dirname($current))
+    );
+}
+
+if (!isset($_composer_autoload_path)) {
+    throw new \LogicException('Could not require composer autoloader');
+}
+
+require $_composer_autoload_path;
+
 
 const INPUT_HEADERS = __DIR__ . '/../resources/headers/SDL.h';
 const OUTPUT_METADATA = __DIR__ . '/metadata.xml';
