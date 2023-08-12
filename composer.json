@@ -1,21 +1,13 @@
 {
     "name": "serafim/ffi-sdl",
-    "description": "SDL2 FFI bindings for the PHP language",
+    "description": "SDL FFI bindings for the PHP language",
     "type": "library",
     "license": "MIT",
     "support": {
         "issues": "https://github.com/SerafimArts/ffi-sdl/issues",
         "source": "https://github.com/SerafimArts/ffi-sdl"
     },
-    "keywords": [
-        "sdl",
-        "ffi",
-        "bindings",
-        "opengl",
-        "graphics",
-        "library",
-        "direct media"
-    ],
+    "keywords": ["sdl", "ffi", "bindings", "opengl", "graphics", "library", "direct media"],
     "homepage": "https://github.com/SerafimArts/ffi-sdl",
     "authors": [
         {
