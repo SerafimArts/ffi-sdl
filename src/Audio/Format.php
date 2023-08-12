@@ -4,6 +4,18 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Audio;
 
+if (\unpack('S', "\x01\x00")[1] === 1) {
+    define('Serafim\SDL\Audio\AUDIO_U16SYS', 0x0010);
+    define('Serafim\SDL\Audio\AUDIO_S16SYS', 0x8010);
+    define('Serafim\SDL\Audio\AUDIO_S32SYS', 0x8020);
+    define('Serafim\SDL\Audio\AUDIO_F32SYS', 0x8120);
+} else {
+    define('Serafim\SDL\Audio\AUDIO_U16SYS', 0x1010);
+    define('Serafim\SDL\Audio\AUDIO_S16SYS', 0x9010);
+    define('Serafim\SDL\Audio\AUDIO_S32SYS', 0x9020);
+    define('Serafim\SDL\Audio\AUDIO_F32SYS', 0x9120);
+}
+
 /**
  * Audio format flags.
  *
@@ -99,4 +111,9 @@ interface Format
      * 32-bit floating point samples (alias)
      */
     public const AUDIO_F32 = self::AUDIO_F32LSB;
+
+    public const AUDIO_U16SYS = AUDIO_U16SYS;
+    public const AUDIO_S16SYS = AUDIO_S16SYS;
+    public const AUDIO_S32SYS = AUDIO_S32SYS;
+    public const AUDIO_F32SYS = AUDIO_F32SYS;
 }
