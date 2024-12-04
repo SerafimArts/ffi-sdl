@@ -62,8 +62,7 @@ final class Header implements HeaderInterface
 
     public function __construct(
         private readonly PreprocessorInterface $pre,
-    ) {
-    }
+    ) {}
 
     /**
      * @return non-empty-string
@@ -84,14 +83,14 @@ final class Header implements HeaderInterface
             $version = Version::create($version->toString());
         }
 
-        $pre->define('_SDL_VERSION_GTE', static fn (string $expected): bool
+        $pre->define('_SDL_VERSION_GTE', static fn(string $expected): bool
             => \version_compare($version->toString(), $expected, '>='));
-        $pre->define('SDL_VERSION_ATLEAST', static fn (string $a, string $b, string $c): bool
+        $pre->define('SDL_VERSION_ATLEAST', static fn(string $a, string $b, string $c): bool
             => \version_compare($version->toString(), \sprintf('%d.%d.%d', $a, $b, $c), '>='));
 
-        $pre->define('WINAPI_FAMILY_PARTITION', static fn (string $type) => 0);
+        $pre->define('WINAPI_FAMILY_PARTITION', static fn(string $type) => 0);
         $pre->define('DECLSPEC', '');
-        $pre->define('_SDL_HAS_BUILTIN', static fn (string $arg) => 0);
+        $pre->define('_SDL_HAS_BUILTIN', static fn(string $arg) => 0);
 
         // Remove stdinc and platform headers
         $pre->add('SDL_stdinc.h', self::SDLINC_H);
@@ -172,7 +171,7 @@ final class Header implements HeaderInterface
                         $depth--;
                         if ($depth <= 0) {
                             while ($result[$to + 1] === ';') {
-                                $to++;
+                                ++$to;
                             }
 
                             $result = \substr($result, 0, $from)

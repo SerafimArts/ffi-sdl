@@ -32,25 +32,19 @@
     },
     "require-dev": {
         "ffi/ide-helper-generator": "^0.1|^1.0",
-        "friendsofphp/php-cs-fixer": "^3.22",
-        "phpunit/phpunit": "^10.3",
-        "symfony/cache": "^5.4|^6.0",
-        "vimeo/psalm": "^5.14"
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Serafim\\SDL\\Tests\\": "tests"
-        }
+        "friendsofphp/php-cs-fixer": "^3.65",
+        "symfony/cache": "^5.4|^6.0|^7.0",
+        "phpstan/phpstan": "^2.0.3",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0"
     },
     "scripts": {
-        "psalm": "@psalm:check",
-        "psalm:check": "psalm --no-cache",
-        "psalm:fix": "psalm --no-cache --alter",
+        "linter": "@linter:check",
+        "linter:check": "phpstan analyse --configuration phpstan.neon",
+        "linter:baseline": "phpstan analyse --configuration phpstan.neon --generate-baseline",
         "phpcs": "@phpcs:check",
-        "phpcs:check": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes --dry-run",
-        "phpcs:fix": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes",
-        "test": "@test:unit",
-        "test:unit": "phpunit --testdox"
+        "phpcs:check": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes --verbose --diff --dry-run",
+        "phpcs:fix": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes --verbose --diff"
     },
     "config": {
         "sort-packages": true

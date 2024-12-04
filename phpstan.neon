@@ -1,0 +1,32 @@
+includes:
+    - phar://phpstan.phar/conf/bleedingEdge.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+parameters:
+    level: max
+    phpVersion:
+        min: 80100
+        max: 80400
+    parallel:
+        jobSize: 20
+        maximumNumberOfProcesses: 32
+        minimumNumberOfJobsPerProcess: 2
+    editorUrlTitle: '%%relFile%%:%%line%%'
+    strictRules:
+        allRules: true
+    paths:
+        - src
+    tmpDir: vendor/.cache.phpstan
+    rememberPossiblyImpureFunctionValues: false
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkImplicitMixed: true
+    checkBenevolentUnionTypes: true
+    reportPossiblyNonexistentGeneralArrayOffset: true
+    reportPossiblyNonexistentConstantArrayOffset: true
+    reportAlwaysTrueInLastCondition: true
+    reportAnyTypeWideningInVarTag: true
+    # Disable checks nonsensical #[Override] attribute
+    checkMissingOverrideMethodAttribute: false
+    inferPrivatePropertyTypeFromConstructor: true
+    tipsOfTheDay: false
+    checkMissingCallableSignature: true

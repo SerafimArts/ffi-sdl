@@ -623,7 +623,6 @@ interface Name
      *  This variable can be set to the following values:
      *    "0"       - Normal rumble behavior is behavior is used (default)
      *    "1"       - Proper GameCube controller rumble behavior is used
-     *
      */
     public const SDL_HINT_JOYSTICK_GAMECUBE_RUMBLE_BRAKE = 'SDL_JOYSTICK_GAMECUBE_RUMBLE_BRAKE';
 
@@ -962,7 +961,6 @@ interface Name
      *  This variable can be set to the following values:
      *    "0"       - A separate thread is not used (the default)
      *    "1"       - A separate thread is used for handling raw input messages
-     *
      */
     public const SDL_HINT_JOYSTICK_THREAD = 'SDL_JOYSTICK_THREAD';
 
@@ -1047,7 +1045,6 @@ interface Name
      *  \brief  When set don't force the SDL app to become a foreground process
      *
      *  This hint only applies to Mac OS X.
-     *
      */
     public const SDL_HINT_MAC_BACKGROUND_APP = 'SDL_MAC_BACKGROUND_APP';
 
@@ -1075,7 +1072,6 @@ interface Name
      *  This hint is available since SDL 2.24.0.
      *
      * @since 2.24.0
-     *
      */
     public const SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH = 'SDL_MAC_OPENGL_ASYNC_DISPATCH';
 
@@ -1232,7 +1228,6 @@ interface Name
      *  This variable can be set to the following values:
      *    "0"       - Use ES profile of OpenGL, if available. (Default when not set.)
      *    "1"       - Load OpenGL ES library using the default library names.
-     *
      */
     public const SDL_HINT_OPENGL_ES_DRIVER = 'SDL_OPENGL_ES_DRIVER';
 
@@ -1667,7 +1662,6 @@ interface Name
      *  \brief Minimize your SDL_Window if it loses key focus when in fullscreen mode. Defaults to false.
      *  \warning  Before SDL 2.0.14, this defaulted to true! In 2.0.14, we're
      *            seeing if "true" causes more problems than it solves in modern times.
-     *
      */
     public const SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS = 'SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS';
 
@@ -1781,7 +1775,6 @@ interface Name
      *    "d3dcompiler_46.dll" - default, best for Vista or later.
      *    "d3dcompiler_43.dll" - for XP support.
      *    "none" - do not load any library, useful if you compiled ANGLE from source and included the compiler in your binaries.
-     *
      */
     public const SDL_HINT_VIDEO_WIN_D3DCOMPILER = 'SDL_VIDEO_WIN_D3DCOMPILER';
 
@@ -1804,7 +1797,6 @@ interface Name
      * "1" - Enable _NET_WM_BYPASS_COMPOSITOR
      *
      * By default SDL will use _NET_WM_BYPASS_COMPOSITOR
-     *
      */
     public const SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR = 'SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR';
 
@@ -1824,7 +1816,6 @@ interface Name
 
     /**
      *  \brief  A variable forcing the visual ID chosen for new X11 windows
-     *
      */
     public const SDL_HINT_VIDEO_X11_WINDOW_VISUALID = 'SDL_VIDEO_X11_WINDOW_VISUALID';
 
@@ -1980,7 +1971,6 @@ interface Name
      *  This variable can be set to the following values:
      *    "0"       - Use SRW Locks when available. If not, fall back to Critical Sections. (default)
      *    "1"       - Force the use of Critical Sections in all cases.
-     *
      */
     public const SDL_HINT_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS = 'SDL_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS';
 
@@ -1996,7 +1986,6 @@ interface Name
      *  This variable can be set to the following values:
      *    "0"       - Use Atomics and WaitOnAddress API when available. If not, fall back to Kernel Objects. (default)
      *    "1"       - Force the use of Kernel Objects in all cases.
-     *
      */
     public const SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL = 'SDL_WINDOWS_FORCE_SEMAPHORE_KERNEL';
 
@@ -2031,7 +2020,6 @@ interface Name
      *  This variable can be set to the following values:
      *    "0"       - Use the original Direct3D 9 API (default)
      *    "1"       - Use the Direct3D 9Ex API on Vista and later (and fall back if D3D9Ex is unavailable)
-     *
      */
     public const SDL_HINT_WINDOWS_USE_D3D9EX = 'SDL_WINDOWS_USE_D3D9EX';
 
@@ -2311,7 +2299,6 @@ interface Name
      */
     public const SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE = 'SDL_QUIT_ON_LAST_WINDOW_CLOSE';
 
-
     /**
      *  \brief  A variable that decides what video backend to use.
      *
@@ -2373,7 +2360,6 @@ interface Name
      * @since 2.24.0
      */
     public const SDL_HINT_KMSDRM_DEVICE_INDEX = 'SDL_KMSDRM_DEVICE_INDEX';
-
 
     /**
      *  \brief  A variable that treats trackpads as touch devices.

@@ -121,9 +121,9 @@ final class SDL extends Proxy implements
      */
     public function __construct(
         ?string $library = null,
-        Platform $platform = null,
-        VersionInterface|string $version = null,
-        CacheInterface $cache = null,
+        ?Platform $platform = null,
+        VersionInterface|string|null $version = null,
+        ?CacheInterface $cache = null,
         PreprocessorInterface $pre = new Preprocessor(),
     ) {
         Runtime::assertAvailable();
@@ -138,7 +138,7 @@ final class SDL extends Proxy implements
 
         $header = $this->getHeader($pre, $cache);
 
-        parent::__construct(\FFI::cdef((string)$header, $this->library));
+        parent::__construct(\FFI::cdef((string) $header, $this->library));
     }
 
     private function getHeader(PreprocessorInterface $pre, ?CacheInterface $cache): string|\Stringable
@@ -151,10 +151,10 @@ final class SDL extends Proxy implements
     }
 
     /**
+     * @return non-empty-string
+     *
      * @psalm-suppress MoreSpecificReturnType
      * @psalm-suppress LessSpecificReturnStatement
-     *
-     * @return non-empty-string
      */
     private function detectLibraryPathname(?string $library): string
     {
@@ -239,7 +239,7 @@ final class SDL extends Proxy implements
     }
 
     /**
-     * @deprecated Please use {@see \FFI::addr()} method instead.
+     * @deprecated please use {@see \FFI::addr()} method instead
      */
     public static function addr(CData $type): CData
     {

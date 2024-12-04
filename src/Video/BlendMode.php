@@ -6,6 +6,7 @@ namespace Serafim\SDL\Video;
 
 /**
  * Note: Additional custom blend modes can be returned by SDL_ComposeCustomBlendMode()
+ *
  * @see https://wiki.libsdl.org/SDL_BlendMode
  */
 interface BlendMode
@@ -16,7 +17,7 @@ interface BlendMode
      *  dstRGBA = srcRGBA
      * </code>
      */
-    public const SDL_BLENDMODE_NONE    = 0x00000000;
+    public const SDL_BLENDMODE_NONE = 0x00000000;
 
     /**
      * Alpha blending
@@ -25,7 +26,7 @@ interface BlendMode
      *  dstA = srcA + (dstA * (1-srcA))
      * </code>
      */
-    public const SDL_BLENDMODE_BLEND   = 0x00000001;
+    public const SDL_BLENDMODE_BLEND = 0x00000001;
 
     /**
      * Additive blending
@@ -34,7 +35,7 @@ interface BlendMode
      *  dstA = srcA + (dstA * (1-srcA))
      * </code>
      */
-    public const SDL_BLENDMODE_ADD     = 0x00000002;
+    public const SDL_BLENDMODE_ADD = 0x00000002;
 
     /**
      * Color modulate
@@ -43,7 +44,7 @@ interface BlendMode
      *  dstA = dstA
      * </code>
      */
-    public const SDL_BLENDMODE_MOD     = 0x00000004;
+    public const SDL_BLENDMODE_MOD = 0x00000004;
 
     /**
      * Color multiply
@@ -51,9 +52,10 @@ interface BlendMode
      *  dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA))
      *  dstA = (srcA * dstA) + (dstA * (1-srcA))
      * </code>
+     *
      * @since SDL 2.0.12
      */
-    public const SDL_BLENDMODE_MUL     = 0x00000008;
+    public const SDL_BLENDMODE_MUL = 0x00000008;
 
     public const SDL_BLENDMODE_INVALID = 0x7FFFFFFF;
 }

@@ -6,6 +6,7 @@ namespace Serafim\SDL\RWops;
 
 /**
  * @see https://wiki.libsdl.org/SDL_RWseek#whence
+ *
  * @since SDL 2.0.10
  */
 interface SeekWhence

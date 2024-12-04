@@ -16,52 +16,52 @@ enum Version: string implements VersionInterface, ComparableInterface
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.0
      */
-    case V2_0_0  = '2.0.0';
+    case V2_0_0 = '2.0.0';
 
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.1
      */
-    case V2_0_1  = '2.0.1';
+    case V2_0_1 = '2.0.1';
 
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.2
      */
-    case V2_0_2  = '2.0.2';
+    case V2_0_2 = '2.0.2';
 
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.3
      */
-    case V2_0_3  = '2.0.3';
+    case V2_0_3 = '2.0.3';
 
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.4
      */
-    case V2_0_4  = '2.0.4';
+    case V2_0_4 = '2.0.4';
 
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.5
      */
-    case V2_0_5  = '2.0.5';
+    case V2_0_5 = '2.0.5';
 
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.6
      */
-    case V2_0_6  = '2.0.6';
+    case V2_0_6 = '2.0.6';
 
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.7
      */
-    case V2_0_7  = '2.0.7';
+    case V2_0_7 = '2.0.7';
 
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.8
      */
-    case V2_0_8  = '2.0.8';
+    case V2_0_8 = '2.0.8';
 
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.9
      */
-    case V2_0_9  = '2.0.9';
+    case V2_0_9 = '2.0.9';
 
     /**
      * @link https://github.com/libsdl-org/SDL/releases/tag/release-2.0.10

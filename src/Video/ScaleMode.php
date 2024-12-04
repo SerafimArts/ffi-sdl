@@ -12,6 +12,7 @@ namespace Serafim\SDL\Video;
  *      SDL_ScaleModeBest
  * } SDL_ScaleMode;
  * </code>
+ *
  * @since SDL 2.0.12
  */
 interface ScaleMode
