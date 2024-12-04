@@ -30,3 +30,6 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     tipsOfTheDay: false
     checkMissingCallableSignature: true
+    ignoreErrors:
+        - '#^PHPDoc tag @var with type FFI\|object#'
+        - '#^Call to an undefined method FFI\|object#'

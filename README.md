@@ -8,9 +8,6 @@
     <a href="https://packagist.org/packages/serafim/ffi-sdl"><img src="https://poser.pugx.org/serafim/ffi-sdl/downloads?style=for-the-badge" alt="Total Downloads"></a>
     <a href="https://raw.githubusercontent.com/serafim/ffi-sdl/master/LICENSE.md"><img src="https://poser.pugx.org/serafim/ffi-sdl/license?style=for-the-badge" alt="License MIT"></a>
 </p>
-<p align="center">
-    <a href="https://github.com/SerafimArts/ffi-sdl/actions"><img src="https://github.com/SerafimArts/ffi-sdl/workflows/build/badge.svg"></a>
-</p>
 
 A SDL FFI bindings for the PHP language.
 

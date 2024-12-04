@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Serafim\SDL\Audio;
 
+// @phpstan-ignore-next-line offsetAccess.nonOffsetAccessible
 if (\unpack('S', "\x01\x00")[1] === 1) {
     define('Serafim\SDL\Audio\AUDIO_U16SYS', 0x0010);
     define('Serafim\SDL\Audio\AUDIO_S16SYS', 0x8010);

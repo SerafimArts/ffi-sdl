@@ -141,7 +141,7 @@ final class SDL extends Proxy implements
         parent::__construct(\FFI::cdef((string) $header, $this->library));
     }
 
-    private function getHeader(PreprocessorInterface $pre, ?CacheInterface $cache): string|\Stringable
+    private function getHeader(PreprocessorInterface $pre, ?CacheInterface $cache): \Stringable
     {
         if ($cache !== null) {
             return new CacheAwareHeader($this->platform, $this->version, $pre, $cache);
@@ -151,17 +151,20 @@ final class SDL extends Proxy implements
     }
 
     /**
+     * @param non-empty-string|null $library
      * @return non-empty-string
-     *
-     * @psalm-suppress MoreSpecificReturnType
-     * @psalm-suppress LessSpecificReturnStatement
      */
     private function detectLibraryPathname(?string $library): string
     {
         if ($library !== null) {
-            return \realpath($library) ?: Locator::resolve($library) ?? $library;
+            /**
+             * @var non-empty-string
+             * @phpstan-ignore-next-line ternary.shortNotAllowed
+             */
+            return \realpath($library) ?: Locator::resolve($library) ?: $library;
         }
 
+        /** @var non-empty-string */
         return match ($this->platform) {
             Platform::WINDOWS => Locator::resolve('SDL2.dll')
                 ?? throw new \RuntimeException(<<<'error'
@@ -178,6 +181,7 @@ final class SDL extends Proxy implements
                     Please make sure the SDL2 library is installed or specify
                     the path to the binary explicitly.
                     error),
+            // @phpstan-ignore-next-line match.alwaysTrue
             Platform::DARWIN => Locator::resolve('libSDL2-2.0.0.dylib')
                 ?? throw new \RuntimeException(<<<'error'
                     Could not load [libSDL2-2.0.0.dylib].
@@ -185,6 +189,7 @@ final class SDL extends Proxy implements
                     Please make sure the SDL2 library is installed or specify
                     the path to the binary explicitly.
                     error),
+            default => throw new \RuntimeException('Unknown platform'),
         };
     }
 
@@ -194,7 +199,7 @@ final class SDL extends Proxy implements
     private function detectVersion(): VersionInterface
     {
         /**
-         * @var object{SDL_GetVersion:callable(object):void} $ffi
+         * @var object{SDL_GetVersion:callable(object):void}|\FFI $ffi
          */
         $ffi = \FFI::cdef(<<<'CLANG'
             typedef uint8_t Uint8;
